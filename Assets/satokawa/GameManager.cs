@@ -2,7 +2,7 @@
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField,Header("プレイヤー")] private ITank[] player; //TODO: 型をPlayerに変える
+    [SerializeField, Header("プレイヤー")] private ITank[] player; //TODO: 型をPlayerに変える
     [SerializeField, Header("敵")] private ITank[] enemys; //TODO：　型をEnemyに変える
     void Update()
     {
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
                 isPlayerActive = true;
             }
         }
-        if(!isPlayerActive)
+        if (!isPlayerActive)
         {
             GameOver();
         }
@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
         foreach (ITank tank in enemys)
         {
             if (tank != null && tank.Hp > 0)
-            { 
-                isTankActive =true;
+            {
+                isTankActive = true;
             }
         }
         if (!isTankActive)
