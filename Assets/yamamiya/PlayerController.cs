@@ -15,11 +15,17 @@ public class PlayerController : MonoBehaviour, ITank
     public int BulletInterval => _bulletInterval;
 
     private Rigidbody _rigidbody;
+    private BulletShoot _tankShoot;
     private Vector2 _moveInput;
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _tankShoot = GetComponent<BulletShoot>();
+        if(_tankShoot != null)
+        {
+            _tankShoot.SetBulletInterval(_bulletInterval);
+        }
     }
 
     private void Update()
@@ -42,11 +48,11 @@ public class PlayerController : MonoBehaviour, ITank
 
     public void Die()
     {
-
+        // TODO 追加予定
     }
 
     public void Hit(int atk)
     {
-
+        // TODO 追加予定
     }
 }
