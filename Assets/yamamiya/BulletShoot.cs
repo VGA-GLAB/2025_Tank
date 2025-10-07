@@ -6,7 +6,7 @@ public class BulletShoot : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private Transform _shotPosition; //TODO マウスのカーソルに合わせて飛んでいくようにしたい
 
-    private int _bulletInterval;
+    private float _bulletInterval;
     private float _intervalTimer;
 
     private void Start()
@@ -22,7 +22,7 @@ public class BulletShoot : MonoBehaviour
         }
     }
 
-    public void SetBulletInterval(int bulletInterval)
+    public void SetBulletInterval(float bulletInterval)
     {
         _bulletInterval = bulletInterval;
     }
