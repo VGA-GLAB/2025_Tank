@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour, ITank
     [SerializeField] private int _atk; //攻撃力
     [SerializeField] private int _moveSpeed; //移動速度
     [SerializeField] private int _bulletInterval; //砲弾の連射インターバル
+    [SerializeField] private float _turnSpeed; //回転速度
 
     public int Hp => _hp;
     public int ATK => _atk;
@@ -32,12 +33,12 @@ public class PlayerController : MonoBehaviour, ITank
     {
         if (_moveInput != Vector2.zero)
         {
-            var x = _moveInput.x * _moveSpeed * Time.deltaTime;
+            var x = _moveInput.x * _turnSpeed * Time.deltaTime;
             var z = _moveInput.y * _moveSpeed * Time.deltaTime;
-            Vector3 moveDirection = new Vector3(x, 0, z);
 
-            _rigidbody.AddForce(moveDirection, ForceMode.Impulse);
-            transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * _moveSpeed);
+            _rigidbody.AddForce(this.transform.forward * z, ForceMode.Impulse);
+
+            this.transform.Rotate(0, x, 0);
         }
     }
 
