@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class EnemyBase : MonoBehaviour, ITank
 {
@@ -7,12 +8,13 @@ public abstract class EnemyBase : MonoBehaviour, ITank
     [SerializeField] private int _moveSpeed;
     [SerializeField] private int _bulletInterval;
 
-    private Transform _player;
+    [SerializeField] private GameObject _player;
 
     public int Hp => _hp;
     public int ATK => _atk;
     public int MoveSpeed => _moveSpeed;
     public int BulletInterval => _bulletInterval;
+    public GameObject Player => _player;
 
     public void Die()
     {
