@@ -8,7 +8,6 @@ public class BulletShoot : MonoBehaviour
 
     private int _bulletInterval;
     private float _intervalTimer;
-    private bool _isShot;
 
     private void Start()
     {
@@ -17,13 +16,9 @@ public class BulletShoot : MonoBehaviour
 
     private void Update()
     {
-        if (_isShot)
+        if (_intervalTimer > 0)
         {
             _intervalTimer -= Time.deltaTime;
-            if(_intervalTimer <= 0)
-            {
-                _isShot = false;
-            }
         }
     }
 
@@ -34,7 +29,6 @@ public class BulletShoot : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        _isShot = true;
         ShotBullet();
     }
 
@@ -43,10 +37,9 @@ public class BulletShoot : MonoBehaviour
     /// </summary>
     private void ShotBullet()
     {
-        if (_isShot && _intervalTimer <= 0)
+        if (_intervalTimer <= 0)
         {
             _intervalTimer = _bulletInterval;
-            _isShot = false;
             GameObject newBullet = Instantiate(_bulletPrefab, _shotPosition.position, Quaternion.identity);
             newBullet.transform.forward = this.transform.forward;
             // TODO 砲弾に攻撃力を渡す処理
