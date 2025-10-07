@@ -6,14 +6,14 @@ public abstract class EnemyBase : MonoBehaviour, ITank
     [SerializeField] private int _hp;
     [SerializeField] private int _atk;
     [SerializeField] private int _moveSpeed;
-    [SerializeField] private int _bulletInterval;
+    [SerializeField] private float _bulletInterval;
 
     [SerializeField] private GameObject _player;
 
     public int Hp => _hp;
     public int ATK => _atk;
     public int MoveSpeed => _moveSpeed;
-    public int BulletInterval => _bulletInterval;
+    public float BulletInterval => _bulletInterval;
     public GameObject Player => _player;
 
     public void Die()

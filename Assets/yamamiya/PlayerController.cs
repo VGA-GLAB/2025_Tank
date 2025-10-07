@@ -7,13 +7,13 @@ public class PlayerController : MonoBehaviour, ITank
     [SerializeField] private int _hp; //耐久力
     [SerializeField] private int _atk; //攻撃力
     [SerializeField] private int _moveSpeed; //移動速度
-    [SerializeField] private int _bulletInterval; //砲弾の連射インターバル
+    [SerializeField] private float _bulletInterval; //砲弾の連射インターバル
     [SerializeField] private float _turnSpeed; //回転速度
 
     public int Hp => _hp;
     public int ATK => _atk;
     public int MoveSpeed => _moveSpeed;
-    public int BulletInterval => _bulletInterval;
+    public float BulletInterval => _bulletInterval;
 
     private Rigidbody _rigidbody;
     private BulletShoot _tankShoot;
