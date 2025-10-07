@@ -467,6 +467,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9c8121c913c60a47b347bd2f0682e22, type: 3}
+--- !u!1 &1035344559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1035344560}
+  m_Layer: 0
+  m_Name: ClonePosition1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1035344560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035344559}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -7.8775396, y: 0.5, z: -0.3505832}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1038307906
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,8 +841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tankPrefab: {fileID: 6221667203085804515, guid: 3bb7064c13b5aae4bb313c86ec9cf8f4, type: 3}
   _clonePosition:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1035344560}
 --- !u!1 &1659875570
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,3 +1283,4 @@ SceneRoots:
   - {fileID: 211817727}
   - {fileID: 1644447650}
   - {fileID: 508537962}
+  - {fileID: 1035344560}
