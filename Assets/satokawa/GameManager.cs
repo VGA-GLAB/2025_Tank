@@ -19,15 +19,15 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        bool isTankActive = false;
+        bool isEnemyActive = false;
         foreach (ITank tank in enemys)
         {
             if (tank != null && tank.Hp > 0)
             {
-                isTankActive = true;
+                isEnemyActive = true;
             }
         }
-        if (!isTankActive)
+        if (!isEnemyActive)
         {
             GameClear();
         }
