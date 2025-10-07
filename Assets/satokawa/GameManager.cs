@@ -6,6 +6,11 @@ public class GameManager : MonoBehaviour
     [SerializeField, Header("敵")] private ITank[] enemys; //TODO：　型をEnemyに変える
     void Update()
     {
+
+    }
+
+    public void CheckTankActive()
+    {
         bool isPlayerActive = false;
         foreach (ITank tank in enemys)
         {
@@ -32,6 +37,7 @@ public class GameManager : MonoBehaviour
             GameClear();
         }
     }
+
     /// <summary>
     /// ゲームオーバー処理
     /// </summary>
