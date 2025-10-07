@@ -11,18 +11,18 @@ public class EnemyStandard : EnemyBase
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = MoveSpeed;
     }
-
+    //テスト用
     private void Update()
+    {
+        Move();
+    }
+
+    protected override void Move()
     {
         _agent.SetDestination(Player.transform.position);
     }
 
-    protected override void EnemyMove()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected override void EnemyAttack()
+    protected override void Attack()
     {
         throw new System.NotImplementedException();
     }

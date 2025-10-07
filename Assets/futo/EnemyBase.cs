@@ -24,7 +24,7 @@ public abstract class EnemyBase : MonoBehaviour, ITank
     public void Hit(int atk)
     {
         _hp -= atk;
-        if(_hp < 0)
+        if(_hp <= 0)
         {
             Die();
         }
@@ -33,10 +33,10 @@ public abstract class EnemyBase : MonoBehaviour, ITank
     /// <summary>
     /// 敵の移動処理
     /// </summary>
-    protected abstract void EnemyMove();
+    protected abstract void Move();
 
     /// <summary>
     /// 敵の攻撃処理
     /// </summary>
-    protected abstract void EnemyAttack();
+    protected abstract void Attack();
 }
