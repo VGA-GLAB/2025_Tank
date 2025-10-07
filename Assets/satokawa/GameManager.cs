@@ -1,36 +1,43 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private ITank player; //プレイヤー　あとでプレイヤークラスに変える
-    [SerializeField] private ITank[] enemys; //敵　あとで書き換え
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-    // Update is called once per frame
+    [SerializeField, Header("プレイヤー")] private ITank[] player; //TODO: 型をPlayerに変える
+    [SerializeField, Header("敵")] private ITank[] enemys; //TODO：　型をEnemyに変える
     void Update()
     {
-        if (player.Hp <= 0)
-            GameOver();
 
-        bool isTankActive = false;
+    }
+
+    public void CheckTankActive()
+    {
+        bool isPlayerActive = false;
         foreach (ITank tank in enemys)
         {
-            //Move処理
-
             if (tank != null && tank.Hp > 0)
-            { 
-                isTankActive =true;
+            {
+                isPlayerActive = true;
             }
         }
-        if (!isTankActive)
+        if (!isPlayerActive)
+        {
+            GameOver();
+        }
+
+        bool isEnemyActive = false;
+        foreach (ITank tank in enemys)
+        {
+            if (tank != null && tank.Hp > 0)
+            {
+                isEnemyActive = true;
+            }
+        }
+        if (!isEnemyActive)
         {
             GameClear();
         }
     }
+
     /// <summary>
     /// ゲームオーバー処理
     /// </summary>
