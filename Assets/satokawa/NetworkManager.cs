@@ -44,7 +44,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     /// <summary>
     /// プレイヤーを生成
     /// </summary>
-    private void CreatePlayerTank()
+    public void CreatePlayerTank()
     {
         _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
         

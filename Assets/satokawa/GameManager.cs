@@ -7,7 +7,27 @@ public class GameManager : MonoBehaviour
     [SerializeField, Header("プレイヤー")] private List<PlayerController> _players; 
     [SerializeField, Header("敵")] private EnemyBase[] _enemys; 
     [SerializeField, Header("次のステージ（Scene）")] private string _nextScene;
-
+    [SerializeField, Header("リスポーン時間")] private float _respawnTime;
+    private bool _isRespawnTimer = false;
+    private float _timer;
+    private NetworkManager _networkManager;
+    private void Start()
+    {
+        _networkManager = GetComponent<NetworkManager>();
+    }
+    public void Update()
+    {
+        //リスポーンタイマーを動かし時間になったらNetworkmanagerにPlayerを作ってもらう
+        if (_isRespawnTimer)
+        {
+            _timer += Time.time;
+            if(_timer > _respawnTime)
+            {
+                _networkManager.CreatePlayerTank();
+                _isRespawnTimer = false;
+            }
+        }    
+    }
     /// <summary>
     /// プレイヤーをGameManagerに渡してHPを確認してもらう
     /// </summary>
@@ -16,7 +36,8 @@ public class GameManager : MonoBehaviour
     {
         _players.Add(newPlayer);
     }
-    public void CheckTankActive()
+    [PunRPC]
+    public void CheckPlayerActive(PlayerController diePlayer)
     {
         bool isPlayerActive = false;
         foreach (PlayerController tank in _players)
@@ -30,7 +51,15 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
-
+        else if (diePlayer.GetComponent<PhotonView>().IsMine)
+        {
+            _isRespawnTimer = true;
+            _timer = 0;
+        }
+    }
+　　[PunRPC]
+    public void CheckEnemeyActive()
+    {
         bool isEnemyActive = false;
         foreach (EnemyBase tank in _enemys)
         {
@@ -44,6 +73,7 @@ public class GameManager : MonoBehaviour
             GameClear();
         }
     }
+    
 
     /// <summary>
     /// ゲームオーバー処理
