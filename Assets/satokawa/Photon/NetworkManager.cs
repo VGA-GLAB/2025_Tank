@@ -42,11 +42,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
         Vector3 position;
-
+        Debug.Log(playerCount);
         //プレイヤーの数が_clonePositionを越えていないかを確認
-        if (playerCount < _clonePosition.Length)
+        if (playerCount <= _clonePosition.Length)
         {
-            position = _clonePosition[PhotonNetwork.CurrentRoom.PlayerCount - 1].position;
+            position = _clonePosition[playerCount -1].position;
         }
         //超えていたらランダムな場所にする
         else
