@@ -8,9 +8,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     [SerializeField, Header("プレイヤーPrefab    !!Resourcesフォルダに入れる!!")] private GameObject _tankPrefab;
     [SerializeField, Header("プレイヤーの生成位置")] private Transform[] _clonePosition;
+
+    private GameManager _gameManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _gameManager = GetComponent<GameManager>();
+
         //Titleで接続した場合はそのまま生成し未接続の場合は接続する
         if (PhotonNetwork.IsConnected)
         {
@@ -35,6 +39,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         CreatePlayerTank();
     }
+
     /// <summary>
     /// プレイヤーを生成
     /// </summary>
@@ -54,6 +59,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             position = new Vector3(Random.Range(-3, 3), 0.5f, Random.Range(-3, 3));
         }
 
-        PhotonNetwork.Instantiate(_tankPrefab.name, position, Quaternion.identity);
+       GameObject newPlayer =  PhotonNetwork.Instantiate(_tankPrefab.name, position, Quaternion.identity);
+        _gameManager.AddPlayer(newPlayer.GetComponent<PlayerController>());
     }
 }

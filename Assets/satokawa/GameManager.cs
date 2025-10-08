@@ -1,14 +1,18 @@
-﻿using UnityEngine;
-
+﻿using System.Collections.Generic;
+using UnityEngine;
 public class GameManager : MonoBehaviour
 {
-    [SerializeField, Header("プレイヤー")] private ITank[] player; //TODO: 型をPlayerに変える
-    [SerializeField, Header("敵")] private ITank[] enemys; //TODO：　型をEnemyに変える
-    void Update()
+    [SerializeField, Header("プレイヤー")] private List<PlayerController> player; //TODO: 型をPlayerに変える
+    [SerializeField, Header("敵")] private EnemyBase[] enemys; //TODO：　型をEnemyに変える
+
+    /// <summary>
+    /// プレイヤーをGameManagerに渡してHPを確認してもらう
+    /// </summary>
+    /// <param name="newPlayer">NetworkManagerで生成したプレイヤー</param>
+    public void AddPlayer(PlayerController newPlayer)
     {
-
+        player.Add(newPlayer);
     }
-
     public void CheckTankActive()
     {
         bool isPlayerActive = false;
