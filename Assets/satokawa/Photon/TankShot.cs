@@ -16,7 +16,7 @@ public class TankShot : MonoBehaviour
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
-        shootAction = playerInput.actions["Jump"];
+        //shootAction = playerInput.actions["Jump"];
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,12 +27,12 @@ public class TankShot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool isPressed = shootAction.ReadValue<float>() > 0.5f;//|| Input.GetKey(KeyCode.Space);
+        //bool isPressed = shootAction.ReadValue<float>() > 0.5f;//|| Input.GetKey(KeyCode.Space);
         timer += Time.deltaTime;
-        if (isPressed && timer > shotInterval)
-        {
+        if (true && timer > shotInterval && PhotonNetwork.InRoom)
+        {   
             timer = 0f;
-            GameObject newBullet = PhotonNetwork.Instantiate(bulletPrefab.name, clonePosition.transform.position, Quaternion.identity);
+            GameObject newBullet = PhotonNetwork.Instantiate(bulletPrefab.name,  clonePosition.transform.position, Quaternion.identity);
             newBullet.transform.forward = this.transform.forward;
         }
     }

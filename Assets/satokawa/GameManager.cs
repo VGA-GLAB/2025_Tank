@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
-    [SerializeField, Header("プレイヤー")] private List<PlayerController> player; //TODO: 型をPlayerに変える
-    [SerializeField, Header("敵")] private EnemyBase[] enemys; //TODO：　型をEnemyに変える
+    [SerializeField, Header("プレイヤー")] private List<PlayerController> _players; 
+    [SerializeField, Header("敵")] private EnemyBase[] _enemys; 
+    [SerializeField, Header("次のステージ（Scene）")] private string _nextScene;
 
     /// <summary>
     /// プレイヤーをGameManagerに渡してHPを確認してもらう
@@ -11,12 +14,12 @@ public class GameManager : MonoBehaviour
     /// <param name="newPlayer">NetworkManagerで生成したプレイヤー</param>
     public void AddPlayer(PlayerController newPlayer)
     {
-        player.Add(newPlayer);
+        _players.Add(newPlayer);
     }
     public void CheckTankActive()
     {
         bool isPlayerActive = false;
-        foreach (ITank tank in enemys)
+        foreach (PlayerController tank in _players)
         {
             if (tank != null && tank.Hp > 0)
             {
@@ -29,7 +32,7 @@ public class GameManager : MonoBehaviour
         }
 
         bool isEnemyActive = false;
-        foreach (ITank tank in enemys)
+        foreach (EnemyBase tank in _enemys)
         {
             if (tank != null && tank.Hp > 0)
             {
@@ -44,9 +47,11 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// ゲームオーバー処理
+    /// 現在のステージをリロードする
     /// </summary>
     private void GameOver()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Debug.Log("ゲームオーバー");
     }
     /// <summary>
@@ -54,6 +59,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void GameClear()
     {
+        SceneManager.LoadScene(_nextScene);
         Debug.Log("ゲームクリア");
     }
 }

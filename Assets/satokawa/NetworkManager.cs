@@ -10,6 +10,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("プレイヤーの生成位置")] private Transform[] _clonePosition;
 
     private GameManager _gameManager;
+    private int _playerNumber;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -45,13 +46,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     /// </summary>
     private void CreatePlayerTank()
     {
-        int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+        _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+        
         Vector3 position;
-        Debug.Log(playerCount);
+        Debug.Log(_playerNumber);
         //プレイヤーの数が_clonePositionを越えていないかを確認
-        if (playerCount <= _clonePosition.Length)
+        if (_playerNumber <= _clonePosition.Length)
         {
-            position = _clonePosition[playerCount -1].position;
+            position = _clonePosition[_playerNumber -1].position;
         }
         //超えていたらランダムな場所にする
         else

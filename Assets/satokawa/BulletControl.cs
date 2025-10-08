@@ -1,5 +1,10 @@
 ﻿using Photon.Pun;
 using UnityEngine;
+/// <summary>
+/// Bullet本体につける
+/// Bulletを動かしHIt判定を送る
+/// 生成時に_atkを代入
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class BulletControl : MonoBehaviourPunCallbacks
 {
