@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour, ITank
             _bulletShooter = GetComponent<BulletShooter>();
         }
 
-        _bulletShooter.SetBulletInterval(_bulletInterval);
+        _bulletShooter.IntializeAttackSettings(_atk, _bulletInterval);
     }
 
     private void Update()

@@ -6,6 +6,7 @@ public class BulletShooter : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private Transform _shotPosition; //TODO マウスのカーソルに合わせて飛んでいくようにしたい
 
+    private int _atk;
     private float _bulletInterval;
     private float _intervalTimer;
 
@@ -22,18 +23,20 @@ public class BulletShooter : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 砲弾の連射インターバルを設定
-    /// </summary>
-    /// <param name="bulletInterval">砲弾の連射インターバル</param>
-    public void SetBulletInterval(float bulletInterval)
-    {
-        _bulletInterval = bulletInterval;
-    }
-
     public void OnFire(InputAction.CallbackContext context)
     {
         ShotBullet();
+    }
+
+    /// <summary>
+    /// 攻撃力と砲弾の連射インターバルを設定
+    /// </summary>
+    /// <param name="atk">攻撃力</param>
+    /// <param name="bulletInterval">砲弾の連射インターバル</param>
+    public void IntializeAttackSettings(int atk, float bulletInterval)
+    {
+        _atk = atk;
+        _bulletInterval = bulletInterval;
     }
 
     /// <summary>
@@ -46,7 +49,11 @@ public class BulletShooter : MonoBehaviour
             _intervalTimer = _bulletInterval;
             GameObject newBullet = Instantiate(_bulletPrefab, _shotPosition.position, Quaternion.identity);
             newBullet.transform.forward = this.transform.forward;
-            // TODO 砲弾に攻撃力を渡す処理
+            
+            if(newBullet.TryGetComponent<BulletControl>(out BulletControl component))
+            {
+                component._atk = _atk;
+            }
         }
     }
 }
