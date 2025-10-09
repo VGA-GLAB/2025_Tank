@@ -3,9 +3,9 @@ using Photon.Pun;
 using Photon.Realtime;
 [RequireComponent(typeof(PhotonView))]
 /// <summary>
-/// ネットワーク関係を管理
+/// インゲームのネットワーク関係を管理
 /// </summary>
-public class NetworkManager : MonoBehaviourPunCallbacks
+public class InGameNetworkManager : MonoBehaviourPunCallbacks
 {
     [SerializeField, Header("プレイヤーPrefab    !!Resourcesフォルダに入れる!!")] private GameObject _playerPrefab;
     [SerializeField, Header("敵Prefab            !!Resourcesフォルダに入れる!!")] private GameObject _enemyPrefab;

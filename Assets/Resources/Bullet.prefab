@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletSpeed: 10
-  _atk: 1
+  _attack: 1
   destroyDistance: 100
 --- !u!114 &-8658519106274961758
 MonoBehaviour:

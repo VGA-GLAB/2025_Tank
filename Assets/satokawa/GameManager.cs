@@ -8,15 +8,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("次のステージ（Scene）")] private string _nextScene;
     [SerializeField, Header("リスポーン時間")] private float _respawnTime;
 
-    private List<PlayerController> _players; 
-    private List<EnemyBase> _enemys; 
+    private List<PlayerController> _players = new List<PlayerController>(); 
+    private List<EnemyBase> _enemys = new List<EnemyBase>(); 
 
     private bool _isRespawnTimer = false;
     private float _timer;
-    private NetworkManager _networkManager;
+    private InGameNetworkManager _networkManager;
     private void Start()
     {
-        _networkManager = GetComponent<NetworkManager>();
+        _networkManager = GetComponent<InGameNetworkManager>();
         _players.Clear();
     }
     public void Update()
