@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BulletShoot : MonoBehaviour
+public class BulletShooter : MonoBehaviour
 {
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private Transform _shotPosition; //TODO マウスのカーソルに合わせて飛んでいくようにしたい
@@ -22,6 +22,10 @@ public class BulletShoot : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 砲弾の連射インターバルを設定
+    /// </summary>
+    /// <param name="bulletInterval">砲弾の連射インターバル</param>
     public void SetBulletInterval(float bulletInterval)
     {
         _bulletInterval = bulletInterval;
