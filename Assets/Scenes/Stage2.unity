@@ -862,10 +862,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d9773bc02a4e9e4e98bedae2a3fe415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _players: []
-  _enemys: []
   _nextScene: Title
   _respawnTime: 0
+  _players: []
+  _timer: 10
 --- !u!114 &1644447653
 MonoBehaviour:
   m_ObjectHideFlags: 0

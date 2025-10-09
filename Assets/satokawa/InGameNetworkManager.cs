@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using DG.Tweening;
 [RequireComponent(typeof(PhotonView))]
 /// <summary>
 /// インゲームのネットワーク関係を管理
@@ -70,7 +71,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
 
         GameObject newPlayer = PhotonNetwork.Instantiate(_playerPrefab.name, position, rotation);
         PhotonView view = newPlayer.GetComponent<PhotonView>();
-        photonView.RPC("AddPlayer", RpcTarget.All, view.ViewID);
+        DOVirtual.DelayedCall(0.1f, () =>  photonView.RPC("AddPlayer", RpcTarget.All, view.ViewID));//TODO:今はゴリ押しでやってるけどタイトルできたらちゃんと書く
     }
     /// <summary>
     /// マスターのみが敵を生成

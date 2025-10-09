@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Common;
 using Photon.Pun;
 using Photon.Pun.Demo.Cockpit;
 using UnityEngine;
@@ -8,11 +9,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("次のステージ（Scene）")] private string _nextScene;
     [SerializeField, Header("リスポーン時間")] private float _respawnTime;
 
-    private List<PlayerController> _players = new List<PlayerController>(); 
+    [SerializeField] private List<PlayerController> _players = new List<PlayerController>(); 
     private List<EnemyBase> _enemys = new List<EnemyBase>(); 
 
     private bool _isRespawnTimer = false;
-    private float _timer;
+    [SerializeField] private float _timer;
     private InGameNetworkManager _networkManager;
     private void Start()
     {
@@ -24,7 +25,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         //リスポーンタイマーを動かし時間になったらNetworkmanagerにPlayerを作ってもらう
         if (_isRespawnTimer)
         {
-            _timer += Time.time;
+            _timer += Time.deltaTime;
             if(_timer > _respawnTime)
             {
                 _networkManager.CreatePlayerTank();
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerController newPlayer = GetPlayerController(newPlayerViewID);
         if (newPlayer == null)
         {
+            Debug.LogError("IDError");
             return;
         }
             _players.Add(newPlayer);
