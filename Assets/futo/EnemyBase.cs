@@ -5,7 +5,7 @@
 /// </summary>
 public abstract class EnemyBase : MonoBehaviour, ITank
 {
-    [Header("敵のステータス")]
+    [Header("敵のステータス設定")]
     [SerializeField] private int _hp = 5;
     [SerializeField] private int _attack = 1;
     [SerializeField] private float _attackRange = 8;
