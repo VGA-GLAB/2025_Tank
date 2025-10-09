@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Pun.Demo.Cockpit;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPunCallbacks
 {
     [SerializeField, Header("プレイヤー")] private List<PlayerController> _players; 
-    [SerializeField, Header("敵")] private EnemyBase[] _enemys; 
+    [SerializeField, Header("敵")] private List<EnemyBase> _enemys; 
     [SerializeField, Header("次のステージ（Scene）")] private string _nextScene;
     [SerializeField, Header("リスポーン時間")] private float _respawnTime;
     private bool _isRespawnTimer = false;
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _networkManager = GetComponent<NetworkManager>();
+        _players.Clear();
     }
     public void Update()
     {
@@ -32,13 +34,40 @@ public class GameManager : MonoBehaviour
     /// プレイヤーをGameManagerに渡してHPを確認してもらう
     /// </summary>
     /// <param name="newPlayer">NetworkManagerで生成したプレイヤー</param>
-    public void AddPlayer(PlayerController newPlayer)
+    [PunRPC]
+    public void AddPlayer(int newPlayerViewID)
     {
-        _players.Add(newPlayer);
+        PlayerController newPlayer = GetPlayerController(newPlayerViewID);
+        if (newPlayer == null)
+        {
+            return;
+        }
+            _players.Add(newPlayer);
     }
     [PunRPC]
-    public void CheckPlayerActive(PlayerController diePlayer)
+    public void AddEnemy(int newEnemyViewID)
     {
+        PhotonView targetView = PhotonView.Find(newEnemyViewID);
+        if (targetView == null)
+        {
+            return;
+        }
+        EnemyBase newEnemy = targetView.GetComponent<EnemyBase>();
+        if (newEnemy == null)
+        {
+            return;
+        }
+        _enemys.Add(newEnemy);
+    }
+    [PunRPC]
+    public void CheckPlayerActive(int  diePlayerID)
+    {
+        PlayerController diePlayer = GetPlayerController(diePlayerID);
+        if( diePlayer == null)
+        {
+            return;
+        }
+
         bool isPlayerActive = false;
         foreach (PlayerController tank in _players)
         {
@@ -47,9 +76,9 @@ public class GameManager : MonoBehaviour
                 isPlayerActive = true;
             }
         }
-        if (!isPlayerActive)
+        if (!isPlayerActive && PhotonNetwork.IsMasterClient)
         {
-            GameOver();
+            photonView.RPC(nameof(GameOver), RpcTarget.All);
         }
         else if (diePlayer.GetComponent<PhotonView>().IsMine)
         {
@@ -57,7 +86,19 @@ public class GameManager : MonoBehaviour
             _timer = 0;
         }
     }
-　　[PunRPC]
+
+    private PlayerController GetPlayerController(int diePlayerID)
+    {
+        PhotonView targetView = PhotonView.Find(diePlayerID);
+        if (targetView == null)
+        {
+            return null;
+        }
+        PlayerController player = targetView.GetComponent<PlayerController>();
+        return player;
+    }
+
+    [PunRPC]
     public void CheckEnemeyActive()
     {
         bool isEnemyActive = false;
@@ -68,28 +109,30 @@ public class GameManager : MonoBehaviour
                 isEnemyActive = true;
             }
         }
-        if (!isEnemyActive)
+        if (!isEnemyActive && PhotonNetwork.IsMasterClient)
         {
-            GameClear();
+            photonView.RPC(nameof(GameClear), RpcTarget.All);
         }
     }
-    
+
 
     /// <summary>
     /// ゲームオーバー処理
     /// 現在のステージをリロードする
     /// </summary>
+    [PunRPC]
     private void GameOver()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Debug.Log("ゲームオーバー");
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().name);
     }
     /// <summary>
     /// ゲームクリア処理
     /// </summary>
+    [PunRPC]
     private void GameClear()
     {
-        SceneManager.LoadScene(_nextScene);
-        Debug.Log("ゲームクリア");
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.LoadLevel(_nextScene);
     }
 }

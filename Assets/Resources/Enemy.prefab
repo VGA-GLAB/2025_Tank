@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 4242202008901277817}
   - component: {fileID: 1835929181047326059}
   - component: {fileID: 210776074583552066}
+  - component: {fileID: 836157806299754177}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -231,6 +232,7 @@ MonoBehaviour:
   _moveSpeed: 1
   _bulletInterval: 1
   _player: {fileID: 0}
+  gameManager: {fileID: 0}
   _agent: {fileID: 210776074583552066}
   _attackRange: 3
 --- !u!195 &210776074583552066
@@ -255,6 +257,21 @@ NavMeshAgent:
   m_BaseOffset: 0.39
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &836157806299754177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4421280240951079713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f60529539b3cdde43a087b3700a52b39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clonePosition: {fileID: 3648757676546276357}
+  bulletPrefab: {fileID: 8653153450281945988, guid: 4054dc889e717194a8ef07c9047879d2, type: 3}
+  shotInterval: 1
 --- !u!1 &5476156238292867432
 GameObject:
   m_ObjectHideFlags: 0

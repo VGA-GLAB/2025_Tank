@@ -1,25 +1,33 @@
 ﻿using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+[RequireComponent(typeof(PhotonView))]
 /// <summary>
 /// ネットワーク関係を管理
 /// </summary>
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField, Header("プレイヤーPrefab    !!Resourcesフォルダに入れる!!")] private GameObject _tankPrefab;
-    [SerializeField, Header("プレイヤーの生成位置")] private Transform[] _clonePosition;
-
-    private GameManager _gameManager;
-    private int _playerNumber;
+    [SerializeField, Header("プレイヤーPrefab    !!Resourcesフォルダに入れる!!")] private GameObject _playerPrefab;
+    [SerializeField, Header("敵Prefab            !!Resourcesフォルダに入れる!!")] private GameObject _enemyPrefab;
+    [SerializeField, Header("プレイヤーの生成位置")] private Transform[] _playerClonePosition;
+    [SerializeField, Header("プレイヤーの生成位置")] private Transform[] _enemyClonePosition;
+    public int _playerNumber { get; private set; }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = false;
+    }
     void Start()
     {
-        _gameManager = GetComponent<GameManager>();
-
         //Titleで接続した場合はそのまま生成し未接続の場合は接続する
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.InRoom)
         {
             CreatePlayerTank();
+            CreateEnemyTank();
+        }
+        else if (PhotonNetwork.IsConnected)
+        {
+            OnConnectedToMaster();
         }
         else
         {
@@ -39,6 +47,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         CreatePlayerTank();
+        CreateEnemyTank();
     }
 
     /// <summary>
@@ -47,21 +56,36 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void CreatePlayerTank()
     {
         _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-        
+
         Vector3 position;
-        Debug.Log(_playerNumber);
+        Quaternion rotation;
         //プレイヤーの数が_clonePositionを越えていないかを確認
-        if (_playerNumber <= _clonePosition.Length)
+        if (_playerNumber <= _playerClonePosition.Length)
         {
-            position = _clonePosition[_playerNumber -1].position;
+            position = _playerClonePosition[_playerNumber - 1].position;
+            rotation = _playerClonePosition[_playerNumber - 1].rotation;
         }
         //超えていたらランダムな場所にする
         else
         {
             position = new Vector3(Random.Range(-3, 3), 0.5f, Random.Range(-3, 3));
+            rotation = Quaternion.identity;
         }
 
-       GameObject newPlayer =  PhotonNetwork.Instantiate(_tankPrefab.name, position, Quaternion.identity);
-        _gameManager.AddPlayer(newPlayer.GetComponent<PlayerController>());
+        GameObject newPlayer = PhotonNetwork.Instantiate(_playerPrefab.name, position, rotation);
+        PhotonView view = newPlayer.GetComponent<PhotonView>();
+        photonView.RPC("AddPlayer", RpcTarget.All, view.ViewID);
+    }
+    public void CreateEnemyTank()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+        foreach(Transform enemyPosition in _enemyClonePosition)
+        {
+            GameObject newEnemy = PhotonNetwork.Instantiate(_enemyPrefab.name, enemyPosition.position, enemyPosition.rotation);
+            photonView.RPC("AddEnemy", RpcTarget.All, newEnemy.GetComponent<PhotonView>().ViewID);
+        }
     }
 }

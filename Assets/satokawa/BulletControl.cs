@@ -25,21 +25,27 @@ public class BulletControl : MonoBehaviourPunCallbacks
         rb.linearVelocity = this.transform.forward * _bulletSpeed;
         if (Vector3.Distance(this.transform.position, startPosition) > destroyDistance)
         {
-            PhotonNetwork.Destroy(this.gameObject);
+            Delete();
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!photonView.IsMine )
+        if (photonView.IsMine )
         {
-            return;
+            ITank tank = collision.gameObject.GetComponent<ITank>();
+            if (tank != null)
+                collision.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _atk);
+
         }
-        ITank tank = collision.gameObject.GetComponent<ITank>();
-        if (tank != null)
-            collision.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All,_atk);
-
-        PhotonNetwork.Destroy(this.gameObject);
+        Delete();
+        
     }
-
+    private void Delete()
+    {
+        if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
+        {
+            PhotonNetwork.Destroy(this.gameObject);
+        }
+    }
 }
