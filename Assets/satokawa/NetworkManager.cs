@@ -10,8 +10,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("プレイヤーPrefab    !!Resourcesフォルダに入れる!!")] private GameObject _playerPrefab;
     [SerializeField, Header("敵Prefab            !!Resourcesフォルダに入れる!!")] private GameObject _enemyPrefab;
     [SerializeField, Header("プレイヤーの生成位置")] private Transform[] _playerClonePosition;
-    [SerializeField, Header("プレイヤーの生成位置")] private Transform[] _enemyClonePosition;
-    public int _playerNumber { get; private set; }
+    [SerializeField, Header("敵の生成位置")] private Transform[] _enemyClonePosition;
+    public int _playerNumber { get; private set; }//何番目にルームに入ったか
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     void Start()
     {
-        //Titleで接続した場合はそのまま生成し未接続の場合は接続する
+        //接続の状態によって処理を分岐
         if (PhotonNetwork.InRoom)
         {
             CreatePlayerTank();
@@ -27,6 +27,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
         else if (PhotonNetwork.IsConnected)
         {
+
             OnConnectedToMaster();
         }
         else
@@ -35,11 +36,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions(), TypedLobby.Default);
@@ -76,6 +72,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonView view = newPlayer.GetComponent<PhotonView>();
         photonView.RPC("AddPlayer", RpcTarget.All, view.ViewID);
     }
+    /// <summary>
+    /// マスターのみが敵を生成
+    /// </summary>
     public void CreateEnemyTank()
     {
         if (!PhotonNetwork.IsMasterClient)

@@ -5,10 +5,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField, Header("プレイヤー")] private List<PlayerController> _players; 
-    [SerializeField, Header("敵")] private List<EnemyBase> _enemys; 
     [SerializeField, Header("次のステージ（Scene）")] private string _nextScene;
     [SerializeField, Header("リスポーン時間")] private float _respawnTime;
+
+    private List<PlayerController> _players; 
+    private List<EnemyBase> _enemys; 
+
     private bool _isRespawnTimer = false;
     private float _timer;
     private NetworkManager _networkManager;
@@ -31,9 +33,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         }    
     }
     /// <summary>
-    /// プレイヤーをGameManagerに渡してHPを確認してもらう
+    ///[PunRPC] NetWorkMagagerで生成したプレイヤーを保存する
     /// </summary>
-    /// <param name="newPlayer">NetworkManagerで生成したプレイヤー</param>
+    /// <<param name="newPlayerViewID">photonViewのviewIDを入れる</param>>
     [PunRPC]
     public void AddPlayer(int newPlayerViewID)
     {
@@ -44,6 +46,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
             _players.Add(newPlayer);
     }
+    /// <summary>
+    /// NetWorkMagagerで生成した敵を保存する
+    /// </summary>
+    /// <param name="newEnemyViewID">photonViewのviewIDを入れる</param>
     [PunRPC]
     public void AddEnemy(int newEnemyViewID)
     {
@@ -59,6 +65,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         _enemys.Add(newEnemy);
     }
+    /// <summary>
+    ///[PunRPC]　プレイヤーのHPを確認して必要に応じてゲームオーバーやリスポーン処理を実行
+    /// </summary>
+    /// <param name="diePlayerID">photonViewのviewIDを入れる</param>
     [PunRPC]
     public void CheckPlayerActive(int  diePlayerID)
     {
@@ -86,7 +96,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             _timer = 0;
         }
     }
-
+    /// <summary>
+    /// photonView.viewIDをPlayerController変換
+    /// </summary>
+    /// <param name="diePlayerID">photonViewのviewIDを入れる</param>
+    /// <returns>photonView.viewIDをPlayerController変換した値</returns>
     private PlayerController GetPlayerController(int diePlayerID)
     {
         PhotonView targetView = PhotonView.Find(diePlayerID);
@@ -97,10 +111,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerController player = targetView.GetComponent<PlayerController>();
         return player;
     }
-
+    /// <summary>
+    ///[PunRPC] 敵のHPを確認してすべて倒していたらゲームオーバーを実行
+    /// </summary>
     [PunRPC]
     public void CheckEnemeyActive()
     {
+        //マスターのみ実行
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
         bool isEnemyActive = false;
         foreach (EnemyBase tank in _enemys)
         {
@@ -117,7 +139,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
     /// <summary>
-    /// ゲームオーバー処理
+    ///[PunRPC] ゲームオーバー処理
     /// 現在のステージをリロードする
     /// </summary>
     [PunRPC]
@@ -127,7 +149,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().name);
     }
     /// <summary>
-    /// ゲームクリア処理
+    ///[PunRPC] ゲームクリア処理　
     /// </summary>
     [PunRPC]
     private void GameClear()

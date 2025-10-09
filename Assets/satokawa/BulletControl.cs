@@ -9,7 +9,7 @@ using UnityEngine;
 public class BulletControl : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float _bulletSpeed;//弾が進むスピード
-    [SerializeField] public int _atk;//攻撃力　クローンする時に入れる
+    [SerializeField] public int _attack;//攻撃力　クローンする時に入れる
     [SerializeField] private float destroyDistance;
     private Rigidbody rb;
     private Vector3 startPosition;
@@ -35,12 +35,15 @@ public class BulletControl : MonoBehaviourPunCallbacks
         {
             ITank tank = collision.gameObject.GetComponent<ITank>();
             if (tank != null)
-                collision.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _atk);
+                collision.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack);
 
         }
         Delete();
         
     }
+    /// <summary>
+    /// 生成したのが自分だったら銃弾を消す
+    /// </summary>
     private void Delete()
     {
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
