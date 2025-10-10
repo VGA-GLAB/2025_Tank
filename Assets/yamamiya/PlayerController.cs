@@ -56,11 +56,15 @@ public class PlayerController : MonoBehaviour, ITank
 
     public void Die()
     {
-        // TODO 追加予定
+        // TODO リスポーン処理
     }
 
     public void Hit(int atk)
     {
-        // TODO 追加予定
+        _hp -= atk;
+        if(_hp <= 0)
+        {
+            Die();
+        }
     }
 }
