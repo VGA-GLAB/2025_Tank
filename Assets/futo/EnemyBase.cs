@@ -37,6 +37,25 @@ public abstract class EnemyBase : MonoBehaviour, ITank
     }
 
     /// <summary>
+    /// 一番近いプレイヤーをターゲットにする
+    /// </summary>
+    public void PlayerFind()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        float nearestDistance = Mathf.Infinity;
+
+        foreach (var player in players)
+        {
+            float dist = Vector3.Distance(transform.position, player.transform.position);
+            if (dist < nearestDistance)
+            {
+                nearestDistance = dist;
+                _player = player;
+            }
+        }
+    }
+
+    /// <summary>
     /// 敵の移動処理
     /// </summary>
     protected abstract void Move();
