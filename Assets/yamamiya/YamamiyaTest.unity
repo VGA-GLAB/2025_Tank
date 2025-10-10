@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 286126928}
   - component: {fileID: 286126927}
   - component: {fileID: 286126931}
+  - component: {fileID: 286126932}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -258,7 +259,19 @@ MonoBehaviour:
     m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
     m_ActionName: 'Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 286126932}
+        m_TargetAssemblyTypeName: RotateTowardsMouse, Assembly-CSharp
+        m_MethodName: OnLock
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6b444451-8a00-4d00-a97e-f47457f736a8
     m_ActionName: 'Player/Look[/Mouse/delta,/Pen/delta]'
   - m_PersistentCalls:
@@ -381,6 +394,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 3600663470774881708, guid: 9bffe5113ecf6d34b9de2b668c468757, type: 3}
   _shotPosition: {fileID: 242243418}
+--- !u!114 &286126932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286126926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823b1744efd84554ea7ffa5c0199dce9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _turret: {fileID: 1906492673}
+  _camera: {fileID: 0}
 --- !u!1 &552015455
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,13 +917,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1860516696}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.45939097, y: 0.0002769107, z: -0.0001424838, w: 0.88823414}
-  m_LocalPosition: {x: -0.53721195, y: 7.534633, z: -5.003916}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 10, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!1 &1906492672
 GameObject:
   m_ObjectHideFlags: 0

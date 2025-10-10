@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class BulletShooter : MonoBehaviour
 {
     [SerializeField] private GameObject _bulletPrefab;
-    [SerializeField] private Transform _shotPosition; //TODO マウスのカーソルに合わせて飛んでいくようにしたい
+    [SerializeField] private Transform _shotPosition;
 
     private int _atk;
     private float _bulletInterval;
