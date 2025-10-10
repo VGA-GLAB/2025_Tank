@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 /// <summary>
 /// 敵の基本クラス
 /// </summary>
-public abstract class EnemyBase : MonoBehaviour, ITank
+public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
 {
     [Header("敵のステータス設定")]
     [SerializeField] private int _hp = 5;
@@ -16,17 +17,27 @@ public abstract class EnemyBase : MonoBehaviour, ITank
     [SerializeField] private GameObject _player;
 
     public int Hp => _hp;
-    public int ATK => _attack;
+    public int AttackPower => _attack;
     public float AttackRange => _attackRange;
     public int MoveSpeed => _moveSpeed;
     public float BulletInterval => _bulletInterval;
     public GameObject Player => _player;
 
+    
+    private GameManager gameManager;
+    protected virtual void Start()
+    {
+        gameManager = FindAnyObjectByType<GameManager>();
+    }
     public void Die()
     {
-        Destroy(this.gameObject);
+        if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
+        {
+            gameManager.GetComponent<PhotonView>().RPC("CheckEnemeyActive", RpcTarget.All);
+            PhotonNetwork.Destroy(this.gameObject);
+        }
     }
-
+    [PunRPC]
     public void Hit(int atk)
     {
         _hp -= atk;
@@ -41,6 +52,7 @@ public abstract class EnemyBase : MonoBehaviour, ITank
     /// </summary>
     public void PlayerFind()
     {
+        //TODO : GMからの取得に変える
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float nearestDistance = Mathf.Infinity;
 
@@ -58,12 +70,12 @@ public abstract class EnemyBase : MonoBehaviour, ITank
     /// <summary>
     /// 敵の移動処理
     /// </summary>
-    protected abstract void Move();
+    public abstract void Move();
 
     /// <summary>
     /// 敵の攻撃処理
     /// </summary>
-    protected abstract void Attack();
+    public abstract void Attack();
 
 #if UNITY_EDITOR
     private void OnValidate()

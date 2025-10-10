@@ -31,7 +31,12 @@ public class GameManager : MonoBehaviourPunCallbacks
                 _networkManager.CreatePlayerTank();
                 _isRespawnTimer = false;
             }
-        }    
+        }
+        
+        foreach(EnemyBase enemy in _enemys)
+        {
+            enemy.Move();
+        }
     }
     /// <summary>
     ///[PunRPC] NetWorkMagagerで生成したプレイヤーを保存する

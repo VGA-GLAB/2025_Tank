@@ -17,8 +17,10 @@ public class EnemyStandard : EnemyBase
     private Vector3 _playerPosition;
     private bool _hasObject;   
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         if(_agent == null)
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -26,7 +28,7 @@ public class EnemyStandard : EnemyBase
         _agent.speed = MoveSpeed;
     }
 
-    protected override void Move() 
+    public override void Move() 
     {
             if(Player ==  null)
         {
@@ -69,7 +71,7 @@ public class EnemyStandard : EnemyBase
         }
     }
 
-    protected override void Attack()
+    public override void Attack()
     {
         _attackTimer += Time.deltaTime;
         if (_attackTimer >= BulletInterval)
@@ -78,7 +80,7 @@ public class EnemyStandard : EnemyBase
             GameObject newBullet = Instantiate(_bulletPrefab,_muzzlePosition.position,Quaternion.identity);
             if(newBullet.TryGetComponent<BulletControl>(out BulletControl component))
             {
-                component._atk = ATK;
+                component._attack = AttackPower;
             }
             _attackTimer = 0;
         }
