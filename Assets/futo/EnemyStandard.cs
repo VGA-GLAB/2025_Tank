@@ -26,19 +26,12 @@ public class EnemyStandard : EnemyBase
         _agent.speed = MoveSpeed;
     }
 
-    //テスト用
-    private void Update()
+    protected override void Move() 
     {
-        if(Player ==  null)
+            if(Player ==  null)
         {
             PlayerFind();
         }
-
-        Move();
-    }
-
-    protected override void Move() 
-    {
         _nowPosition = transform.position;
         _playerPosition = Player.transform.position;
 
