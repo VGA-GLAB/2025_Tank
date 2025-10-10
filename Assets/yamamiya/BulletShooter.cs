@@ -5,6 +5,7 @@ public class BulletShooter : MonoBehaviour
 {
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private Transform _shotPosition;
+    [SerializeField] private Transform _turret;
 
     private int _atk;
     private float _bulletInterval;
@@ -47,8 +48,8 @@ public class BulletShooter : MonoBehaviour
         if (_intervalTimer <= 0)
         {
             _intervalTimer = _bulletInterval;
-            GameObject newBullet = Instantiate(_bulletPrefab, _shotPosition.position, Quaternion.identity);
-            newBullet.transform.forward = this.transform.forward;
+            GameObject newBullet = Instantiate(_bulletPrefab, _shotPosition.position, _turret.rotation);
+            newBullet.transform.forward = _turret.forward;
             
             if(newBullet.TryGetComponent<BulletControl>(out BulletControl component))
             {

@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 242243417}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.2, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -392,8 +392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8585a0a244f76f74888b3115c89a14f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 3600663470774881708, guid: 9bffe5113ecf6d34b9de2b668c468757, type: 3}
+  _bulletPrefab: {fileID: 8653153450281945988, guid: 4054dc889e717194a8ef07c9047879d2, type: 3}
   _shotPosition: {fileID: 242243418}
+  _turret: {fileID: 1906492673}
 --- !u!114 &286126932
 MonoBehaviour:
   m_ObjectHideFlags: 0
