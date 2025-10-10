@@ -40,6 +40,13 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - Hit
+  - CheckEnemeyActive
+  - CheckPlayerActive
+  - AddPlayer
+  - GameOver
+  - GameClear
+  - AddEnemy
+  - LoadInGameScene
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

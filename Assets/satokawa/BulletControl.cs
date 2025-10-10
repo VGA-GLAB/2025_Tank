@@ -1,10 +1,15 @@
 ﻿using Photon.Pun;
 using UnityEngine;
+/// <summary>
+/// Bullet本体につける
+/// Bulletを動かしHIt判定を送る
+/// 生成時に_atkを代入
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class BulletControl : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float _bulletSpeed;//弾が進むスピード
-    [SerializeField] public int _atk;//攻撃力　クローンする時に入れる
+    [SerializeField] public int _attack;//攻撃力　クローンする時に入れる
     [SerializeField] private float destroyDistance;
     private Rigidbody rb;
     private Vector3 startPosition;
@@ -20,21 +25,30 @@ public class BulletControl : MonoBehaviourPunCallbacks
         rb.linearVelocity = this.transform.forward * _bulletSpeed;
         if (Vector3.Distance(this.transform.position, startPosition) > destroyDistance)
         {
-            PhotonNetwork.Destroy(this.gameObject);
+            Delete();
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!photonView.IsMine )
+        if (photonView.IsMine )
         {
-            return;
+            ITank tank = collision.gameObject.GetComponent<ITank>();
+            if (tank != null)
+                collision.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack);
+
         }
-        ITank tank = collision.gameObject.GetComponent<ITank>();
-        if (tank != null)
-            collision.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All,_atk);
-
-        PhotonNetwork.Destroy(this.gameObject);
+        Delete();
+        
     }
-
+    /// <summary>
+    /// 生成したのが自分だったら銃弾を消す
+    /// </summary>
+    private void Delete()
+    {
+        if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
+        {
+            PhotonNetwork.Destroy(this.gameObject);
+        }
+    }
 }
