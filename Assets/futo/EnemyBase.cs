@@ -1,17 +1,23 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
 
+/// <summary>
+/// 敵の基本クラス
+/// </summary>
 public abstract class EnemyBase : MonoBehaviour, ITank
 {
-    [SerializeField] private int _hp;
-    [SerializeField] private int _atk;
-    [SerializeField] private int _moveSpeed;
-    [SerializeField] private float _bulletInterval;
+    [Header("敵のステータス設定")]
+    [SerializeField] private int _hp = 5;
+    [SerializeField] private int _attack = 1;
+    [SerializeField] private float _attackRange = 8;
+    [SerializeField] private int _moveSpeed = 5;
+    [SerializeField] private float _bulletInterval = 1.5f;
 
+    [Header("ターゲット設定")]
     [SerializeField] private GameObject _player;
 
     public int Hp => _hp;
-    public int ATK => _atk;
+    public int ATK => _attack;
+    public float AttackRange => _attackRange;
     public int MoveSpeed => _moveSpeed;
     public float BulletInterval => _bulletInterval;
     public GameObject Player => _player;
@@ -24,19 +30,73 @@ public abstract class EnemyBase : MonoBehaviour, ITank
     public void Hit(int atk)
     {
         _hp -= atk;
-        if(_hp < 0)
+        if(_hp <= 0)
         {
             Die();
         }
     }
 
     /// <summary>
+    /// 一番近いプレイヤーをターゲットにする
+    /// </summary>
+    public void PlayerFind()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        float nearestDistance = Mathf.Infinity;
+
+        foreach (var player in players)
+        {
+            float dist = Vector3.Distance(transform.position, player.transform.position);
+            if (dist < nearestDistance)
+            {
+                nearestDistance = dist;
+                _player = player;
+            }
+        }
+    }
+
+    /// <summary>
     /// 敵の移動処理
     /// </summary>
-    protected abstract void EnemyMove();
+    protected abstract void Move();
 
     /// <summary>
     /// 敵の攻撃処理
     /// </summary>
-    protected abstract void EnemyAttack();
+    protected abstract void Attack();
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if(_hp <= 0)
+        {
+            Debug.LogWarning($"{name}のHPが0以下です。1に修正します");
+            _hp = 1;
+        }
+
+        if(_attack < 0)
+        {
+            Debug.LogWarning($"{name}の攻撃力が負の値です。0に修正します。");
+            _attack = 0;
+        }
+
+        if(_attackRange < 0)
+        {
+            Debug.LogWarning($"{name}の攻撃可能範囲が0以下です。1に修正します。");
+            _attackRange = 1;
+        }
+
+        if (_moveSpeed < 0)
+        {
+            Debug.LogWarning($"{name}の移動速度が負の値です。0に修正します。");
+            _moveSpeed = 0;
+        }
+
+        if ( _bulletInterval <= 0)
+        {
+            Debug.LogWarning($"{name}の弾の発射間隔が0以下です。1に修正します。");
+            _bulletInterval = 1;
+        }
+    }
+#endif
 }
