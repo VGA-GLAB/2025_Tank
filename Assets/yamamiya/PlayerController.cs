@@ -4,29 +4,36 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour, ITank
 {
+    public int Hp => _hp;
+    public int ATK => _atk;
+    public int MoveSpeed => _moveSpeed;
+    public float BulletInterval => _bulletInterval;
+
+    [Header("ステータス設定")]
     [SerializeField] private int _hp; //耐久力
     [SerializeField] private int _atk; //攻撃力
     [SerializeField] private int _moveSpeed; //移動速度
     [SerializeField] private float _bulletInterval; //砲弾の連射インターバル
     [SerializeField] private float _turnSpeed; //回転速度
 
-    public int Hp => _hp;
-    public int ATK => _atk;
-    public int MoveSpeed => _moveSpeed;
-    public float BulletInterval => _bulletInterval;
+    [Header("コンポーネント")]
+    [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private BulletShooter _bulletShooter;
 
-    private Rigidbody _rigidbody;
-    private BulletShoot _tankShoot;
     private Vector2 _moveInput;
 
     private void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _tankShoot = GetComponent<BulletShoot>();
-        if(_tankShoot != null)
+        if(_rigidbody == null)
         {
-            _tankShoot.SetBulletInterval(_bulletInterval);
+            _rigidbody = GetComponent<Rigidbody>();
         }
+        if(_bulletShooter == null)
+        {
+            _bulletShooter = GetComponent<BulletShooter>();
+        }
+
+        _bulletShooter.IntializeAttackSettings(_atk, _bulletInterval);
     }
 
     private void Update()
@@ -49,11 +56,15 @@ public class PlayerController : MonoBehaviour, ITank
 
     public void Die()
     {
-        // TODO 追加予定
+        // TODO リスポーン処理
     }
 
     public void Hit(int atk)
     {
-        // TODO 追加予定
+        _hp -= atk;
+        if(_hp <= 0)
+        {
+            Die();
+        }
     }
 }
