@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("次のステージ（Scene）")] private string _nextScene;
     [SerializeField, Header("リスポーン時間")] private float _respawnTime;
 
-    [SerializeField] private List<PlayerController> _players = new List<PlayerController>(); 
-    private List<EnemyBase> _enemys = new List<EnemyBase>(); 
+    [SerializeField] private List<PlayerController> _players = new List<PlayerController>();
+    private List<EnemyBase> _enemys = new List<EnemyBase>();
 
     private bool _isRespawnTimer = false;
     [SerializeField] private float _timer;
@@ -26,14 +26,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (_isRespawnTimer)
         {
             _timer += Time.deltaTime;
-            if(_timer > _respawnTime)
+            if (_timer > _respawnTime)
             {
                 _networkManager.CreatePlayerTank();
                 _isRespawnTimer = false;
             }
         }
-        
-        foreach(EnemyBase enemy in _enemys)
+
+        foreach (EnemyBase enemy in _enemys)
         {
             enemy.Move();
         }
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.LogError("IDError");
             return;
         }
-            _players.Add(newPlayer);
+        _players.Add(newPlayer);
     }
     /// <summary>
     /// NetWorkMagagerで生成した敵を保存する
@@ -77,10 +77,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// </summary>
     /// <param name="diePlayerID">photonViewのviewIDを入れる</param>
     [PunRPC]
-    public void CheckPlayerActive(int  diePlayerID)
+    public void CheckPlayerActive(int diePlayerID)
     {
         PlayerController diePlayer = GetPlayerController(diePlayerID);
-        if( diePlayer == null)
+        if (diePlayer == null)
         {
             return;
         }
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void CheckEnemeyActive()
     {
         //マスターのみ実行
-        if(!PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient)
         {
             return;
         }

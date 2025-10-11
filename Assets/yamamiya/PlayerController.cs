@@ -26,11 +26,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
 
     private void Start()
     {
-        if(_rigidbody == null)
+        if (_rigidbody == null)
         {
             _rigidbody = GetComponent<Rigidbody>();
         }
-        if(_bulletShooter == null)
+        if (_bulletShooter == null)
         {
             _bulletShooter = GetComponent<BulletShooter>();
         }
@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     public void Hit(int atk)
     {
         _hp -= atk;
-        if(_hp <= 0)
+        if (_hp <= 0)
         {
             Die();
         }

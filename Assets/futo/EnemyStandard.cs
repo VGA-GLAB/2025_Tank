@@ -1,36 +1,37 @@
 ﻿using UnityEngine.AI;
 using UnityEngine;
+using Photon.Pun;
 
 public class EnemyStandard : EnemyBase
 {
     [Header("敵の基礎設定")]
     [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private GameObject _bulletPrefab;
-    [SerializeField] private GameObject _battery;
+    [SerializeField] private GameObject _turret;
     [SerializeField] private Transform _muzzlePosition;
-  
+
     private float _distance;
     private float _attackTimer;
     private Vector3 _direction;
     private Vector3 _rayOrigin;
     private Vector3 _nowPosition;
     private Vector3 _playerPosition;
-    private bool _hasObject;   
+    private bool _hasObject;
 
     protected override void Start()
     {
         base.Start();
 
-        if(_agent == null)
+        if (_agent == null)
         {
             _agent = GetComponent<NavMeshAgent>();
         }
         _agent.speed = MoveSpeed;
     }
 
-    public override void Move() 
+    public override void Move()
     {
-            if(Player ==  null)
+        if (Player == null)
         {
             PlayerFind();
         }
@@ -41,15 +42,15 @@ public class EnemyStandard : EnemyBase
         _direction = (_playerPosition - _nowPosition).normalized;
         _rayOrigin = _nowPosition + Vector3.up * 1.0f;
 
-        if(_battery != null)
+        if (_turret != null)
         {
-            _battery.transform.LookAt(_playerPosition);
+            _turret.transform.LookAt(_playerPosition);
         }
 
         _hasObject = false;
         if (Physics.Raycast(_rayOrigin, _direction, out RaycastHit hit, AttackRange))
         {
-            if(hit.collider.gameObject != Player)
+            if (hit.collider.gameObject != Player)
             {
                 _hasObject = true;
             }
@@ -77,8 +78,9 @@ public class EnemyStandard : EnemyBase
         if (_attackTimer >= BulletInterval)
         {
             Debug.Log("こうげき！");
-            GameObject newBullet = Instantiate(_bulletPrefab,_muzzlePosition.position,Quaternion.identity);
-            if(newBullet.TryGetComponent<BulletControl>(out BulletControl component))
+            GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.identity);
+            newBullet.transform.forward = _muzzlePosition.forward;
+            if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
             {
                 component._attack = AttackPower;
             }

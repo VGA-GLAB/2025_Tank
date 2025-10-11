@@ -51,8 +51,8 @@ public class BulletShooter : MonoBehaviour
             _intervalTimer = _bulletInterval;
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _shotPosition.position, _turret.rotation);
             newBullet.transform.forward = _turret.forward;
-            
-            if(newBullet.TryGetComponent<BulletControl>(out BulletControl component))
+
+            if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
             {
                 component._attack = _attack;
             }
