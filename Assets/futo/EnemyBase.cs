@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 /// <summary>
 /// 敵の基本クラス
 /// </summary>
-public abstract class EnemyBase : MonoBehaviour, ITank
+public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
 {
     [Header("敵のステータス設定")]
     [SerializeField] private int _hp = 5;
@@ -16,21 +17,31 @@ public abstract class EnemyBase : MonoBehaviour, ITank
     [SerializeField] private GameObject _player;
 
     public int Hp => _hp;
-    public int ATK => _attack;
+    public int AttackPower => _attack;
     public float AttackRange => _attackRange;
     public int MoveSpeed => _moveSpeed;
     public float BulletInterval => _bulletInterval;
     public GameObject Player => _player;
 
+
+    private GameManager gameManager;
+    protected virtual void Start()
+    {
+        gameManager = FindAnyObjectByType<GameManager>();
+    }
     public void Die()
     {
-        Destroy(this.gameObject);
+        if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
+        {
+            PhotonNetwork.Destroy(this.gameObject);
+            gameManager.GetComponent<PhotonView>().RPC("CheckEnemeyActive", RpcTarget.All);
+        }
     }
-
+    [PunRPC]
     public void Hit(int atk)
     {
         _hp -= atk;
-        if(_hp <= 0)
+        if (_hp <= 0)
         {
             Die();
         }
@@ -41,6 +52,7 @@ public abstract class EnemyBase : MonoBehaviour, ITank
     /// </summary>
     public void PlayerFind()
     {
+        //TODO : GMからの取得に変える
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float nearestDistance = Mathf.Infinity;
 
@@ -58,29 +70,29 @@ public abstract class EnemyBase : MonoBehaviour, ITank
     /// <summary>
     /// 敵の移動処理
     /// </summary>
-    protected abstract void Move();
+    public abstract void Move();
 
     /// <summary>
     /// 敵の攻撃処理
     /// </summary>
-    protected abstract void Attack();
+    public abstract void Attack();
 
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        if(_hp <= 0)
+        if (_hp <= 0)
         {
             Debug.LogWarning($"{name}のHPが0以下です。1に修正します");
             _hp = 1;
         }
 
-        if(_attack < 0)
+        if (_attack < 0)
         {
             Debug.LogWarning($"{name}の攻撃力が負の値です。0に修正します。");
             _attack = 0;
         }
 
-        if(_attackRange < 0)
+        if (_attackRange < 0)
         {
             Debug.LogWarning($"{name}の攻撃可能範囲が0以下です。1に修正します。");
             _attackRange = 1;
@@ -92,7 +104,7 @@ public abstract class EnemyBase : MonoBehaviour, ITank
             _moveSpeed = 0;
         }
 
-        if ( _bulletInterval <= 0)
+        if (_bulletInterval <= 0)
         {
             Debug.LogWarning($"{name}の弾の発射間隔が0以下です。1に修正します。");
             _bulletInterval = 1;

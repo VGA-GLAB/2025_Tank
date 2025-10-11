@@ -2,7 +2,7 @@
 public interface ITank
 {
     public int Hp { get; }
-    public int ATK { get; }
+    public int AttackPower { get; }
     public int MoveSpeed { get; }
     public float BulletInterval { get; }
     [PunRPC]

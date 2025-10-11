@@ -7,7 +7,7 @@ public class PlayerTest : MonoBehaviour,ITank
     [SerializeField] private int _move;
     [SerializeField] private float _bullet;
     public int Hp => _hp;
-    public int ATK => _atk;
+    public int AttackPower => _atk;
     public int MoveSpeed => _move;
     public float BulletInterval => _bullet;
 

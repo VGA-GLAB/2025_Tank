@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour, ITank
+public class PlayerController : MonoBehaviourPunCallbacks, ITank
 {
     public int Hp => _hp;
-    public int ATK => _atk;
+    public int AttackPower => _atk;
     public int MoveSpeed => _moveSpeed;
     public float BulletInterval => _bulletInterval;
 
@@ -21,19 +22,21 @@ public class PlayerController : MonoBehaviour, ITank
     [SerializeField] private BulletShooter _bulletShooter;
 
     private Vector2 _moveInput;
+    private GameManager gameManager;
 
     private void Start()
     {
-        if(_rigidbody == null)
+        if (_rigidbody == null)
         {
             _rigidbody = GetComponent<Rigidbody>();
         }
-        if(_bulletShooter == null)
+        if (_bulletShooter == null)
         {
             _bulletShooter = GetComponent<BulletShooter>();
         }
 
         _bulletShooter.IntializeAttackSettings(_atk, _bulletInterval);
+        gameManager = FindAnyObjectByType<GameManager>();
     }
 
     private void Update()
@@ -53,18 +56,29 @@ public class PlayerController : MonoBehaviour, ITank
     {
         _moveInput = context.ReadValue<Vector2>();
     }
-
+    /// <summary>
+    /// プレイヤーを消してリスポーン処理を実行
+    /// </summary>
     public void Die()
     {
-        // TODO リスポーン処理
+        if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
+        {
+            PhotonNetwork.Destroy(this.gameObject);
+            gameManager.GetComponent<PhotonView>().RPC("CheckPlayerActive", RpcTarget.All, photonView.ViewID);
+        }
     }
-
+    [PunRPC]
     public void Hit(int atk)
     {
         _hp -= atk;
-        if(_hp <= 0)
+        if (_hp <= 0)
         {
             Die();
         }
     }
+    public void OnPhotonDeastroy(PhotonMessageInfo info)
+    {
+        Debug.Log($"Destroyed by actor: {info.Sender}");
+    }
+
 }

@@ -31,7 +31,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
-        
+
     }
     public void GameStart()
     {

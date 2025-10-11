@@ -31,7 +31,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (photonView.IsMine )
+        if (photonView.IsMine)
         {
             ITank tank = collision.gameObject.GetComponent<ITank>();
             if (tank != null)
@@ -39,14 +39,14 @@ public class BulletControl : MonoBehaviourPunCallbacks
 
         }
         Delete();
-        
+
     }
     /// <summary>
     /// 生成したのが自分だったら銃弾を消す
     /// </summary>
     private void Delete()
     {
-        if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
+        if (photonView.IsMine && PhotonNetwork.AutomaticallySyncScene)
         {
             PhotonNetwork.Destroy(this.gameObject);
         }
