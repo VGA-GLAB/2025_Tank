@@ -63,8 +63,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     {
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
-            gameManager.GetComponent<PhotonView>().RPC("CheckPlayerActive", RpcTarget.All, photonView.ViewID);
             PhotonNetwork.Destroy(this.gameObject);
+            gameManager.GetComponent<PhotonView>().RPC("CheckPlayerActive", RpcTarget.All, photonView.ViewID);
         }
     }
     [PunRPC]
@@ -76,4 +76,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             Die();
         }
     }
+    public void OnPhotonDeastroy(PhotonMessageInfo info)
+    {
+        Debug.Log($"Destroyed by actor: {info.Sender}");
+    }
+
 }

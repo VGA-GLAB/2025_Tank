@@ -46,7 +46,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
     /// </summary>
     private void Delete()
     {
-        if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
+        if (photonView.IsMine && PhotonNetwork.AutomaticallySyncScene)
         {
             PhotonNetwork.Destroy(this.gameObject);
         }
