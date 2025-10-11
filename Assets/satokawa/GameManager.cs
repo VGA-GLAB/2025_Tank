@@ -33,9 +33,15 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
 
-        foreach (EnemyBase enemy in _enemys)
+        if (!PhotonNetwork.AutomaticallySyncScene)
         {
-            enemy.Move();
+            foreach (EnemyBase enemy in _enemys)
+            {
+                if (enemy != null && enemy.GetComponent<PhotonView>().IsMine)
+                {
+                    enemy.Move();
+                }
+            }
         }
     }
     /// <summary>
