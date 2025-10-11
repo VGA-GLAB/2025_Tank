@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class RotateTowardsMouse : MonoBehaviour
+public class RotateTowardsMouse : MonoBehaviourPunCallbacks
 {
     [SerializeField] private Transform _turret;
     [SerializeField] private Camera _camera;
@@ -18,7 +19,10 @@ public class RotateTowardsMouse : MonoBehaviour
 
     private void Update()
     {
-        RotateToMouse();
+        if (photonView.IsMine)
+        {
+            RotateToMouse();
+        }
     }
 
     /// <summary>
