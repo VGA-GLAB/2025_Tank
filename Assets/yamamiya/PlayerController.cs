@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [Header("ステータス設定")]
     [SerializeField] private int _hp; //耐久力
     [SerializeField] private int _attackPower; //攻撃力
-    [SerializeField] private int _moveSpeed; //移動速度
+    [SerializeField] private float _moveSpeed; //移動速度
     [SerializeField] private float _bulletInterval; //砲弾の連射インターバル
     [SerializeField] private float _turnSpeed; //回転速度
 
