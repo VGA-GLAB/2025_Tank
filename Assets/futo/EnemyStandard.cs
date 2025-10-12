@@ -1,15 +1,8 @@
-﻿using UnityEngine.AI;
-using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
 
 public class EnemyStandard : EnemyBase
 {
-    [Header("敵の基礎設定")]
-    [SerializeField] private NavMeshAgent _agent;
-    [SerializeField] private GameObject _bulletPrefab;
-    [SerializeField] private GameObject _turret;
-    [SerializeField] private Transform _muzzlePosition;
-
     private float _distance;
     private float _attackTimer;
     private Vector3 _direction;
@@ -21,12 +14,6 @@ public class EnemyStandard : EnemyBase
     protected override void Start()
     {
         base.Start();
-
-        if (_agent == null)
-        {
-            _agent = GetComponent<NavMeshAgent>();
-        }
-        _agent.speed = MoveSpeed;
     }
 
     public override void Move()
@@ -52,7 +39,7 @@ public class EnemyStandard : EnemyBase
         }
 
         _hasObject = false;
-        if (Physics.Raycast(_rayOrigin, _direction, out RaycastHit hit, AttackRange))
+        if (Physics.Raycast(_rayOrigin, _direction, out RaycastHit hit, _attackRange))
         {
             if (hit.collider.gameObject != Player)
             {
@@ -61,10 +48,10 @@ public class EnemyStandard : EnemyBase
         }
 
 #if UNITY_EDITOR
-        Debug.DrawRay(_rayOrigin, _direction * AttackRange, _hasObject ? Color.red : Color.green);
+        Debug.DrawRay(_rayOrigin, _direction * _attackRange, _hasObject ? Color.red : Color.green);
 #endif
 
-        if (_distance > AttackRange || _hasObject)
+        if (_distance > _attackRange || _hasObject)
         {
             _agent.isStopped = false;
             _agent.SetDestination(Player.transform.position);
@@ -79,7 +66,7 @@ public class EnemyStandard : EnemyBase
     public override void Attack()
     {
         _attackTimer += Time.deltaTime;
-        if (_attackTimer >= BulletInterval)
+        if (_attackTimer >= _bulletInterval)
         {
             Debug.Log("こうげき！");
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.identity);

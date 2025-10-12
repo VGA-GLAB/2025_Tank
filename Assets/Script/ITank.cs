@@ -3,9 +3,8 @@ public interface ITank
 {
     public int Hp { get; }
     public int AttackPower { get; }
-    public int MoveSpeed { get; }
-    public float BulletInterval { get; }
+    public float MoveSpeed { get; }
     [PunRPC]
-    public void Hit(int atk);
+    public void Hit(int attack);
     public void Die();
 }
