@@ -1,33 +1,41 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.AI;
 /// <summary>
 /// 敵の基本クラス
 /// </summary>
 public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
 {
     [Header("敵のステータス設定")]
-    [SerializeField] private int _hp = 5;
-    [SerializeField] private int _attack = 1;
-    [SerializeField] private float _attackRange = 8;
-    [SerializeField] private int _moveSpeed = 5;
-    [SerializeField] private float _bulletInterval = 1.5f;
+    [SerializeField] protected int _hp = 5;
+    [SerializeField] protected int _attack = 1;
+    [SerializeField] protected float _attackRange = 8;
+    [SerializeField] protected int _moveSpeed = 5;
+    [SerializeField] protected float _bulletInterval = 1.5f;
+    [SerializeField] protected GameObject _bulletPrefab;
+    [SerializeField] protected GameObject _turret;
 
     [Header("ターゲット設定")]
     [SerializeField] private GameObject _player;
 
     public int Hp => _hp;
     public int AttackPower => _attack;
-    public float AttackRange => _attackRange;
     public int MoveSpeed => _moveSpeed;
     public float BulletInterval => _bulletInterval;
     public GameObject Player => _player;
 
-
+    
     private GameManager gameManager;
+    protected NavMeshAgent _agent;
     protected virtual void Start()
     {
         gameManager = FindAnyObjectByType<GameManager>();
+        if (_agent == null)
+        {
+            _agent = GetComponent<NavMeshAgent>();
+        }
+        _agent.speed = MoveSpeed;
     }
     public void Die()
     {
