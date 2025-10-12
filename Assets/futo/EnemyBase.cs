@@ -22,8 +22,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
 
     public int Hp => _hp;
     public int AttackPower => _attack;
-    public int MoveSpeed => _moveSpeed;
-    public float BulletInterval => _bulletInterval;
+    public float MoveSpeed => _moveSpeed;
     public GameObject Player => _player;
 
     private GameManager gameManager;
@@ -46,9 +45,9 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
         }
     }
     [PunRPC]
-    public void Hit(int atk)
+    public void Hit(int attack)
     {
-        _hp -= atk;
+        _hp -= attack;
         if (_hp <= 0)
         {
             Die();

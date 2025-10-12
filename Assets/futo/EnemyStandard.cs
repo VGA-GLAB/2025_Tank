@@ -66,7 +66,7 @@ public class EnemyStandard : EnemyBase
     public override void Attack()
     {
         _attackTimer += Time.deltaTime;
-        if (_attackTimer >= BulletInterval)
+        if (_attackTimer >= _bulletInterval)
         {
             Debug.Log("こうげき！");
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.identity);

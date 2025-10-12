@@ -6,13 +6,12 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviourPunCallbacks, ITank
 {
     public int Hp => _hp;
-    public int AttackPower => _atk;
-    public int MoveSpeed => _moveSpeed;
-    public float BulletInterval => _bulletInterval;
+    public int AttackPower => _attackPower;
+    public float MoveSpeed => _moveSpeed;
 
     [Header("ステータス設定")]
     [SerializeField] private int _hp; //耐久力
-    [SerializeField] private int _atk; //攻撃力
+    [SerializeField] private int _attackPower; //攻撃力
     [SerializeField] private int _moveSpeed; //移動速度
     [SerializeField] private float _bulletInterval; //砲弾の連射インターバル
     [SerializeField] private float _turnSpeed; //回転速度
@@ -35,7 +34,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             _bulletShooter = GetComponent<BulletShooter>();
         }
 
-        _bulletShooter.IntializeAttackSettings(_atk, _bulletInterval);
+        _bulletShooter.IntializeAttackSettings(_attackPower, _bulletInterval);
         gameManager = FindAnyObjectByType<GameManager>();
     }
 
@@ -68,9 +67,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         }
     }
     [PunRPC]
-    public void Hit(int atk)
+    public void Hit(int attack)
     {
-        _hp -= atk;
+        _hp -= attack;
         if (_hp <= 0)
         {
             Die();
