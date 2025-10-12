@@ -33,7 +33,11 @@ public class EnemyStandard : EnemyBase
     {
         if (Player == null)
         {
-            PlayerFind();
+            if (!PlayerFind())
+            {
+                //みつからなかった時の処理
+                return;
+            }
         }
         _nowPosition = transform.position;
         _playerPosition = Player.transform.position;

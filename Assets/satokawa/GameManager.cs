@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Data.Common;
 using Photon.Pun;
-using Photon.Pun.Demo.Cockpit;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviourPunCallbacks
@@ -9,16 +7,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("次のステージ（Scene）")] private string _nextScene;
     [SerializeField, Header("リスポーン時間")] private float _respawnTime;
 
-    [SerializeField] private List<PlayerController> _players = new List<PlayerController>();
-    private List<EnemyBase> _enemys = new List<EnemyBase>();
+    public List<PlayerController> Players { get; private set; }
+    public List<EnemyBase> Enemys { get; private set; }
 
     private bool _isRespawnTimer = false;
     [SerializeField] private float _timer;
     private InGameNetworkManager _networkManager;
-    private void Start()
+    private void Awake()
     {
         _networkManager = GetComponent<InGameNetworkManager>();
-        _players.Clear();
+        Players = new List<PlayerController>();
+        Enemys = new List<EnemyBase>();
     }
     public void Update()
     {
@@ -33,9 +32,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if (!PhotonNetwork.AutomaticallySyncScene)
+        if (PhotonNetwork.AutomaticallySyncScene)
         {
-            foreach (EnemyBase enemy in _enemys)
+            foreach (EnemyBase enemy in Enemys)
             {
                 if (enemy != null && enemy.GetComponent<PhotonView>().IsMine)
                 {
@@ -57,7 +56,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.LogError("IDError");
             return;
         }
-        _players.Add(newPlayer);
+        Players.Add(newPlayer);
     }
     /// <summary>
     /// NetWorkMagagerで生成した敵を保存する
@@ -76,7 +75,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             return;
         }
-        _enemys.Add(newEnemy);
+        Enemys.Add(newEnemy);
     }
     /// <summary>
     ///[PunRPC]　プレイヤーのHPを確認して必要に応じてゲームオーバーやリスポーン処理を実行
@@ -92,7 +91,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
 
         bool isPlayerActive = false;
-        foreach (PlayerController tank in _players)
+        foreach (PlayerController tank in Players)
         {
             if (tank != null && tank.Hp > 0)
             {
@@ -137,7 +136,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
 
         bool isEnemyActive = false;
-        foreach (EnemyBase tank in _enemys)
+        foreach (EnemyBase tank in Enemys)
         {
             if (tank != null && tank.Hp > 0)
             {

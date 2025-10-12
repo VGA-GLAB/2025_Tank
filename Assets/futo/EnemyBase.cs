@@ -1,6 +1,6 @@
 ﻿using Photon.Pun;
 using UnityEngine;
-
+using System.Collections.Generic;
 /// <summary>
 /// 敵の基本クラス
 /// </summary>
@@ -48,23 +48,28 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     }
 
     /// <summary>
-    /// 一番近いプレイヤーをターゲットにする
+    ///  一番近いプレイヤーをターゲットにする
     /// </summary>
-    public void PlayerFind()
+    /// <returns>ture　みつかった false みつからなかった</returns>
+    public bool PlayerFind()
     {
-        //TODO : GMからの取得に変える
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        if(gameManager?.Players == null)
+        {
+            return false;
+        }
+        List<PlayerController> players = gameManager.Players;
         float nearestDistance = Mathf.Infinity;
 
-        foreach (var player in players)
+        foreach (PlayerController player in players)
         {
             float dist = Vector3.Distance(transform.position, player.transform.position);
             if (dist < nearestDistance)
             {
                 nearestDistance = dist;
-                _player = player;
+                _player = player.gameObject;
             }
         }
+        return Player != null;
     }
 
     /// <summary>
