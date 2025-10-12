@@ -11,7 +11,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     [SerializeField] protected int _hp = 5;
     [SerializeField] protected int _attack = 1;
     [SerializeField] protected float _attackRange = 8;
-    [SerializeField] protected int _moveSpeed = 5;
+    [SerializeField] protected float _moveSpeed = 5;
     [SerializeField] protected float _bulletInterval = 1.5f;
     [SerializeField] protected GameObject _bulletPrefab;
     [SerializeField] protected GameObject _turret;
