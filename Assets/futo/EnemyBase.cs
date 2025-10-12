@@ -15,6 +15,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     [SerializeField] protected float _bulletInterval = 1.5f;
     [SerializeField] protected GameObject _bulletPrefab;
     [SerializeField] protected GameObject _turret;
+    [SerializeField] protected Transform _muzzlePosition;
 
     [Header("ターゲット設定")]
     [SerializeField] private GameObject _player;
@@ -25,7 +26,6 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     public float BulletInterval => _bulletInterval;
     public GameObject Player => _player;
 
-    
     private GameManager gameManager;
     protected NavMeshAgent _agent;
     protected virtual void Start()

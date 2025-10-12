@@ -1,12 +1,8 @@
-﻿using UnityEngine.AI;
-using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
 
 public class EnemyStandard : EnemyBase
 {
-    [Header("敵のマズル設定")]
-    [SerializeField] private Transform _muzzlePosition;
-
     private float _distance;
     private float _attackTimer;
     private Vector3 _direction;
