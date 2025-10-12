@@ -502,7 +502,15 @@ MonoBehaviour:
   _muzzlePosition: {fileID: 6032910575836555161}
   _player: {fileID: 0}
   attackPatterns:
-  - attackType: 1
-    shotCount: 3
+  - attackType: 2
+    shotCount: 2
     shotInterval: 2
+  - attackType: 0
+    shotCount: 1
+    shotInterval: 1
   _buckshotAngle: 10
+  _radarAngle: 179
+  _radarDistance: 10
+  _radarSpeed: 3
+  patternIndex: 0
+  attackCounter: 0

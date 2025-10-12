@@ -28,8 +28,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
             Delete();
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if(collision.gameObject.GetComponent<BulletControl>() != null)
         {
