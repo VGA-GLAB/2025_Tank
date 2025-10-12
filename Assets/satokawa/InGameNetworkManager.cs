@@ -22,7 +22,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
-        //PhotonNetwork.AutomaticallySyncScene = false;
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
     void Start()
     {
