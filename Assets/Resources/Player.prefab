@@ -576,7 +576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hp: 10
-  _atk: 1
+  _attackPower: 0
   _moveSpeed: 300
   _bulletInterval: 1
   _turnSpeed: 100

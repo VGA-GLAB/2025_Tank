@@ -8,10 +8,16 @@ using DG.Tweening;
 /// </summary>
 public class InGameNetworkManager : MonoBehaviourPunCallbacks
 {
+    [System.Serializable]
+    public class CloneData
+    {
+        [SerializeField,Header("クローンするPrefab")] public GameObject clonePrefab;
+        [SerializeField,Header("ステージ上にあるクローンする場所")] public Transform clonePosition;
+    }
     [SerializeField, Header("プレイヤーPrefab    !!Resourcesフォルダに入れる!!")] private GameObject _playerPrefab;
-    [SerializeField, Header("敵Prefab            !!Resourcesフォルダに入れる!!")] private GameObject _enemyPrefab;
     [SerializeField, Header("プレイヤーの生成位置")] private Transform[] _playerClonePosition;
-    [SerializeField, Header("敵の生成位置")] private Transform[] _enemyClonePosition;
+    [SerializeField, Header("敵の生成位置と敵オブジェクト")] private CloneData[] _enemyClone;
+    [SerializeField, Header("アイテムをの生成位置とアイテムオブジェクト")] private CloneData[] _itemClone;
     public int _playerNumber { get; private set; }//何番目にルームに入ったか
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -25,6 +31,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         {
             CreatePlayerTank();
             CreateEnemyTank();
+            CreateItem();
         }
         else if (PhotonNetwork.IsConnected)
         {
@@ -45,6 +52,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     {
         CreatePlayerTank();
         CreateEnemyTank();
+        CreateItem();
     }
 
     /// <summary>
@@ -82,10 +90,24 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         {
             return;
         }
-        foreach (Transform enemyPosition in _enemyClonePosition)
+        foreach (CloneData enemyClone in _enemyClone)
         {
-            GameObject newEnemy = PhotonNetwork.Instantiate(_enemyPrefab.name, enemyPosition.position, enemyPosition.rotation);
+            GameObject newEnemy = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
             photonView.RPC("AddEnemy", RpcTarget.All, newEnemy.GetComponent<PhotonView>().ViewID);
+        }
+    }
+    /// <summary>
+    /// マスターのみがアイテムを生成
+    /// </summary>
+    public void CreateItem()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+        foreach (CloneData enemyClone in _itemClone)
+        {
+            GameObject newItem = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
         }
     }
 }
