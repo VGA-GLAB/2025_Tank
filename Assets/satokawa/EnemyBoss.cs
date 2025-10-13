@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using Photon.Pun;
 using System.Collections.Generic;
-using System.Collections;
 using DG.Tweening;
 using System;
-using static EnemyBoss;
 public class EnemyBoss : EnemyBase
 {
     [System.Serializable]
@@ -18,33 +16,40 @@ public class EnemyBoss : EnemyBase
     private List<AttackPattern> attackPatterns;
     [SerializeField, Header("散弾で左右の弾を撃つ角度")]
     private float _buckshotAngle;
+    [Header("レーザー")]
+    [SerializeField,Range(1,179)] private float _laserAngle;
+    [SerializeField] private float _laserDistance;
+    [SerializeField] private float _laserRotationSpeed;
+    [SerializeField] private float _laserDamageInterval;
+    [SerializeField] private LineRenderer _laserLine;
 
-    [SerializeField, Header("レーダー角度"),Range(1,179)]
-    private float _radarAngle;
-    [SerializeField, Header("レーダー距離")]
-    private float _radarDistance;
-    [SerializeField, Header("レーダースピード")]
-    private float _radarSpeed;
+    private float _patternTimer;
+    private int _patternIndex;
+    private int _attackCounter;
 
-    private float timer;
-    [SerializeField] private int patternIndex;
-    [SerializeField] private int attackCounter;
-    private bool isRaserTween = false;
+    private float _laserTimer;
+    private bool _isRaserTween = false;
+    private bool _isLaser = false;
     public enum AttackType
     {
         SingleShot, Buckshot, LaserShot, Wait
     }
-    private void Start()
+    protected override void Start()
     {
-        patternIndex = 0;
-        timer = 0;
+        base.Start();
+        _patternIndex = 0;
+        _patternTimer = 0;
     }
     private void Update()
     {
+        if (_isLaser)
+        {
+            AttackRaser();
+        }
 
-        AttackPattern pattern = attackPatterns[patternIndex];
-        timer += Time.deltaTime;
-        if (pattern == null || timer < pattern.shotInterval)
+        AttackPattern pattern = attackPatterns[_patternIndex];
+        _patternTimer += Time.deltaTime;
+        if (pattern == null || _patternTimer < pattern.shotInterval)
         {
             return;
         }
@@ -55,7 +60,7 @@ public class EnemyBoss : EnemyBase
         {
             case AttackType.SingleShot:
                 Shot(this.transform.forward);
-                timer = 0f;
+                _patternTimer = 0f;
                 break;
 
             case AttackType.Buckshot:
@@ -68,12 +73,12 @@ public class EnemyBoss : EnemyBase
                 Quaternion leftAngle = Quaternion.Euler(0, -_buckshotAngle, 0);
                 Shot(leftAngle * this.transform.forward);
 
-                timer = 0f;
+                _patternTimer = 0f;
                 break;
 
             case AttackType.LaserShot:
 
-                if (isRaserTween)
+                if (_isRaserTween)
                 {
                     return;
                 }
@@ -83,7 +88,7 @@ public class EnemyBoss : EnemyBase
                 return;
 
             case AttackType.Wait:
-                timer = 0f;
+                _patternTimer = 0f;
                 break;
 
             default:
@@ -94,11 +99,11 @@ public class EnemyBoss : EnemyBase
         //即座に完了する攻撃（SingleShot, Buckshot, Wait）のみがこの処理に進む
         if (isCompletedImmediately)
         {
-            attackCounter++;
-            if (attackCounter >= pattern.shotCount)
+            _attackCounter++;
+            if (_attackCounter >= pattern.shotCount)
             {
-                attackCounter = 0;
-                patternIndex = (patternIndex + 1) % attackPatterns.Count;
+                _attackCounter = 0;
+                _patternIndex = (_patternIndex + 1) % attackPatterns.Count;
             }
         }
     }
@@ -109,28 +114,23 @@ public class EnemyBoss : EnemyBase
     private void StartLaserShotSequence(AttackPattern pattern)
     {
         // DOTweenが既にアクティブでないかチェック（念のため）
-        if (isRaserTween) return;
+        if (_isRaserTween) return;
 
         // 1. フラグを立て、シーケンスを開始
-        isRaserTween = true;
+        _isRaserTween = true;
         Sequence sequence = DOTween.Sequence();
 
-        // 攻撃回数に応じて回転の方向を決定する係数
-        // 偶数のとき -1 (左回転開始)、奇数のとき +1 (右回転開始) にしたい場合:
-        // int directionCoefficient = (int)Math.Pow(-1, attackCounter) * -1; // 偶数:-1, 奇数:1
 
-        // 提示されたコードに合わせて、偶数のとき +1 (右回転開始)、奇数のとき -1 (左回転開始)
-        // 提示されたコード: DOLocalRotate(new Vector3(0, -(int)Math.Pow(-1, attackCounter) * _radarAngle, 0), ...)
-        int powerResult = (int)Math.Pow(-1, attackCounter); // 偶数: +1, 奇数: -1
-        float startAngle = -powerResult * _radarAngle /2;      // 偶数: -_radarAngle, 奇数: +_radarAngle
-        float endAngle = powerResult * _radarAngle /2 ;         // 偶数: +_radarAngle, 奇数: -_radarAngle
+        // 偶数のとき +1 (右回転開始)、奇数のとき -1 (左回転開始)
+        int powerResult = (int)Math.Pow(-1, _attackCounter); 
+        float startAngle = -powerResult * _laserAngle /2;      
+        float endAngle = powerResult * _laserAngle /2 ;      
 
         // ----------------------------------------------------
-        // 2. シーケンスの定義
+        // シーケンスの定義
         // ----------------------------------------------------
 
         // 1. ターレットを指定角度へ回転 (首振り開始)
-        // 提示コードではDOLocalRotateを使っていたため、そちらを使用
         sequence.Append(_turret.transform.DOLocalRotate(
             new Vector3(0, startAngle, 0),
             pattern.shotInterval / 2
@@ -139,19 +139,22 @@ public class EnemyBoss : EnemyBase
         // 2. レーザー発射開始
         sequence.AppendCallback(() =>
         {
-            RaserStart();
+            _laserLine.enabled = true;
+            _isLaser = true;
+            _laserTimer = _laserDamageInterval;
         });
 
         // 3. レーザーを出しながら反対側へ回転 (レーダー発射)
         sequence.Append(_turret.transform.DOLocalRotate(
             new Vector3(0, endAngle, 0),
-            _radarSpeed // <-- ここはレーザー発射にかける時間として設定
+            _laserRotationSpeed
         ));
 
         // 4. レーザー発射終了
         sequence.AppendCallback(() =>
         {
-            RaserEnd();
+            _laserLine.enabled = false;
+            _isLaser = false;
         });
 
         // 5. 元の角度（0度）に戻す
@@ -163,30 +166,43 @@ public class EnemyBoss : EnemyBase
         // 6. シーケンス完了時の処理 (タイマー/カウンタの更新)
         sequence.AppendCallback(() =>
         {
-            // 制御フラグを解除
-            isRaserTween = false;
+            _isRaserTween = false;
+            _patternTimer = 0f;
 
-            // タイマーをリセット
-            timer = 0f;
-
-            // カウンタを進め、次のパターンへ遷移
-            attackCounter++;
-            if (attackCounter >= pattern.shotCount)
+            _attackCounter++;
+            if (_attackCounter >= pattern.shotCount)
             {
-                attackCounter = 0;
-                patternIndex = (patternIndex + 1) % attackPatterns.Count;
+                _attackCounter = 0;
+                _patternIndex = (_patternIndex + 1) % attackPatterns.Count;
             }
         });
 
         // シーケンスを再生
         sequence.Play();
     }
-    private void RaserStart()
+    private void AttackRaser()
     {
+        Ray ray = new Ray(_muzzlePosition.position, _muzzlePosition.forward);
+        RaycastHit[] hits = Physics.RaycastAll(ray.origin,ray.direction, _laserDistance);
+        Array.Sort(hits,(a,b) => a.distance.CompareTo(b.distance));
+        _laserTimer += Time.deltaTime;
+        float stopDistance = _laserDistance;
 
-    }
-    private void RaserEnd()
-    {
+        foreach(RaycastHit hit in hits)
+        {
+            if (!hit.collider.TryGetComponent(out ITank tank) && !hit.collider.TryGetComponent(out ItemBase item))
+            {//遮蔽物に当たった
+                stopDistance = hit.distance;
+                break;
+            }
+            if (tank != null && _laserTimer > _laserDamageInterval)
+            {
+                hit.collider.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack);
+                _laserTimer = 0;
+            }
+        }
+        _laserLine.SetPosition(0,ray.origin);
+        _laserLine.SetPosition(1, ray.origin + ray.direction * stopDistance);
 
     }
     public override void Attack()

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 5196323656423330255}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0396409, y: -0.008360797, z: 1.2171515}
+  m_LocalPosition: {x: -0.04, y: -0.19836079, z: 1.363}
   m_LocalScale: {x: 1.9820409, y: 2.7869127, z: 1.4879597}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 5501357210459302298}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.649}
+  m_LocalPosition: {x: 0, y: -0.19, z: 0.649}
   m_LocalScale: {x: 0.3061939, y: 0.34406406, z: 1.337117}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -144,8 +144,8 @@ Transform:
   m_GameObject: {fileID: 5732027431164560116}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.007, y: -0.197, z: -0.01}
-  m_LocalScale: {x: 0.94877, y: 0.35882, z: 0.88926}
+  m_LocalPosition: {x: 0.007, y: -0.2911, z: -0.01}
+  m_LocalScale: {x: 0.94877, y: 0.17058302, z: 0.88926}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5696561966487061354}
@@ -232,7 +232,7 @@ Transform:
   m_GameObject: {fileID: 6261481625025165700}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.007000029, y: 0.11400008, z: -0.010000229}
+  m_LocalPosition: {x: 0.007000029, y: -0.051, z: -0.010000229}
   m_LocalScale: {x: 0.5045305, y: 0.35882, z: 0.6720612}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -347,6 +347,7 @@ GameObject:
   - component: {fileID: 6054020542968976000}
   - component: {fileID: 7526461851531789871}
   - component: {fileID: 2448198829399664688}
+  - component: {fileID: 8964624490280985592}
   m_Layer: 0
   m_Name: EnemyBoss
   m_TagString: Untagged
@@ -509,8 +510,115 @@ MonoBehaviour:
     shotCount: 1
     shotInterval: 1
   _buckshotAngle: 10
-  _radarAngle: 179
-  _radarDistance: 10
-  _radarSpeed: 3
-  patternIndex: 0
-  attackCounter: 0
+  _laserAngle: 120
+  _laserDistance: 20
+  _laserRotationSpeed: 3
+  _laserDamageInterval: 0.1
+  _laserLine: {fileID: 8964624490280985592}
+--- !u!120 &8964624490280985592
+LineRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573993724064172963}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Positions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.16477966
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 0, b: 0, a: 1}
+      key1: {r: 1, g: 0, b: 0, a: 1}
+      key2: {r: 0.39096785, g: 0.36037737, b: 1, a: 0}
+      key3: {r: 0.90473014, g: 0.49433708, b: 1.781479, a: 0}
+      key4: {r: 0.34117648, g: 0.24313726, b: 0.9098039, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 65535
+      ctime3: 49807
+      ctime4: 65535
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 65535
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 0
+    numCapVertices: 0
+    alignment: 0
+    textureMode: 0
+    textureScale: {x: 1, y: 1}
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_MaskInteraction: 0
+  m_UseWorldSpace: 1
+  m_Loop: 0
+  m_ApplyActiveColorSpace: 1
