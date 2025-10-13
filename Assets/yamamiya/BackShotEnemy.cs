@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 public class BackShotEnemy : EnemyBase
 {
+    [Header("散弾の左右の弾の撃つ角度")]
+    [SerializeField] float _buckShotAngle;
     private float _distance;
     private float _attackTimer;
     private Vector3 _direction;
@@ -64,6 +67,37 @@ public class BackShotEnemy : EnemyBase
 
     public override void Attack()
     {
+        _attackTimer += Time.deltaTime;
+        if (_attackTimer >= _bulletInterval)
+        {
+            // 正面方向に弾を生成
+            GenerateBullet(_muzzlePosition.forward);
 
+            // 左方向に角度を指定
+            Quaternion leftAngle = Quaternion.Euler(0, -_buckShotAngle, 0);
+            // 正面方向から左に角度をつけて生成
+            GenerateBullet(leftAngle * _muzzlePosition.forward);
+
+            // 右方向に角度を指定
+            Quaternion rightAngle = Quaternion.Euler(0, _buckShotAngle, 0);
+            // 正面方向から右に角度をつけて生成
+            GenerateBullet(rightAngle * _muzzlePosition.forward);
+
+            _attackTimer = 0f;
+        }
+    }
+
+    /// <summary>
+    /// 弾の生成
+    /// </summary>
+    /// <param name="direction">弾の方向</param>
+    private void GenerateBullet(Vector3 direction)
+    {
+        GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.identity);
+        newBullet.transform.forward = direction;
+        if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
+        {
+            component._attack = _attack;
+        }
     }
 }
