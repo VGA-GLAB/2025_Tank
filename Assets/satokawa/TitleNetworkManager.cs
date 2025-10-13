@@ -1,5 +1,8 @@
-﻿using Photon.Pun;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
@@ -7,31 +10,50 @@ using UnityEngine.UI;
 /// </summary>
 public class TitleNetworkManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private Button joinButton;
-    [SerializeField] private Button startButton;
+    [SerializeField] private TitleUIManager _uIManager;
+    [SerializeField] private GameObject _logUI;
+    [SerializeField] private TextMeshProUGUI _logText;
+    private List<RoomInfo> _roomList = new();
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        joinButton.interactable = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        startButton.interactable = PhotonNetwork.InRoom;
     }
     public void JoinMaster()
     {
-        joinButton.interactable = false;
+        _logText.text = "Connecting to server...";
+        _logUI.SetActive(true);
         PhotonNetwork.ConnectUsingSettings();
     }
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions(), TypedLobby.Default);
+        _logText.text = "Connecting to lobby...";
+        PhotonNetwork.JoinLobby();
+    }
+    public override void OnJoinedLobby()
+    {
+        _logUI.SetActive(false);
+        _uIManager.ChangeScreen(1);
+    }
+    public void RoomCreate(string roomName)
+    {
+        RoomOptions roomOptions = new RoomOptions();
+        roomOptions.MaxPlayers = 4;
+        roomOptions.IsVisible = true;
+        roomOptions.IsOpen = true;
+        _logText.text = "Creating a room...";
+        _logUI.SetActive(true);
+        PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
     }
     public override void OnJoinedRoom()
     {
-
+        _logUI.SetActive(false);
+        _uIManager.ChangeScreen(3);
     }
     public void GameStart()
     {
@@ -42,5 +64,13 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.LoadLevel("Stage1");
+    }
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        _roomList = roomList;
+    }
+    public bool FindRoomName(string roomName)
+    {
+       return  _roomList.Any(_roomList => _roomList.Name == roomName);
     }
 }

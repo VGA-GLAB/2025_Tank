@@ -12,7 +12,10 @@ public class TitleUIManager : MonoBehaviour
     {
         ChangeScreen(0);
     }
-        
+    /// <summary>
+    /// 画面の切り替え
+    /// </summary>
+    /// <param name="number">切り替える画面</param>
     public void ChangeScreen(int number)
     {
         title.SetActive(number == 0);
@@ -20,4 +23,5 @@ public class TitleUIManager : MonoBehaviour
         stageSelectSingle.SetActive(number == 2);
         stageSelectMulti.SetActive(number == 3);
     }
+
 }
