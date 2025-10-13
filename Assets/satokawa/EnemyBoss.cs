@@ -3,17 +3,20 @@ using Photon.Pun;
 using System.Collections.Generic;
 using DG.Tweening;
 using System;
+/// <summary>
+/// ボス敵のクラス
+/// </summary>
 public class EnemyBoss : EnemyBase
 {
     [System.Serializable]
     public class AttackPattern
     {
-        public AttackType attackType;
-        public int shotCount;
-        public float shotInterval;
+        public AttackType _attackType;
+        public int _shotCount;
+        public float _shotInterval;
     }
     [SerializeField, Header("攻撃パターン")]
-    private List<AttackPattern> attackPatterns;
+    private List<AttackPattern> _attackPatterns;
     [SerializeField, Header("散弾で左右の弾を撃つ角度")]
     private float _buckshotAngle;
     [Header("レーザー")]
@@ -47,16 +50,16 @@ public class EnemyBoss : EnemyBase
             AttackRaser();
         }
 
-        AttackPattern pattern = attackPatterns[_patternIndex];
+        AttackPattern pattern = _attackPatterns[_patternIndex];
         _patternTimer += Time.deltaTime;
-        if (pattern == null || _patternTimer < pattern.shotInterval)
+        if (pattern == null || _patternTimer < pattern._shotInterval)
         {
             return;
         }
 
         bool isCompletedImmediately = true;
-
-        switch (pattern.attackType)
+        // それぞの攻撃方法に応じた処理
+        switch (pattern._attackType)
         {
             case AttackType.SingleShot:
                 Shot(this.transform.forward);
@@ -100,23 +103,21 @@ public class EnemyBoss : EnemyBase
         if (isCompletedImmediately)
         {
             _attackCounter++;
-            if (_attackCounter >= pattern.shotCount)
+            if (_attackCounter >= pattern._shotCount)
             {
                 _attackCounter = 0;
-                _patternIndex = (_patternIndex + 1) % attackPatterns.Count;
+                _patternIndex = (_patternIndex + 1) % _attackPatterns.Count;
             }
         }
     }
 
-
-    // AttackPatternの定義が不明なため、引数として必要な情報を渡します
-    // (実際のコードに合わせて適宜修正してください)
+    /// <summary>
+    /// レーザー攻撃のシーケンスを開始
+    /// </summary>
     private void StartLaserShotSequence(AttackPattern pattern)
     {
-        // DOTweenが既にアクティブでないかチェック（念のため）
         if (_isRaserTween) return;
 
-        // 1. フラグを立て、シーケンスを開始
         _isRaserTween = true;
         Sequence sequence = DOTween.Sequence();
 
@@ -133,7 +134,7 @@ public class EnemyBoss : EnemyBase
         // 1. ターレットを指定角度へ回転 (首振り開始)
         sequence.Append(_turret.transform.DOLocalRotate(
             new Vector3(0, startAngle, 0),
-            pattern.shotInterval / 2
+            pattern._shotInterval / 2
         ));
 
         // 2. レーザー発射開始
@@ -160,7 +161,7 @@ public class EnemyBoss : EnemyBase
         // 5. 元の角度（0度）に戻す
         sequence.Append(_turret.transform.DOLocalRotate(
             new Vector3(0, 0, 0),
-            pattern.shotInterval / 2
+            pattern._shotInterval / 2
         ));
 
         // 6. シーケンス完了時の処理 (タイマー/カウンタの更新)
@@ -170,16 +171,19 @@ public class EnemyBoss : EnemyBase
             _patternTimer = 0f;
 
             _attackCounter++;
-            if (_attackCounter >= pattern.shotCount)
+            if (_attackCounter >= pattern._shotCount)
             {
                 _attackCounter = 0;
-                _patternIndex = (_patternIndex + 1) % attackPatterns.Count;
+                _patternIndex = (_patternIndex + 1) % _attackPatterns.Count;
             }
         });
 
         // シーケンスを再生
         sequence.Play();
     }
+    /// <summary>
+    /// レーザー攻撃
+    /// </summary>
     private void AttackRaser()
     {
         Ray ray = new Ray(_muzzlePosition.position, _muzzlePosition.forward);
@@ -205,10 +209,11 @@ public class EnemyBoss : EnemyBase
         _laserLine.SetPosition(1, ray.origin + ray.direction * stopDistance);
 
     }
-    public override void Attack()
-    {
-
-    }
+    public override void Attack() { }
+    /// <summary>
+    /// 弾を撃つ 一回の呼び出しにつき一発
+    /// </summary>
+    /// <param name="direction">撃つ方向</param>
     private void Shot(Vector3 direction)
     {
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
@@ -216,8 +221,6 @@ public class EnemyBoss : EnemyBase
             GameObject bullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.LookRotation(direction));
         }
     }
-    public override void Move()
-    {
-
-    }
+    public override void Move() { }
+    
 }
