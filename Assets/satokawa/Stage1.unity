@@ -850,11 +850,11 @@ MonoBehaviour:
   - clonePrefab: {fileID: 4421280240951079713, guid: f9c8121c913c60a47b347bd2f0682e22, type: 3}
     clonePosition: {fileID: 1301292434}
   _itemClone:
-  - clonePrefab: {fileID: 1349992103545548166, guid: e601069a4ad4afc49b016bfe4473a34e, type: 3}
+  - clonePrefab: {fileID: 2414042231499467189, guid: 23fe3126deafe1d4198175121845760b, type: 3}
     clonePosition: {fileID: 5067939204167928297}
-  - clonePrefab: {fileID: 5885035801294827095, guid: 0dca058480a27b543996cd551578c414, type: 3}
+  - clonePrefab: {fileID: 2414042231499467189, guid: 23fe3126deafe1d4198175121845760b, type: 3}
     clonePosition: {fileID: 8448927992273518173}
-  - clonePrefab: {fileID: 1688121585922976264, guid: ff5522b4ced6ffc46a1d49bf39cd970e, type: 3}
+  - clonePrefab: {fileID: 2414042231499467189, guid: 23fe3126deafe1d4198175121845760b, type: 3}
     clonePosition: {fileID: 1909001313615061265}
 --- !u!114 &1644447652
 MonoBehaviour:
@@ -871,7 +871,6 @@ MonoBehaviour:
   _nextScene: Stage2
   _respawnTime: 10
   _lives: 2
-  _timer: 0
 --- !u!114 &1644447653
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,8 +11,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     [System.Serializable]
     public class CloneData
     {
-        [SerializeField,Header("クローンするPrefab")] public GameObject clonePrefab;
-        [SerializeField,Header("ステージ上にあるクローンする場所")] public Transform clonePosition;
+        [Header("クローンするPrefab")] public GameObject clonePrefab;
+        [Header("ステージ上にあるクローンする場所")] public Transform clonePosition;
     }
     [SerializeField, Header("プレイヤーPrefab    !!Resourcesフォルダに入れる!!")] private GameObject _playerPrefab;
     [SerializeField, Header("プレイヤーの生成位置")] private Transform[] _playerClonePosition;

@@ -122,4 +122,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _toBuff: 2
-  _buffamount: 10
+  _buffAmount: 1

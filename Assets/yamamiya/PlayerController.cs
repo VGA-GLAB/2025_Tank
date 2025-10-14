@@ -30,12 +30,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
 
     [Header("バフの上限設定")]
     [SerializeField] private int _maxHp;
-    [SerializeField] private int _maxattackPower;
-    [SerializeField] private float _maxmoveSpeed;
+    [SerializeField] private int _maxAttackPower;
+    [SerializeField] private float _maxMoveSpeed;
     [SerializeField] private float _minBulletdInterval;
 
     private Vector2 _moveInput;
-    private GameManager gameManager;
+    private GameManager _gameManager;
 
     private void Start()
     {
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         }
 
         _bulletShooter.IntializeAttackSettings(_attackPower, _bulletInterval);
-        gameManager = FindAnyObjectByType<GameManager>();
+        _gameManager = FindAnyObjectByType<GameManager>();
     }
 
     private void Update()
@@ -76,8 +76,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     {
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
+            _gameManager.GetComponent<PhotonView>().RPC("CheckPlayerActive", RpcTarget.All, photonView.ViewID);
             PhotonNetwork.Destroy(this.gameObject);
-            gameManager.GetComponent<PhotonView>().RPC("CheckPlayerActive", RpcTarget.All, photonView.ViewID);
         }
     }
     [PunRPC]
@@ -107,16 +107,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                 break;
             case Buff.Attack:
                 _attackPower += (int)amount;
-                if (_attackPower > _maxattackPower)
+                if (_attackPower > _maxAttackPower)
                 {
-                    _attackPower = _maxattackPower;
+                    _attackPower = _maxAttackPower;
                 }
                 break;
             case Buff.MoveSpeed:
                 _moveSpeed += amount;
-                if( _moveSpeed > _maxmoveSpeed)
+                if( _moveSpeed > _maxMoveSpeed)
                 {
-                    _moveSpeed = _maxmoveSpeed;
+                    _moveSpeed = _maxMoveSpeed;
                 }
                 break;
             case Buff.BulletInterval:

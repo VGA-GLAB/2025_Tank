@@ -40,8 +40,8 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     {
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
-            PhotonNetwork.Destroy(this.gameObject);
             gameManager.GetComponent<PhotonView>().RPC("CheckEnemeyActive", RpcTarget.All);
+            PhotonNetwork.Destroy(this.gameObject);
         }
     }
     [PunRPC]

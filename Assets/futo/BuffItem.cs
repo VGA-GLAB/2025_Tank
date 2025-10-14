@@ -3,13 +3,18 @@
 public class BuffItem : ItemBase
 {
     [SerializeField] Buff _toBuff;
-    [SerializeField] float _buffamount;
+    [SerializeField] float _buffAmount;
 
-    //ItemDataBaseのonTriggerEnterで取得してほしい
-    PlayerController _target;
-    public override void HitAction()
+    public override void HitAction(GameObject hitObject)
     {
-        _target.BuffStatus(_toBuff, _buffamount);
+        if(hitObject.TryGetComponent(out PlayerController target))
+        {
+            target.BuffStatus(_toBuff, _buffAmount);
+        }
+        else
+        {
+            return;
+        }
         Delete();
     }
 }

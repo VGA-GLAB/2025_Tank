@@ -11,9 +11,9 @@ public class EnemyBoss : EnemyBase
     [System.Serializable]
     public class AttackPattern
     {
-        public AttackType _attackType;
-        public int _shotCount;
-        public float _shotInterval;
+        [Header("攻撃パターン")] public AttackType _attackType;
+        [Header("攻撃する回数")] public int _attackCount;
+        [Header("攻撃する間隔")] public float _attackInterval;
     }
     [SerializeField, Header("攻撃パターン")]
     private List<AttackPattern> _attackPatterns;
@@ -52,7 +52,7 @@ public class EnemyBoss : EnemyBase
 
         AttackPattern pattern = _attackPatterns[_patternIndex];
         _patternTimer += Time.deltaTime;
-        if (pattern == null || _patternTimer < pattern._shotInterval)
+        if (pattern == null || _patternTimer < pattern._attackInterval)
         {
             return;
         }
@@ -103,7 +103,7 @@ public class EnemyBoss : EnemyBase
         if (isCompletedImmediately)
         {
             _attackCounter++;
-            if (_attackCounter >= pattern._shotCount)
+            if (_attackCounter >= pattern._attackCount)
             {
                 _attackCounter = 0;
                 _patternIndex = (_patternIndex + 1) % _attackPatterns.Count;
@@ -134,7 +134,7 @@ public class EnemyBoss : EnemyBase
         // 1. ターレットを指定角度へ回転 (首振り開始)
         sequence.Append(_turret.transform.DOLocalRotate(
             new Vector3(0, startAngle, 0),
-            pattern._shotInterval / 2
+            pattern._attackInterval / 2
         ));
 
         // 2. レーザー発射開始
@@ -161,7 +161,7 @@ public class EnemyBoss : EnemyBase
         // 5. 元の角度（0度）に戻す
         sequence.Append(_turret.transform.DOLocalRotate(
             new Vector3(0, 0, 0),
-            pattern._shotInterval / 2
+            pattern._attackInterval / 2
         ));
 
         // 6. シーケンス完了時の処理 (タイマー/カウンタの更新)
@@ -171,7 +171,7 @@ public class EnemyBoss : EnemyBase
             _patternTimer = 0f;
 
             _attackCounter++;
-            if (_attackCounter >= pattern._shotCount)
+            if (_attackCounter >= pattern._attackCount)
             {
                 _attackCounter = 0;
                 _patternIndex = (_patternIndex + 1) % _attackPatterns.Count;
