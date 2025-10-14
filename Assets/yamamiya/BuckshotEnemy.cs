@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-public class BackShotEnemy : EnemyBase
+public class BuckshotEnemy : EnemyBase
 {
     [Header("散弾の左右の弾の撃つ角度")]
     [SerializeField] float _buckShotAngle;
