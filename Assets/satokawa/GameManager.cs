@@ -6,18 +6,28 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     [SerializeField, Header("次のステージ（Scene）")] private string _nextScene;
     [SerializeField, Header("リスポーン時間")] private float _respawnTime;
-
+    [SerializeField, Header("残機数")] private int _lives;
     public List<PlayerController> Players { get; private set; }
     public List<EnemyBase> Enemys { get; private set; }
 
     private bool _isRespawnTimer = false;
-    [SerializeField] private float _timer;
+    private float _timer;
     private InGameNetworkManager _networkManager;
     private void Awake()
     {
         _networkManager = GetComponent<InGameNetworkManager>();
         Players = new List<PlayerController>();
         Enemys = new List<EnemyBase>();
+
+        //残機数をCustomPropertyに保存
+        if (PhotonNetwork.IsMasterClient)
+        {
+            CustomPropertiesManager.GetNetValue(PhotonNetwork.LocalPlayer, "lives", out bool found);
+            if (!found)
+            {
+                CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, "lives", _lives);
+            }
+        }
     }
     public void Update()
     {
@@ -100,7 +110,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         if (!isPlayerActive && PhotonNetwork.IsMasterClient)
         {
-            photonView.RPC(nameof(GameOver), RpcTarget.All);
+            if (ReduceLives())
+            {
+                photonView.RPC(nameof(Retry), RpcTarget.All);
+            }
+            else
+            {
+                photonView.RPC(nameof(GameOver), RpcTarget.All);
+            }
         }
         else if (diePlayer.GetComponent<PhotonView>().IsMine)
         {
@@ -151,14 +168,60 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
     /// <summary>
-    ///[PunRPC] ゲームオーバー処理
+    ///[PunRPC] リトライ処理
     /// 現在のステージをリロードする
+    /// </summary>
+    [PunRPC]
+    private void Retry()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().name);
+    }
+    /// <summary>
+    /// [PunRPC] ゲームオーバー処理 　タイトルに戻す
     /// </summary>
     [PunRPC]
     private void GameOver()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().name);
+        PhotonNetwork.LoadLevel("Title"); //TODO :　どこのシーンに戻るか決める
+    }
+    /// <summary>
+    /// 残機数を減らし0以下かを確認する
+    /// </summary>
+    /// <returns>ture 1以上 false 0以下</returns>
+    private bool ReduceLives()
+    {
+        int lives = (int)CustomPropertiesManager.GetNetValue(PhotonNetwork.LocalPlayer, "lives", out bool found);
+        if (!found)
+        {
+            Debug.LogError("残機数を取得できませんでした");
+        }
+        if (lives > 0)
+        {
+            lives--;
+            CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, "lives", lives);
+            return true;
+        }
+        else
+        {
+            CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, "lives", _lives);
+            return false;
+        }
+    }
+    /// <summary>
+    /// 残機を増やす
+    /// </summary>
+    /// <param name="value">増加量 基本は1</param>
+    public void AddLives(int value = 1)
+    {
+        int livs = (int)CustomPropertiesManager.GetNetValue(PhotonNetwork.LocalPlayer, "lives", out bool found);
+        if (!found)
+        {
+            Debug.LogError("残機数を取得できませんでした");
+        }
+        livs += value;
+        CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, "lives", livs);
     }
     /// <summary>
     ///[PunRPC] ゲームクリア処理　

@@ -870,6 +870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nextScene: Stage2
   _respawnTime: 10
+  _lives: 2
   _timer: 0
 --- !u!114 &1644447653
 MonoBehaviour:
