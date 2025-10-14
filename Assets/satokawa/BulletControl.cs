@@ -28,9 +28,13 @@ public class BulletControl : MonoBehaviourPunCallbacks
             Delete();
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
+        if(collision.gameObject.GetComponent<BulletControl>() != null)
+        {
+            //弾同士は無視
+            return;
+        }
         if (photonView.IsMine)
         {
             ITank tank = collision.gameObject.GetComponent<ITank>();

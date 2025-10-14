@@ -251,11 +251,10 @@ MonoBehaviour:
   _attackRange: 8
   _moveSpeed: 1
   _bulletInterval: 1.5
-  _player: {fileID: 0}
-  _agent: {fileID: 210776074583552066}
   _bulletPrefab: {fileID: 8653153450281945988, guid: 4054dc889e717194a8ef07c9047879d2, type: 3}
   _turret: {fileID: 7865886444252179200}
   _muzzlePosition: {fileID: 3648757676546276357}
+  _player: {fileID: 0}
 --- !u!1 &5476156238292867432
 GameObject:
   m_ObjectHideFlags: 0
