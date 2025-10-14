@@ -2,6 +2,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum Buff
+{
+    Hp,
+    Attack,
+    MoveSpeed,
+    BulletInterval
+}
+
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviourPunCallbacks, ITank
 {
@@ -19,6 +27,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [Header("コンポーネント")]
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private BulletShooter _bulletShooter;
+
+    [Header("バフの上限設定")]
+    [SerializeField] private int _maxHp;
+    [SerializeField] private int _maxattackPower;
+    [SerializeField] private float _maxmoveSpeed;
+    [SerializeField] private float _minBulletdInterval;
 
     private Vector2 _moveInput;
     private GameManager gameManager;
@@ -80,4 +94,38 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         Debug.Log($"Destroyed by actor: {info.Sender}");
     }
 
+    public void BuffStatus(Buff buff, float amount)
+    {
+        switch(buff)
+        {
+            case Buff.Hp:
+                _hp += (int)amount;
+                if (_hp > _maxHp)
+                {
+                    _hp = _maxHp;
+                }
+                break;
+            case Buff.Attack:
+                _attackPower += (int)amount;
+                if (_attackPower > _maxattackPower)
+                {
+                    _attackPower = _maxattackPower;
+                }
+                break;
+            case Buff.MoveSpeed:
+                _moveSpeed += amount;
+                if( _moveSpeed > _maxmoveSpeed)
+                {
+                    _moveSpeed = _maxmoveSpeed;
+                }
+                break;
+            case Buff.BulletInterval:
+                _bulletInterval -= amount;
+                if(_bulletInterval < _minBulletdInterval)
+                {
+                    _bulletInterval = _minBulletdInterval;
+                }
+                break;
+        }
+    }
 }
