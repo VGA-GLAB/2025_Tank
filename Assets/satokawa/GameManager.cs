@@ -19,6 +19,20 @@ public class GameManager : MonoBehaviourPunCallbacks
         Players = new List<PlayerController>();
         Enemys = new List<EnemyBase>();
 
+        if (PhotonNetwork.InRoom)
+        {
+            SetupAfterJoiningRoom();
+        }
+    }
+    public override void OnJoinedRoom()
+    {
+        SetupAfterJoiningRoom();
+    }
+    /// <summary>
+    /// ルームに入った後のセットアップ
+    /// </summary>
+    private void SetupAfterJoiningRoom()
+    {
         //残機数をCustomPropertyに保存
         if (PhotonNetwork.IsMasterClient)
         {
