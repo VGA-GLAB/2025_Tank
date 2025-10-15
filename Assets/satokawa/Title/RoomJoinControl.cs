@@ -25,10 +25,15 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _errorText.text = "";
-    }
 
-    // Update is called once per frame
+    }
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        _errorText.text = "";
+        _roomNameInput.text = "";
+        _createButton.interactable = true;
+    }
     void Update()
     {
 
@@ -37,10 +42,11 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     {
         if (CheckNameInput(_roomNameInput.text, out string errorMessage))
         {//適切なルーム名
+            _createButton.interactable = false;
             _networkManager.RoomCreate(_roomNameInput.text);
         }
         else
-        { 
+        {
             _errorText.text = errorMessage;
         }
     }
@@ -54,26 +60,36 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     {
         if (roomName.Length < 1 || roomName.Length > 10)
         {
-            errorMessage = "ルーム名は1文字以上10文字以下にしてください";
+            errorMessage = "Room name must be between 1 and 10 characters.";
             return false;
         }
         if (roomName.Contains(" ") || roomName.Contains("　"))
         {
-            errorMessage = "ルーム名にスペースは使用できません";
+            errorMessage = "Spaces are not allowed in the room name.";
             return false;
         }
         if (roomName.Contains("/") || roomName.Contains("\\"))
         {
-            errorMessage = "ルーム名に / \\ は使用できません";
+            errorMessage = "Room name cannot contain '/' or '\\'.";
             return false;
         }
         if (_networkManager.FindRoomName(roomName))
         {
-            errorMessage = "そのルーム名はすでに使用されています";
+            errorMessage = "This room name is already in use.";
             return false;
         }
         errorMessage = "";
         return true;
+
+
+    }
+    public void CreateRoomFailure(string message)
+    {
+        _errorText.text = message;
+        _createButton.interactable = true;
+    }
+    public void ReloadRoomList(List<RoomInfo> roomList)
+    {
 
     }
 }
