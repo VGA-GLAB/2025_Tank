@@ -13,6 +13,8 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private TitleUIManager _uIManager;
     [SerializeField] private GameObject _logUI;
     [SerializeField] private TextMeshProUGUI _logText;
+    [SerializeField] private TextMeshProUGUI _roomName;
+    [SerializeField] private RoomJoinControl _roomJoinControl;
     private List<RoomInfo> _roomList = new();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -50,13 +52,28 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         _logUI.SetActive(true);
         PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
     }
+    /// <summary>
+    /// ルームに参加したとき
+    /// </summary>
     public override void OnJoinedRoom()
     {
         _logUI.SetActive(false);
+        _roomName.text = "RoomName:\n"+PhotonNetwork.CurrentRoom.Name;
         _uIManager.ChangeScreen(3);
+    }
+    /// <summary>
+    /// ルームの作成に失敗したとき
+    /// </summary>
+    /// <param name="returnCode"></param>
+    /// <param name="message"></param>
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        _roomJoinControl.CreateRoomFailure($"ErrorCode:{returnCode.ToString()}  {message}");
     }
     public void GameStart()
     {
+        //参加不可にしてInGameSceneに移動
+        PhotonNetwork.CurrentRoom.IsOpen = false;
         photonView.RPC(nameof(LoadInGameScene), RpcTarget.All);
     }
     [PunRPC]
@@ -68,9 +85,21 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         _roomList = roomList;
+        _roomJoinControl.ReloadRoomList(roomList);
     }
     public bool FindRoomName(string roomName)
     {
        return  _roomList.Any(_roomList => _roomList.Name == roomName);
+    }
+    public void ExitRoom()
+    {
+        _logText.text = "Disconnecting...";
+        _logUI.SetActive(true);
+        PhotonNetwork.Disconnect();
+    }
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        _uIManager.ChangeScreen(0);
+        _logUI.SetActive(false);
     }
 }

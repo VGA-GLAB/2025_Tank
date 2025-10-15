@@ -69,6 +69,10 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
 
         foreach (PlayerController player in players)
         {
+            if(player == null)
+            {
+                continue;
+            }
             float dist = Vector3.Distance(transform.position, player.transform.position);
             if (dist < nearestDistance)
             {

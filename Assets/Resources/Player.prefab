@@ -582,6 +582,10 @@ MonoBehaviour:
   _turnSpeed: 100
   _rigidbody: {fileID: 0}
   _bulletShooter: {fileID: 5466267992034881535}
+  _maxHp: 0
+  _maxAttackPower: 0
+  _maxMoveSpeed: 0
+  _minBulletdInterval: 0
 --- !u!114 &5466267992034881535
 MonoBehaviour:
   m_ObjectHideFlags: 0
