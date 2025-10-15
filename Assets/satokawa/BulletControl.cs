@@ -30,17 +30,18 @@ public class BulletControl : MonoBehaviourPunCallbacks
     }
     private void OnTriggerEnter(Collider collision)
     {
-        if(collision.gameObject.GetComponent<BulletControl>() != null)
+        if(collision.TryGetComponent(out BulletControl bullet) || collision.TryGetComponent(out ItemBase item))
         {
-            //弾同士は無視
+            //弾とアイテムは無視
             return;
         }
         if (photonView.IsMine)
         {
-            ITank tank = collision.gameObject.GetComponent<ITank>();
-            if (tank != null)
+            if(collision.TryGetComponent(out ITank tank))
+            {
                 collision.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack);
 
+            }
         }
         Delete();
 
