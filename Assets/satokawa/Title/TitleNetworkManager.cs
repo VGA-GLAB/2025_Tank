@@ -16,6 +16,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private TextMeshProUGUI _logText;
     [SerializeField] private TextMeshProUGUI _roomName;
     [SerializeField] private RoomJoinControl _roomJoinControl;
+    [SerializeField] private TankUIControl _tankUIControl;
     private List<RoomInfo> _roomList = new();
     private Dictionary<string, RoomInfo> cachedRoomList = new();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -67,6 +68,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         _logUI.SetActive(false);
         _roomName.text = "RoomName:\n"+PhotonNetwork.CurrentRoom.Name;
         _uIManager.ChangeScreen(3);
+        _tankUIControl.JoinNewPlayer();
     }
     /// <summary>
     /// ルームの作成に失敗したとき
@@ -83,6 +85,13 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         _logText.text = $"ErrorCode:{returnCode.ToString()}  {message}";
         _logUI.SetActive(true);
         DOVirtual.DelayedCall(3f,() => _logUI.SetActive(false));//TODO エラーメッセージを出すUIを作ったらそっちに変える
+    }
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            _tankUIControl.JoinNewPlayer();
+        }
     }
     public void GameStart()
     {
