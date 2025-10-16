@@ -1,15 +1,23 @@
-﻿using TMPro;
+﻿using System.Security.Cryptography;
+using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 
 public class RoomItemView : MonoBehaviour
 {
-    [SerializeField] public GameObject _outLine { get;}
+    [SerializeField] private GameObject _outLine;
     [SerializeField] private TextMeshProUGUI _roomName;
     [SerializeField] private TextMeshProUGUI _playerCount;
-
-    public void SetRoomData(string name,int playerCount, int maxPlayer)
+    public RoomInfo _roomInfo { get; private set; }
+    public void Start()
     {
-        _roomName.text = name;
-        _playerCount.text = playerCount + "/" + maxPlayer;
+        OutLineActive(false);
     }
+    public void SetRoomData(RoomInfo info)
+    {
+        _roomName.text = info.Name;
+        _playerCount.text = info.PlayerCount + "/" + info.MaxPlayers;
+        _roomInfo = info;
+    }
+    public void OutLineActive(bool a) => _outLine.SetActive(a);
 }

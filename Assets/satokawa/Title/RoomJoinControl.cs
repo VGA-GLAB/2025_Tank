@@ -13,15 +13,13 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     [Header("RoomCreate")]
     [SerializeField] private Button _createButton;
     [SerializeField] private TMP_InputField _roomNameInput;
-    [SerializeField] private GameObject _roomCreate;
     [SerializeField] private TextMeshProUGUI _errorText;
 
     [Header("RoomJoin")]
     [SerializeField] private Button _joinButton;
     [SerializeField] private Transform _roomListContent;
     [SerializeField] private GameObject _roomListPrefab;
-    [SerializeField] private GameObject _roomIn;
-
+    private RoomItemView _selectedRoom;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -90,6 +88,49 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     }
     public void ReloadRoomList(List<RoomInfo> roomList)
     {
+        Debug.Log("ReloadRoomList");
+        for (int i = 0; i < _roomListContent.childCount; i++)
+        {
+            Destroy(_roomListContent.GetChild(i).gameObject);
+        }
+        foreach (RoomInfo info in roomList)
+        {
+            GameObject newPanel = Instantiate(_roomListPrefab, _roomListContent);
+            if(newPanel.TryGetComponent(out RoomItemView itemView))
+            {
+                itemView.SetRoomData(info);
+            }
 
+            if(newPanel.TryGetComponent(out Button button))
+            {
+                button.onClick.AddListener(() =>
+                {
+                    SelectRoom(itemView);
+                    itemView.OutLineActive(true);
+                });
+            }
+        }
+    }
+    public void SelectRoom(RoomItemView room)
+    {
+        if(room == null)
+        {
+            return;
+        }
+        if(_selectedRoom != null)
+        {
+            _selectedRoom.OutLineActive(false);
+        }
+        _selectedRoom = room;
+    }
+    public void JoinSelectRoom()
+    {
+        if(_selectedRoom == null)
+        {
+            return;
+        }
+        _networkManager.JoinRoom(_selectedRoom._roomInfo.Name);
+        _selectedRoom.OutLineActive(false);
+        _selectedRoom = null;
     }
 }

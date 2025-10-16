@@ -7394,12 +7394,10 @@ MonoBehaviour:
   _networkManager: {fileID: 2068855393}
   _createButton: {fileID: 1874016664}
   _roomNameInput: {fileID: 1476416178}
-  _roomCreate: {fileID: 0}
   _errorText: {fileID: 1663162196}
-  _joinButton: {fileID: 0}
-  _roomListContent: {fileID: 0}
-  _roomListPrefab: {fileID: 0}
-  _roomIn: {fileID: 0}
+  _joinButton: {fileID: 1192767166}
+  _roomListContent: {fileID: 1187113198}
+  _roomListPrefab: {fileID: 7731274791224035124, guid: 58c83b689c27f9f4e86bd4f3c526daf9, type: 3}
 --- !u!1 &1187113197
 GameObject:
   m_ObjectHideFlags: 0
@@ -7455,7 +7453,7 @@ MonoBehaviour:
     m_Top: 40
     m_Bottom: 0
   m_ChildAlignment: 1
-  m_Spacing: 0
+  m_Spacing: 30
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -7559,7 +7557,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1192767167}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1158322040}
+        m_TargetAssemblyTypeName: RoomJoinControl, Assembly-CSharp
+        m_MethodName: JoinSelectRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1192767167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14521,7 +14531,7 @@ MonoBehaviour:
   _logUI: {fileID: 1888394334}
   _logText: {fileID: 1558187134}
   _roomName: {fileID: 702931402}
-  _roomJoinControl: {fileID: 0}
+  _roomJoinControl: {fileID: 1158322040}
 --- !u!114 &2068855394
 MonoBehaviour:
   m_ObjectHideFlags: 0
