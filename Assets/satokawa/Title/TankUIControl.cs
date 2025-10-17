@@ -4,26 +4,38 @@ using System.Collections.Generic;
 using Photon.Pun;
 public class TankUIControl : MonoBehaviour
 {
-    [SerializeField] private RawImage[] _tankImage;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    [SerializeField] private GameObject[] _tankObject;
+    [SerializeField] private Material[] _tankMaterial;
+    [SerializeField] private Material _hiddenMaterial;
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void JoinNewPlayer()
     {
         int i = 1;
         int playerNumber = PhotonNetwork.CurrentRoom.PlayerCount;
-        foreach (RawImage image in _tankImage)
+        foreach (GameObject tank in _tankObject)
         {
-            image.gameObject.SetActive(i <= playerNumber);
+            if (i <= playerNumber)
+            {
+                ChangeMaterial(_tankMaterial[i - 1], tank);
+            }
+            else
+            {
+                ChangeMaterial(_hiddenMaterial, tank);
+            }
             i++;
+        }
+    }
+    private void ChangeMaterial(Material material, GameObject tank)
+    {
+        Transform[] allChildren = tank.GetComponentsInChildren<Transform>(true);
+
+        foreach (Transform child in allChildren)
+        {
+            if (child == tank) continue; // 親自身を除外したい場合
+            if (child.TryGetComponent(out MeshRenderer meshRenderer))
+            {
+                meshRenderer.material = material;
+            }
         }
     }
 }

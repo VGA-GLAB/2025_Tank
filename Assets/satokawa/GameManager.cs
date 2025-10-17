@@ -188,6 +188,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void Retry()
     {
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().name);
     }
@@ -197,6 +201,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void GameOver()
     {
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.LoadLevel("Title"); //TODO :　どこのシーンに戻るか決める
     }

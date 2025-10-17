@@ -88,7 +88,6 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     }
     public void ReloadRoomList(List<RoomInfo> roomList)
     {
-        Debug.Log("ReloadRoomList");
         for (int i = 0; i < _roomListContent.childCount; i++)
         {
             Destroy(_roomListContent.GetChild(i).gameObject);
