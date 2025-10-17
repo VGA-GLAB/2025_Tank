@@ -3,11 +3,14 @@ using Photon.Pun;
 using System.Collections.Generic;
 using DG.Tweening;
 using System;
+using static UnityEngine.GraphicsBuffer;
 /// <summary>
 /// ボス敵のクラス
 /// </summary>
 public class EnemyBoss : EnemyBase
 {
+    [SerializeField,Header("タレット回転速度")] private float _turretRotateSpeed;
+
     [System.Serializable]
     public class AttackPattern
     {
@@ -28,7 +31,7 @@ public class EnemyBoss : EnemyBase
 
     private float _patternTimer;
     private int _patternIndex;
-    private int _attackCounter;
+    private int _attackCounter =1;
 
     private float _laserTimer;
     private bool _isRaserTween = false;
@@ -43,13 +46,18 @@ public class EnemyBoss : EnemyBase
         _patternIndex = 0;
         _patternTimer = 0;
     }
-    private void Update()
+    public  void Update()
     {
+        if (!PlayerFind()) return;
+
         if (_isLaser)
         {
             AttackRaser();
         }
-
+        if (_attackPatterns[_patternIndex]._attackType != AttackType.LaserShot)
+        {
+            RotationTurret();
+        }
         AttackPattern pattern = _attackPatterns[_patternIndex];
         _patternTimer += Time.deltaTime;
         if (pattern == null || _patternTimer < pattern._attackInterval)
@@ -110,7 +118,16 @@ public class EnemyBoss : EnemyBase
             }
         }
     }
+    private void RotationTurret()
+    {
+        if(Player == null) return;
 
+        Vector3 playerPosition = Player.transform.position;
+        playerPosition.y = _turret.transform.position.y;
+
+        Quaternion targetRotation = Quaternion.LookRotation(playerPosition - _turret.transform.position);
+        _turret.transform.rotation = Quaternion.Lerp(_turret.transform.rotation,targetRotation,Time.deltaTime * _turretRotateSpeed);
+    }
     /// <summary>
     /// レーザー攻撃のシーケンスを開始
     /// </summary>
@@ -218,7 +235,7 @@ public class EnemyBoss : EnemyBase
     {
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
-            GameObject bullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.LookRotation(direction));
+            GameObject bullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.LookRotation(_muzzlePosition.transform.forward));
         }
     }
     public override void Move() { }

@@ -502,13 +502,23 @@ MonoBehaviour:
   _turret: {fileID: 6261481625025165700}
   _muzzlePosition: {fileID: 6032910575836555161}
   _player: {fileID: 0}
-  attackPatterns:
-  - attackType: 2
-    shotCount: 2
-    shotInterval: 2
-  - attackType: 0
-    shotCount: 1
-    shotInterval: 1
+  _turretRotateSpeed: 5
+  _attackPatterns:
+  - _attackType: 3
+    _attackCount: 1
+    _attackInterval: 3
+  - _attackType: 0
+    _attackCount: 5
+    _attackInterval: 0.5
+  - _attackType: 1
+    _attackCount: 2
+    _attackInterval: 1.5
+  - _attackType: 2
+    _attackCount: 2
+    _attackInterval: 1
+  - _attackType: 0
+    _attackCount: 50
+    _attackInterval: 0.1
   _buckshotAngle: 10
   _laserAngle: 120
   _laserDistance: 20
