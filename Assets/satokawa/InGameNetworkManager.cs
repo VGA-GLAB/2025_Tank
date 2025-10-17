@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PhotonView))]
 /// <summary>
 /// インゲームのネットワーク関係を管理
@@ -148,5 +149,11 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         {
             GameObject newItem = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
         }
+    }
+    public void ReturnToTitle()
+    {
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("Title");
+        return;
     }
 }

@@ -252,6 +252,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void GameClear()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+        if(_nextScene == "Title")
+        {
+            _networkManager.ReturnToTitle();
+            return;
+        }
         PhotonNetwork.LoadLevel(_nextScene);
     }
 }
