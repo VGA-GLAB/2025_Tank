@@ -126,11 +126,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if (ReduceLives())
             {
-                photonView.RPC(nameof(Retry), RpcTarget.All);
+                Retry();
             }
             else
             {
-                photonView.RPC(nameof(GameOver), RpcTarget.All);
+                GameOver();
             }
         }
         else if (diePlayer.GetComponent<PhotonView>().IsMine)
@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         if (!isEnemyActive && PhotonNetwork.IsMasterClient)
         {
-            photonView.RPC(nameof(GameClear), RpcTarget.All);
+            GameClear();
         }
     }
 
@@ -185,27 +185,23 @@ public class GameManager : MonoBehaviourPunCallbacks
     ///[PunRPC] リトライ処理
     /// 現在のステージをリロードする
     /// </summary>
-    [PunRPC]
     private void Retry()
     {
         if(!PhotonNetwork.IsMasterClient)
         {
             return;
         }
-        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().name);
     }
     /// <summary>
     /// [PunRPC] ゲームオーバー処理 　タイトルに戻す
     /// </summary>
-    [PunRPC]
     private void GameOver()
     {
         if(!PhotonNetwork.IsMasterClient)
         {
             return;
         }
-        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.LoadLevel("Title"); //TODO :　どこのシーンに戻るか決める
     }
     /// <summary>
@@ -248,13 +244,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// <summary>
     ///[PunRPC] ゲームクリア処理　
     /// </summary>
-    [PunRPC]
     private void GameClear()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
         if(_nextScene == "Title")
         {
-            _networkManager.ReturnToTitle();
+            photonView.RPC("ReturnToTitle", RpcTarget.All);
             return;
         }
         PhotonNetwork.LoadLevel(_nextScene);

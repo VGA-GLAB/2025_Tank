@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 /// <summary>
 /// タイトルのネットワークを管理
 /// </summary>
@@ -25,6 +23,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -98,9 +97,10 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         _logUI.SetActive(false);
-        _roomName.text = "ルーム名:\n"+PhotonNetwork.CurrentRoom.Name;
+        _roomName.text = "ルーム名:\n" + PhotonNetwork.CurrentRoom.Name;
         _uIManager.ChangeScreen(3);
         _tankUIControl.JoinNewPlayer();
+        PhotonNetwork.AutomaticallySyncScene = true; // 事前に設定してもOK
     }
     /// <summary>
     /// ルームの作成に失敗したとき
@@ -125,25 +125,18 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public void GameStart()
     {
         //参加不可にしてInGameSceneに移動
-        PhotonNetwork.CurrentRoom.IsOpen = false;
-        photonView.RPC(nameof(LoadInGameScene), RpcTarget.All);
-    }
-    [PunRPC]
-    public void LoadInGameScene()
-    {
-        PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.LoadLevel("Stage1");
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.LoadLevel("Stage1");           // マスターだけ呼ぶ
+        }
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        Debug.Log($"OnRoomListUpdate 呼ばれた: {roomList.Count} 件");
-        foreach (var info in roomList)
-        {
-            Debug.Log($"ルーム: {info.Name}, 削除: {info.RemovedFromList}, 開放: {info.IsOpen}, 表示: {info.IsVisible}");
-        }
         foreach (RoomInfo info in roomList)
         {
-            if(!info.IsOpen || !info.IsVisible || info.RemovedFromList)
+            if (!info.IsOpen || !info.IsVisible || info.RemovedFromList)
             {
                 if (_cachedRoomList.ContainsKey(info.Name))
                 {
@@ -161,7 +154,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
             }
         }
         _roomList.Clear();
-        foreach(RoomInfo info in _cachedRoomList.Values)
+        foreach (RoomInfo info in _cachedRoomList.Values)
         {
             _roomList.Add(info);
         }
@@ -169,7 +162,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public bool FindRoomName(string roomName)
     {
-       return  _roomList.Any(_roomList => _roomList.Name == roomName);
+        return _roomList.Any(_roomList => _roomList.Name == roomName);
     }
     public void ExitRoom()
     {

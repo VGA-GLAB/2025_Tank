@@ -57,7 +57,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         yield return new WaitUntil(() => _isAllLoaded);
 
         // 条件が揃ったらここが実行される
-        CreatePlayerTank();
+        photonView.RPC(nameof(CreatePlayerTank), RpcTarget.All);
         CreateEnemyTank();
         CreateItem();
 
@@ -99,10 +99,9 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     /// <summary>
     /// プレイヤーを生成
     /// </summary>
+    [PunRPC]
     public void CreatePlayerTank()
     {
-
-
         Vector3 position;
         Quaternion rotation;
         //プレイヤーの数が_clonePositionを越えていないかを確認
@@ -151,6 +150,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             GameObject newItem = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
         }
     }
+    [PunRPC]
     public void ReturnToTitle()
     {
         StartCoroutine(DisconnectAndReturn());
