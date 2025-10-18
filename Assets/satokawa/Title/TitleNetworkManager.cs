@@ -13,6 +13,7 @@ using UnityEngine.UI;
 public class TitleNetworkManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TitleUIManager _uIManager;
+    [SerializeField] private MessageUI _messageUI;
     [SerializeField] private GameObject _logUI;
     [SerializeField] private TextMeshProUGUI _logText;
     [SerializeField] private TextMeshProUGUI _roomName;
@@ -49,6 +50,13 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public void JoinMaster()
     {
+        //インターネット接続確認
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            _messageUI.ShowMessage("インターネットに接続されていません。");
+            return;
+        }
+
         PhotonNetwork.OfflineMode = false;
         _logText.text = "サーバーに接続中...";
         _logUI.SetActive(true);
@@ -101,14 +109,11 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     /// <param name="message"></param>
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        _logUI.SetActive(false);
-        _roomJoinControl.CreateRoomFailure($"ErrorCode:{returnCode.ToString()}  {message}");//TODO これも変える
+        _messageUI.ShowMessage($"Error Code:{returnCode.ToString()} \n {message}");
     }
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        _logText.text = $"ErrorCode:{returnCode.ToString()}  {message}";
-        _logUI.SetActive(true);
-        DOVirtual.DelayedCall(3f,() => _logUI.SetActive(false));//TODO エラーメッセージを出すUIを作ったらそっちに変える
+        _messageUI.ShowMessage($"Error Code:{returnCode.ToString()} \n {message}");
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
