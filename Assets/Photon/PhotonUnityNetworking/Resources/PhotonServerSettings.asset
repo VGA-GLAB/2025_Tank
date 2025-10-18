@@ -50,6 +50,7 @@ MonoBehaviour:
   - HitAction
   - Retry
   - CreatePlayerTank
+  - ReturnToTitle
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
