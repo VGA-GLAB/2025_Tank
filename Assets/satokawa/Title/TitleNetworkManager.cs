@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 /// <summary>
 /// タイトルのネットワークを管理
@@ -28,7 +29,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (PhotonNetwork.IsConnected)
+        if (PhotonNetwork.IsConnected && !PhotonNetwork.OfflineMode)
         {
             _refreshTimer += Time.deltaTime;
             if (_refreshTimer >= 10f) // 5秒おき
@@ -38,8 +39,17 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
             }
         }
     }
+    public void StartSinglePlay()
+    {
+        if (PhotonNetwork.IsConnected)//接続済みだったら切断
+            PhotonNetwork.Disconnect();
+
+        PhotonNetwork.OfflineMode = true;
+        SceneManager.LoadScene("Stage1");
+    }
     public void JoinMaster()
     {
+        PhotonNetwork.OfflineMode = false;
         _logText.text = "サーバーに接続中...";
         _logUI.SetActive(true);
         PhotonNetwork.ConnectUsingSettings();
@@ -47,6 +57,10 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         _logText.text = "ロビーに接続中...";
+        if (PhotonNetwork.OfflineMode)
+        {
+            return;
+        }
         PhotonNetwork.JoinLobby();
     }
     public override void OnJoinedLobby()

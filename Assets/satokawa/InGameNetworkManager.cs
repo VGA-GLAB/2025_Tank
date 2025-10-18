@@ -29,6 +29,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     }
     void Start()
     {
+
         //接続の状態によって処理を分岐
         if (PhotonNetwork.InRoom)
         {
@@ -152,8 +153,13 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     }
     public void ReturnToTitle()
     {
+        StartCoroutine(DisconnectAndReturn());
+    }
+
+    private IEnumerator DisconnectAndReturn()
+    {
         PhotonNetwork.Disconnect();
+        yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
         SceneManager.LoadScene("Title");
-        return;
     }
 }
