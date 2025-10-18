@@ -18,7 +18,8 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private RoomJoinControl _roomJoinControl;
     [SerializeField] private TankUIControl _tankUIControl;
     private List<RoomInfo> _roomList = new();
-    private Dictionary<string, RoomInfo> cachedRoomList = new();
+    private Dictionary<string, RoomInfo> _cachedRoomList = new();
+    private float _refreshTimer = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,16 +28,25 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        if (PhotonNetwork.IsConnected)
+        {
+            _refreshTimer += Time.deltaTime;
+            if (_refreshTimer >= 10f) // 5秒おき
+            {
+                _refreshTimer = 0;
+                PhotonNetwork.JoinLobby(); // 再参加＝RoomList再取得
+            }
+        }
     }
     public void JoinMaster()
     {
-        _logText.text = "Connecting to server...";
+        _logText.text = "サーバーに接続中...";
         _logUI.SetActive(true);
         PhotonNetwork.ConnectUsingSettings();
     }
     public override void OnConnectedToMaster()
     {
-        _logText.text = "Connecting to lobby...";
+        _logText.text = "ロビーに接続中...";
         PhotonNetwork.JoinLobby();
     }
     public override void OnJoinedLobby()
@@ -50,13 +60,13 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         roomOptions.MaxPlayers = 4;
         roomOptions.IsVisible = true;
         roomOptions.IsOpen = true;
-        _logText.text = "Creating a room...";
+        _logText.text = "ルームを作成中...";
         _logUI.SetActive(true);
         PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
     }
     public void JoinRoom(string roomName)
     {
-        _logText.text = "Joining a room...";
+        _logText.text = "ルームに接続中...";
         _logUI.SetActive(true);
         PhotonNetwork.JoinRoom(roomName);
     }
@@ -66,7 +76,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         _logUI.SetActive(false);
-        _roomName.text = "RoomName:\n"+PhotonNetwork.CurrentRoom.Name;
+        _roomName.text = "ルーム名:\n"+PhotonNetwork.CurrentRoom.Name;
         _uIManager.ChangeScreen(3);
         _tankUIControl.JoinNewPlayer();
     }
@@ -107,27 +117,32 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        foreach(RoomInfo info in roomList)
+        Debug.Log($"OnRoomListUpdate 呼ばれた: {roomList.Count} 件");
+        foreach (var info in roomList)
+        {
+            Debug.Log($"ルーム: {info.Name}, 削除: {info.RemovedFromList}, 開放: {info.IsOpen}, 表示: {info.IsVisible}");
+        }
+        foreach (RoomInfo info in roomList)
         {
             if(!info.IsOpen || !info.IsVisible || info.RemovedFromList)
             {
-                if (cachedRoomList.ContainsKey(info.Name))
+                if (_cachedRoomList.ContainsKey(info.Name))
                 {
-                    cachedRoomList.Remove(info.Name);
+                    _cachedRoomList.Remove(info.Name);
                 }
                 continue;
             }
-            if (cachedRoomList.ContainsKey(info.Name))
+            if (_cachedRoomList.ContainsKey(info.Name))
             {
-                cachedRoomList[info.Name] = info;
+                _cachedRoomList[info.Name] = info;
             }
             else
             {
-                cachedRoomList.Add(info.Name, info);
+                _cachedRoomList.Add(info.Name, info);
             }
         }
         _roomList.Clear();
-        foreach(RoomInfo info in cachedRoomList.Values)
+        foreach(RoomInfo info in _cachedRoomList.Values)
         {
             _roomList.Add(info);
         }
@@ -139,7 +154,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public void ExitRoom()
     {
-        _logText.text = "Disconnecting...";
+        _logText.text = "切断中...";
         _logUI.SetActive(true);
         PhotonNetwork.Disconnect();
     }
