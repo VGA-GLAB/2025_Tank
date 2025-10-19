@@ -2,6 +2,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using System.Linq;
+using System;
 /// <summary>
 /// 敵の基本クラス
 /// </summary>
@@ -58,29 +60,68 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     ///  一番近いプレイヤーをターゲットにする
     /// </summary>
     /// <returns>ture　みつかった false みつからなかった</returns>
-    public bool PlayerFind()
+    protected virtual bool PlayerFind(int n = 1)
     {
-        if(gameManager?.Players == null)
+        if (gameManager?.Players == null || gameManager.Players.Count == 0)
         {
             return false;
         }
-        List<PlayerController> players = gameManager.Players;
-        float nearestDistance = Mathf.Infinity;
 
-        foreach (PlayerController player in players)
+        List<PlayerController> players = new List<PlayerController>();
+
+        foreach (var player in gameManager.Players)
         {
-            if(player == null)
+            if (player != null)
             {
-                continue;
-            }
-            float dist = Vector3.Distance(transform.position, player.transform.position);
-            if (dist < nearestDistance)
-            {
-                nearestDistance = dist;
-                _player = player.gameObject;
+                players.Add(player);
             }
         }
-        return Player != null;
+
+        if (players.Count == 0)
+        {
+            return false;
+        }
+
+        // 距離順にソート
+        players.Sort((a, b) =>
+        {
+            float distA = Vector3.Distance(transform.position, a.transform.position);
+            float distB = Vector3.Distance(transform.position, b.transform.position);
+            return distA.CompareTo(distB); // 昇順（近い順）
+        });
+
+        // n番目が範囲外なら一番遠いプレイヤ-
+        int index = Mathf.Clamp(n - 1, 0, players.Count - 1);
+
+        _player = players[index].gameObject;
+
+        return _player != null;
+
+    }
+    /// <summary>
+    /// 指定したインデックスのプレイヤーをターゲットにする
+    /// </summary>
+    /// <param name="index">n番目に近いプレイヤー </param>
+    /// <returns>true プレイヤーを見つけた　false プレイヤーを見つからなかった </returns>
+    protected bool FindPlayer(int index)
+    {
+        var players = gameManager.Players
+            .Where(go => go != null) // nullチェック
+            .OrderBy(go => Vector3.Distance(transform.position, go.transform.position)) // 距離順にソート
+            .ToArray();
+
+        // プレイヤーが存在しない場合は false を返す
+        if (players.Length == 0) return false;
+
+        // インデックスが範囲外の場合は false を返す
+        if (index < 0 || index >= players.Length) return false;
+        _player = players[index].gameObject;
+
+        // 指定されたインデックスが要素数を超えるなら一番遠いプレイヤーを選択するパターン
+        // if (index < 0) return false;
+        // _player = players[Mathf.Min(index, players.Length - 1)].gameObject;
+
+        return true;
     }
 
     /// <summary>
