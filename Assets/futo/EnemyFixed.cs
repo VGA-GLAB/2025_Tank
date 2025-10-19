@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyFixed : EnemyBase
 {
-    [SerializeField] Transform[] _patrolPoint;
+    [SerializeField]　private Transform[] _patrolPoint;
 
     private int _destpoint = 0;
     private float _attackTimer;
