@@ -5,18 +5,20 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 /// <summary>
 /// タイトルのネットワークを管理
 /// </summary>
 public class TitleNetworkManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TitleUIManager _uIManager;
-    [SerializeField] private MessageUI _messageUI;
+    [SerializeField] private ErrorMessageUI _messageUI;
     [SerializeField] private GameObject _logUI;
     [SerializeField] private TextMeshProUGUI _logText;
     [SerializeField] private TextMeshProUGUI _roomName;
     [SerializeField] private RoomJoinControl _roomJoinControl;
     [SerializeField] private TankUIControl _tankUIControl;
+    [SerializeField] private Button _serverJoinButton;
     private List<RoomInfo> _roomList = new();
     private Dictionary<string, RoomInfo> _cachedRoomList = new();
     private float _refreshTimer = 0;
@@ -39,6 +41,10 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
             }
         }
     }
+    public void RoomDataReload()
+    {
+        PhotonNetwork.JoinLobby();
+    }
     public void StartSinglePlay()
     {
         if (PhotonNetwork.IsConnected)//接続済みだったら切断
@@ -49,6 +55,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public void JoinMaster()
     {
+        _serverJoinButton.interactable = false;
         //インターネット接続確認
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
@@ -72,6 +79,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedLobby()
     {
+        _serverJoinButton.interactable = true;
         _logUI.SetActive(false);
         _uIManager.ChangeScreen(1);
     }
@@ -107,14 +115,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     /// </summary>
     /// <param name="returnCode"></param>
     /// <param name="message"></param>
-    public override void OnCreateRoomFailed(short returnCode, string message)
-    {
-        _messageUI.ShowMessage($"Error Code:{returnCode.ToString()} \n {message}");
-    }
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        _messageUI.ShowMessage($"Error Code:{returnCode.ToString()} \n {message}");
-    }
+  
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         if (PhotonNetwork.InRoom)
@@ -136,6 +137,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     {
         foreach (RoomInfo info in roomList)
         {
+            Debug.Log(info.Name);
             if (!info.IsOpen || !info.IsVisible || info.RemovedFromList)
             {
                 if (_cachedRoomList.ContainsKey(info.Name))
@@ -166,13 +168,47 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public void ExitRoom()
     {
+        if (!PhotonNetwork.IsConnected)
+        {
+            OnDisconnected(DisconnectCause.None);
+            return;
+        }
         _logText.text = "切断中...";
         _logUI.SetActive(true);
         PhotonNetwork.Disconnect();
     }
+    //-------------------------------
+    //エラー処理
+    //-------------------------------
+
+    /// <summary>
+    /// サーバーから切断されたとき
+    /// </summary>
+    /// <param name="cause"></param>
     public override void OnDisconnected(DisconnectCause cause)
     {
+        _serverJoinButton.interactable = true;
+        _messageUI.ShowMessage(cause);
         _uIManager.ChangeScreen(0);
         _logUI.SetActive(false);
     }
+    /// <summary>
+    /// ルームの作成に失敗したとき
+    /// </summary>
+    /// <param name="returnCode"></param>
+    /// <param name="message"></param>
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        _messageUI.ShowMessage($"Error Code:{returnCode.ToString()} \n {message}");
+    }
+    /// <summary>
+    /// ルームの参加に失敗したとき
+    /// </summary>
+    /// <param name="returnCode"></param>
+    /// <param name="message"></param>
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        _messageUI.ShowMessage($"Error Code:{returnCode.ToString()} \n {message}");
+    }
+    
 }

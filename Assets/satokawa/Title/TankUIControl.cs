@@ -7,7 +7,7 @@ public class TankUIControl : MonoBehaviour
     [SerializeField] private GameObject[] _tankObject;
     [SerializeField] private Material[] _tankMaterial;
     [SerializeField] private Material _hiddenMaterial;
-
+    [SerializeField] private Button _startButton;
     public void JoinNewPlayer()
     {
         int i = 1;
@@ -24,6 +24,8 @@ public class TankUIControl : MonoBehaviour
             }
             i++;
         }
+
+        _startButton.interactable = PhotonNetwork.IsMasterClient;
     }
     private void ChangeMaterial(Material material, GameObject tank)
     {

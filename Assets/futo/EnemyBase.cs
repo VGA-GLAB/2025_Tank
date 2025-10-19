@@ -1,9 +1,8 @@
-﻿using Photon.Pun;
-using UnityEngine;
-using System.Collections.Generic;
-using UnityEngine.AI;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System;
+using Photon.Pun;
+using UnityEngine;
+using UnityEngine.AI;
 /// <summary>
 /// 敵の基本クラス
 /// </summary>

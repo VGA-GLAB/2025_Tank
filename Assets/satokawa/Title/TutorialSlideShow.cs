@@ -5,39 +5,42 @@ using UnityEngine.UI;
 
 public class TutorialSlideShow : MonoBehaviour
 {
-    [SerializeField] private Sprite[] images;
-    [SerializeField] private Image mainImage;
-    [SerializeField] private Image slideImage;
-    [SerializeField] private float moveDuration = 1f;
-    [SerializeField] private float movePositionX;
-    private int viewIndex = 0;
-    private bool isMove = false;
+    [SerializeField] private Sprite[] _images;
+    [SerializeField] private Image _mainImage;
+    [SerializeField] private Image _slideImage;
+    [SerializeField] private float _moveDuration = 1f;
+    [SerializeField] private float _movePositionX;
+    private int _viewIndex = 0;
+    private bool _isMove = false;
     private void OnEnable()
     {
-        viewIndex = 0;
-        mainImage.sprite = images[viewIndex];
-        slideImage.gameObject.SetActive(false);
+        _viewIndex = 0;
+        _mainImage.sprite = _images[_viewIndex];
+        _slideImage.gameObject.SetActive(false);
     }
-
+    /// <summary>
+    /// スライドを切り替える
+    /// </summary>
+    /// <param name="next">true 次　false 戻す</param>
     public void OnClick(bool next)
     {
-        if (isMove) return;
-        isMove = true;
-        slideImage.sprite = images[viewIndex];
-        slideImage.gameObject.SetActive(true);
+        if (_isMove) return;
+        _isMove = true;
+        _slideImage.sprite = _images[_viewIndex];
+        _slideImage.gameObject.SetActive(true);
 
         //indexを更新
-        viewIndex = (viewIndex + (next ? 1 : -1) + images.Length) % images.Length;
-        mainImage.sprite = images[viewIndex];
-        mainImage.rectTransform.localPosition = new Vector3(movePositionX * (next ? 1 : -1), mainImage.rectTransform.localPosition.y, 0);
-        slideImage.rectTransform.localPosition = Vector3.zero;
+        _viewIndex = (_viewIndex + (next ? 1 : -1) + _images.Length) % _images.Length;
+        _mainImage.sprite = _images[_viewIndex];
+        _mainImage.rectTransform.localPosition = new Vector3(_movePositionX * (next ? 1 : -1), _mainImage.rectTransform.localPosition.y, 0);
+        _slideImage.rectTransform.localPosition = Vector3.zero;
 
-        mainImage.rectTransform.DOLocalMoveX(0, moveDuration);
-        slideImage.rectTransform.DOLocalMoveX(movePositionX * (next ? -1 : 1), moveDuration)
+        _mainImage.rectTransform.DOLocalMoveX(0, _moveDuration);
+        _slideImage.rectTransform.DOLocalMoveX(_movePositionX * (next ? -1 : 1), _moveDuration)
             .OnComplete(() =>
             {
-                slideImage.gameObject.SetActive(false);
-                isMove = false;
+                _slideImage.gameObject.SetActive(false);
+                _isMove = false;
             });
     }
 }
