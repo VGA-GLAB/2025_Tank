@@ -67,7 +67,7 @@ public class EnemyFixed : EnemyBase
         }
     }
 
-    void GoNextPoint()
+   　private void GoNextPoint()
     {
         if (_patrolPoint.Length == 0) return;
 
@@ -76,7 +76,7 @@ public class EnemyFixed : EnemyBase
         _destpoint = (_destpoint + 1) % _patrolPoint.Length;
     }
 
-    void FindPatrolPoint()
+    private void FindPatrolPoint()
     {
         GameObject[] points = GameObject.FindGameObjectsWithTag("PatrolPoint");
 
