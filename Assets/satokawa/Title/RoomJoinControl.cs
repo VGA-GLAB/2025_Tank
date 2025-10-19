@@ -13,15 +13,13 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     [Header("RoomCreate")]
     [SerializeField] private Button _createButton;
     [SerializeField] private TMP_InputField _roomNameInput;
-    [SerializeField] private GameObject _roomCreate;
     [SerializeField] private TextMeshProUGUI _errorText;
 
     [Header("RoomJoin")]
     [SerializeField] private Button _joinButton;
     [SerializeField] private Transform _roomListContent;
     [SerializeField] private GameObject _roomListPrefab;
-    [SerializeField] private GameObject _roomIn;
-
+    private RoomItemView _selectedRoom;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -42,6 +40,7 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     {
         if (CheckNameInput(_roomNameInput.text, out string errorMessage))
         {//適切なルーム名
+            _errorText.text = errorMessage;
             _createButton.interactable = false;
             _networkManager.RoomCreate(_roomNameInput.text);
         }
@@ -58,31 +57,35 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     /// <returns>true 適切　flase 問題を起こす可能性がある</returns>
     public bool CheckNameInput(string roomName, out string errorMessage)
     {
-        if (roomName.Length < 1 || roomName.Length > 10)
+        if (roomName.Length < 1 )
         {
-            errorMessage = "Room name must be between 1 and 10 characters.";
+            errorMessage = "1文字以上にしてください。";
+            return false;
+        } 
+        if (roomName.Length > 10)
+        {
+            errorMessage = "10文字以下にしてください。";
             return false;
         }
         if (roomName.Contains(" ") || roomName.Contains("　"))
         {
-            errorMessage = "Spaces are not allowed in the room name.";
+            errorMessage = "スペースを含めることはできません。";
             return false;
         }
         if (roomName.Contains("/") || roomName.Contains("\\"))
         {
-            errorMessage = "Room name cannot contain '/' or '\\'.";
+            errorMessage = "/ \\ は使えません";
             return false;
         }
         if (_networkManager.FindRoomName(roomName))
         {
-            errorMessage = "This room name is already in use.";
+            errorMessage = "このルーム名はすでに使用されています。";
             return false;
         }
         errorMessage = "";
         return true;
-
-
     }
+
     public void CreateRoomFailure(string message)
     {
         _errorText.text = message;
@@ -90,6 +93,49 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     }
     public void ReloadRoomList(List<RoomInfo> roomList)
     {
+        Debug.Log("ルームリスト再読み込み");
+        for (int i = 0; i < _roomListContent.childCount; i++)
+        {
+            Destroy(_roomListContent.GetChild(i).gameObject);
+        }
+        foreach (RoomInfo info in roomList)
+        {
+            GameObject newPanel = Instantiate(_roomListPrefab, _roomListContent);
+            if(newPanel.TryGetComponent(out RoomItemView itemView))
+            {
+                itemView.SetRoomData(info);
+            }
 
+            if(newPanel.TryGetComponent(out Button button))
+            {
+                button.onClick.AddListener(() =>
+                {
+                    SelectRoom(itemView);
+                    itemView.OutLineActive(true);
+                });
+            }
+        }
+    }
+    public void SelectRoom(RoomItemView room)
+    {
+        if(room == null)
+        {
+            return;
+        }
+        if(_selectedRoom != null)
+        {
+            _selectedRoom.OutLineActive(false);
+        }
+        _selectedRoom = room;
+    }
+    public void JoinSelectRoom()
+    {
+        if(_selectedRoom == null)
+        {
+            return;
+        }
+        _networkManager.JoinRoom(_selectedRoom._roomInfo.Name);
+        _selectedRoom.OutLineActive(false);
+        _selectedRoom = null;
     }
 }

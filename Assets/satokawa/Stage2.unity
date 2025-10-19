@@ -870,7 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d9773bc02a4e9e4e98bedae2a3fe415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nextScene: Stage2
+  _nextScene: BossStage
   _respawnTime: 10
   _lives: 2
 --- !u!114 &1644447653

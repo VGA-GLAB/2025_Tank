@@ -2,6 +2,8 @@
 using Photon.Pun;
 using Photon.Realtime;
 using DG.Tweening;
+using System.Collections;
+using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PhotonView))]
 /// <summary>
 /// インゲームのネットワーク関係を管理
@@ -19,6 +21,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("敵の生成位置と敵オブジェクト")] private CloneData[] _enemyClone;
     [SerializeField, Header("アイテムをの生成位置とアイテムオブジェクト")] private CloneData[] _itemClone;
     public int _playerNumber { get; private set; }//何番目にルームに入ったか
+    private bool _isAllLoaded;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -26,12 +29,17 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     }
     void Start()
     {
+
         //接続の状態によって処理を分岐
         if (PhotonNetwork.InRoom)
         {
-            CreatePlayerTank();
-            CreateEnemyTank();
-            CreateItem();
+            _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+            CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, $"isLoaded{_playerNumber}", 1);
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(WaitAllLoaded());
+            }
         }
         else if (PhotonNetwork.IsConnected)
         {
@@ -43,25 +51,57 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectUsingSettings();
         }
     }
+    private IEnumerator WaitAllLoaded()
+    {
+        // 条件が満たされるまで待つ
+        yield return new WaitUntil(() => _isAllLoaded);
+
+        // 条件が揃ったらここが実行される
+        photonView.RPC(nameof(CreatePlayerTank), RpcTarget.All);
+        CreateEnemyTank();
+        CreateItem();
+
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            CustomPropertiesManager.SetNetValue(player, $"isLoaded{player.ActorNumber}", 0);
+        }
+    }
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        if (_isAllLoaded)
+        {
+            return;
+        }
+        _isAllLoaded = true;
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            int data = (int)CustomPropertiesManager.GetNetValue(player, $"isLoaded{player.ActorNumber}", out bool found);
+            if (!found || data == 0)
+            {
+                _isAllLoaded = false;
+                break;
+            }
+        }
+
+    }
 
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinOrCreateRoom("Room", new RoomOptions(), TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom(Random.Range(-1000, 1000).ToString(), new RoomOptions(), TypedLobby.Default);
     }
     public override void OnJoinedRoom()
     {
-        CreatePlayerTank();
-        CreateEnemyTank();
-        CreateItem();
+        _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+        CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, $"isLoaded{_playerNumber}", 1);
+        StartCoroutine(WaitAllLoaded());
     }
 
     /// <summary>
     /// プレイヤーを生成
     /// </summary>
+    [PunRPC]
     public void CreatePlayerTank()
     {
-        _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-
         Vector3 position;
         Quaternion rotation;
         //プレイヤーの数が_clonePositionを越えていないかを確認
@@ -109,5 +149,17 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         {
             GameObject newItem = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
         }
+    }
+    [PunRPC]
+    public void ReturnToTitle()
+    {
+        StartCoroutine(DisconnectAndReturn());
+    }
+
+    private IEnumerator DisconnectAndReturn()
+    {
+        PhotonNetwork.Disconnect();
+        yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
+        SceneManager.LoadScene("Title");
     }
 }
