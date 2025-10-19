@@ -3,7 +3,6 @@ using Photon.Pun;
 using System.Collections.Generic;
 using DG.Tweening;
 using System;
-using static UnityEngine.GraphicsBuffer;
 /// <summary>
 /// ボス敵のクラス
 /// </summary>
