@@ -1,13 +1,15 @@
 ﻿using Photon.Pun;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class FlankingEnemy : EnemyBase
 {
     [Header("背後を取ろうとする時の設定")]
-    [SerializeField] private float _flankOffset = 2f;
+    [SerializeField, Tooltip("プレイヤーの背後から側面にずれる距離")] private float _flankOffset = 2f;
+    [SerializeField, Tooltip("プレイヤーの背後からの距離")] private float _behindDistance = 3f;
     [SerializeField, Tooltip("プレイヤーの背後の場所の更新")] private float _updateInterval = 0.5f;
 
-    [SerializeField]private float _distance;
+    private float _distance;
     private float _attackTimer;
     private float _updateTimer;
     private int flanDirection;
@@ -44,11 +46,11 @@ public class FlankingEnemy : EnemyBase
         _nowPosition = transform.position;
         _playerPosition = Player.transform.position;
 
-        _updateTimer -= Time.deltaTime;
-        if (_updateTimer <= 0f)
+        _updateTimer += Time.deltaTime;
+        if (_updateTimer >= _updateInterval)
         {
-            _behindPosition = Player.transform.position - Player.transform.forward * _attackRange;
-            _updateTimer = _updateInterval;
+            _behindPosition = Player.transform.position - Player.transform.forward * _behindDistance;
+            _updateTimer = 0;
         }
 
         _distance = Vector3.Distance(_nowPosition, _playerPosition);
@@ -73,7 +75,7 @@ public class FlankingEnemy : EnemyBase
         Debug.DrawRay(_rayOrigin, _direction * _attackRange, _hasObject ? Color.red : Color.green);
 #endif
 
-        if (_distance > _attackRange ||_hasObject)
+        if (_distance > _attackRange || _hasObject)
         {
             _agent.isStopped = false;
             MoveToFlankPosition();
@@ -88,11 +90,11 @@ public class FlankingEnemy : EnemyBase
     public override void Attack()
     {
         _attackTimer += Time.deltaTime;
-        if(_attackTimer >= _bulletInterval)
+        if (_attackTimer >= _bulletInterval)
         {
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.identity);
             newBullet.transform.forward = _muzzlePosition.forward;
-            if(newBullet.TryGetComponent<BulletControl>(out BulletControl component))
+            if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
             {
                 component._attack = _attack;
             }
@@ -107,6 +109,12 @@ public class FlankingEnemy : EnemyBase
     {
         _lateraDir = Player.transform.right * flanDirection;
         _targetPosition = _behindPosition + _lateraDir * _flankOffset;
+
+        // 指定した位置がNavMesh上でどこが最も近いかを検索
+        if (NavMesh.SamplePosition(_targetPosition, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+        {
+            _targetPosition = hit.position;
+        }
 
         _agent.SetDestination(_targetPosition);
     }
