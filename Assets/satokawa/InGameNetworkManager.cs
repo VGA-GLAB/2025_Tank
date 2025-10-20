@@ -4,6 +4,7 @@ using Photon.Realtime;
 using DG.Tweening;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.Linq;
 [RequireComponent(typeof(PhotonView))]
 /// <summary>
 /// インゲームのネットワーク関係を管理
@@ -20,6 +21,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("プレイヤーの生成位置")] private Transform[] _playerClonePosition;
     [SerializeField, Header("敵の生成位置と敵オブジェクト")] private CloneData[] _enemyClone;
     [SerializeField, Header("アイテムをの生成位置とアイテムオブジェクト")] private CloneData[] _itemClone;
+    [SerializeField, Header("壊せる壁プレハブ")] private GameObject _wallPrefab;
     public int _playerNumber { get; private set; }//何番目にルームに入ったか
     private bool _isAllLoaded;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -60,7 +62,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         photonView.RPC(nameof(CreatePlayerTank), RpcTarget.All);
         CreateEnemyTank();
         CreateItem();
-
+        photonView.RPC(nameof(CreateWall), RpcTarget.All);
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             CustomPropertiesManager.SetNetValue(player, $"isLoaded{player.ActorNumber}", 0);
@@ -150,6 +152,34 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             GameObject newItem = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
         }
     }
+    /// <summary>
+    /// マスターが壊せる壁を生成
+    /// </summary>
+    [PunRPC]
+    public void CreateWall()
+    {
+      
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("DestructibleWall");
+        Transform[] walls = objects.Select(obj => obj.transform).ToArray();
+        Transform parent = walls[0].parent;
+        foreach(GameObject obj in objects)
+        {
+           Destroy(obj);
+        }
+
+        //生成はマスターだけが行う
+        if (PhotonNetwork.IsMasterClient)
+        {
+            foreach (Transform wall in walls)
+            {
+                GameObject newWall = PhotonNetwork.Instantiate(_wallPrefab.name, wall.position, wall.rotation);
+                newWall.transform.parent = parent;
+                newWall.transform.localScale = wall.localScale;
+            }
+        }
+
+    }
+    
     [PunRPC]
     public void ReturnToTitle()
     {
