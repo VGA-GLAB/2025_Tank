@@ -7,6 +7,7 @@ public class FlankingEnemy : EnemyBase
     [Header("背後を取ろうとする時の設定")]
     [SerializeField, Tooltip("プレイヤーの背後から側面にずれる距離")] private float _flankOffset = 2f;
     [SerializeField, Tooltip("プレイヤーの背後からの距離")] private float _behindDistance = 3f;
+    [SerializeField, Tooltip("背後の視野角のしきい値"), Range(-1, 0)] private float _viewAngleThreshold = -0.5f;
     [SerializeField, Tooltip("プレイヤーの背後の場所の更新")] private float _updateInterval = 0.5f;
 
     private float _distance;
@@ -56,6 +57,7 @@ public class FlankingEnemy : EnemyBase
         _distance = Vector3.Distance(_nowPosition, _playerPosition);
         _direction = (_playerPosition - _nowPosition).normalized;
         _rayOrigin = _nowPosition + Vector3.up * 1.0f;
+        float dot = Vector3.Dot(this.transform.forward, _direction);
 
         if (_turret != null)
         {
@@ -75,7 +77,10 @@ public class FlankingEnemy : EnemyBase
         Debug.DrawRay(_rayOrigin, _direction * _attackRange, _hasObject ? Color.red : Color.green);
 #endif
 
-        if (_distance > _attackRange || _hasObject)
+        // 1 プレイヤーの背後にいるかどうか
+        // 2 プレイヤーとの距離が攻撃範囲より大きいか
+        // 3 オブジェクトがあるかどうか
+        if (dot > _viewAngleThreshold || _distance > _attackRange || _hasObject)
         {
             _agent.isStopped = false;
             MoveToFlankPosition();
