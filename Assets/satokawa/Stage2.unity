@@ -858,6 +858,7 @@ MonoBehaviour:
     clonePosition: {fileID: 8448927992273518173}
   - clonePrefab: {fileID: 2414042231499467189, guid: 23fe3126deafe1d4198175121845760b, type: 3}
     clonePosition: {fileID: 1909001313615061265}
+  _wallPrefab: {fileID: 6053443035484031607, guid: e461fc9ed184e3046878d501ad5a20a7, type: 3}
 --- !u!114 &1644447652
 MonoBehaviour:
   m_ObjectHideFlags: 0
