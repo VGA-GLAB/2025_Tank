@@ -13,7 +13,7 @@ public class FlankingEnemy : EnemyBase
     private float _distance;
     private float _attackTimer;
     private float _updateTimer;
-    private int flanDirection;
+    private int _flanDirection;
     private Vector3 _direction;
     private Vector3 _rayOrigin;
     private Vector3 _nowPosition;
@@ -26,7 +26,7 @@ public class FlankingEnemy : EnemyBase
     protected override void Start()
     {
         base.Start();
-        flanDirection = Random.value > 0.5f ? 1 : -1;
+        _flanDirection = Random.value > 0.5f ? 1 : -1;
     }
 
     private void Update()
@@ -112,7 +112,7 @@ public class FlankingEnemy : EnemyBase
     /// </summary>
     private void MoveToFlankPosition()
     {
-        _lateraDir = Player.transform.right * flanDirection;
+        _lateraDir = Player.transform.right * _flanDirection;
         _targetPosition = _behindPosition + _lateraDir * _flankOffset;
 
         // 指定した位置がNavMesh上でどこが最も近いかを検索
