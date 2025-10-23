@@ -28,10 +28,10 @@ public class LaserEnemy : EnemyBase
 
     public void Update()
     {
-        //if (!PlayerFind())
-        //{
-        //    return;
-        //}
+        if (!PlayerFind())
+        {
+            return;
+        }
 
         if (_isLaser)
         {
