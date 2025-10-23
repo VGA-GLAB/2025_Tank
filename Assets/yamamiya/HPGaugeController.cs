@@ -3,30 +3,55 @@ using UnityEngine.UI;
 
 public class HPGaugeController : MonoBehaviour
 {
-    [SerializeField] private Image _hpGuage;
+    [SerializeField] private GameObject _target;
+    [SerializeField] private Image _hpGauge;
+    private Camera _camera;
+    private ITank _tank;
     private float _startHP;
+
+    private void Start()
+    {
+        _camera = Camera.main;
+        if (_target != null)
+        {
+            SetTarget(_target);
+        }
+    }
 
     private void Update()
     {
-        this.transform.rotation = Camera.main.transform.rotation;
+        this.transform.rotation = _camera.transform.rotation;
     }
 
     /// <summary>
-    /// 開始時点のHPを設定する
+    /// HPゲージの表示対象を設定し、
+    /// 対象の初期HPに応じてゲージを初期化・更新。
     /// </summary>
-    /// <param name="hp"></param>
-    public void SetStartHP(float hp)
+    /// <param name="target">HPゲージの対象となるオブジェクト</param>
+    public void SetTarget(GameObject target)
     {
-        _startHP = hp;
-        UpdateHPGuage(hp);
+        if (target.TryGetComponent(out _tank))
+        {
+            _startHP = _tank.Hp;
+            UpdateHPGauge();
+        }
     }
 
     /// <summary>
-    /// HPゲージを更新する 
+    /// HPゲージを現在のHP似合わせて更新。
     /// </summary>
-    /// <param name="hp"></param>
-    public void UpdateHPGuage(float hp)
+    public void UpdateHPGauge()
     {
-        _hpGuage.fillAmount = hp / _startHP;
+        if (_tank == null || _startHP <= 0f)
+        {
+            return;
+        }
+
+        if (_tank.Hp <= 0f)
+        {
+            _hpGauge.fillAmount = 0f;
+            return;
+        }
+        _hpGauge.fillAmount = _tank.Hp / _startHP;
     }
 }
