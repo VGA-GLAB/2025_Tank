@@ -26,6 +26,7 @@ public class HPGaugeController : MonoBehaviour
     /// <summary>
     /// HPゲージの表示対象を設定し、
     /// 対象の初期HPに応じてゲージを初期化・更新。
+    /// プレイヤーを生成するかボスエネミーを生成する際は読んでください。
     /// </summary>
     /// <param name="target">HPゲージの対象となるオブジェクト</param>
     public void SetTarget(GameObject target)
