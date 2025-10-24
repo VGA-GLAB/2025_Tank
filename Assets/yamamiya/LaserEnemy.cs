@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using Photon.Pun;
 using System;
 using UnityEngine;
@@ -35,7 +35,7 @@ public class LaserEnemy : EnemyBase
 
         if (_isLaser)
         {
-            AttackRaser();
+            Attack();
         }
 
         if (_isRaserTween)
@@ -44,7 +44,7 @@ public class LaserEnemy : EnemyBase
         }
 
         _attackTimer += Time.deltaTime;
-        if(_attackTimer >= _attackInterval)
+        if (_attackTimer >= _attackInterval)
         {
             StartLaserShotSequence();
         }
@@ -117,7 +117,7 @@ public class LaserEnemy : EnemyBase
     /// <summary>
     /// レーザー攻撃
     /// </summary>
-    private void AttackRaser()
+    public override void Attack()
     {
         Debug.Log("レーザー攻撃開始");
         Ray ray = new Ray(_muzzlePosition.position, _muzzlePosition.forward);
@@ -144,5 +144,4 @@ public class LaserEnemy : EnemyBase
     }
 
     public override void Move() { }
-    public override void Attack() { }
 }
