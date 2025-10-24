@@ -160,6 +160,10 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     {
       
         GameObject[] objects = GameObject.FindGameObjectsWithTag("DestructibleWall");
+        if(objects.Length == 0)
+        {
+            return;
+        }
         Transform[] walls = objects.Select(obj => obj.transform).ToArray();
         Transform parent = walls[0].parent;
         foreach(GameObject obj in objects)

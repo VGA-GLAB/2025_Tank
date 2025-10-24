@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviourPunCallbacks
@@ -7,6 +8,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("次のステージ（Scene）")] private string _nextScene;
     [SerializeField, Header("リスポーン時間")] private float _respawnTime;
     [SerializeField, Header("残機数")] private int _lives;
+    [SerializeField] private TextMeshProUGUI _livesText;
     public List<PlayerController> Players { get; private set; }
     public List<EnemyBase> Enemys { get; private set; }
 
@@ -36,10 +38,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         //残機数をCustomPropertyに保存
         if (PhotonNetwork.IsMasterClient)
         {
-            CustomPropertiesManager.GetNetValue(PhotonNetwork.LocalPlayer, "lives", out bool found);
+            _livesText.text = CustomPropertiesManager.GetNetValue(PhotonNetwork.LocalPlayer, "lives", out bool found).ToString();
             if (!found)
             {
                 CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, "lives", _lives);
+                _livesText.text = _lives.ToString();
             }
         }
     }
@@ -187,7 +190,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// </summary>
     private void Retry()
     {
-        if(!PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient)
         {
             return;
         }
@@ -196,13 +199,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// <summary>
     /// [PunRPC] ゲームオーバー処理 　タイトルに戻す
     /// </summary>
+
     private void GameOver()
     {
-        if(!PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient)
         {
             return;
         }
-        PhotonNetwork.LoadLevel("Title"); //TODO :　どこのシーンに戻るか決める
+        photonView.RPC("ReturnToTitle", RpcTarget.All);
+        //PhotonNetwork.LoadLevel("Title"); //TODO :　どこのシーンに戻るか決める
     }
     /// <summary>
     /// 残機数を減らし0以下かを確認する
@@ -219,11 +224,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             lives--;
             CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, "lives", lives);
+            _livesText.text = CustomPropertiesManager.GetNetValue(PhotonNetwork.LocalPlayer, "lives", out found).ToString();
             return true;
         }
         else
         {
             CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, "lives", _lives);
+            _livesText.text = CustomPropertiesManager.GetNetValue(PhotonNetwork.LocalPlayer, "lives", out found).ToString();
             return false;
         }
     }
@@ -246,7 +253,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// </summary>
     private void GameClear()
     {
-        if(_nextScene == "Title")
+        if (_nextScene == "Title")
         {
             photonView.RPC("ReturnToTitle", RpcTarget.All);
             return;
