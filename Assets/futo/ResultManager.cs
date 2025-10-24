@@ -13,10 +13,9 @@ public class ResultManager : MonoBehaviour
     [Header("コンポーネント設定")]
     [SerializeField] private GameObject _resultPnanel;
     [SerializeField] private Image[] _starImage;
-    private List<Animator> _animators;
 
+    private List<Animator> _animators;
     private int _starCount;
-    [SerializeField] float Time;
 
     private void Start()
     {
@@ -27,20 +26,8 @@ public class ResultManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            ShowResult(Time);
-        }
-    }
     public void ShowResult(float clearTime)
     {
-        foreach (Image star in _starImage)
-        {
-            star.enabled = false;
-        }
-
         switch (true)
         {
             case bool _ when clearTime <= _threeStarTime:
