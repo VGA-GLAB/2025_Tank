@@ -18,11 +18,6 @@ public class HPGaugeController : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        this.transform.rotation = _camera.transform.rotation;
-    }
-
     /// <summary>
     /// HPゲージの表示対象を設定し、
     /// 対象の初期HPに応じてゲージを初期化・更新。
