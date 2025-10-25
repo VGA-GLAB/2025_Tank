@@ -501,6 +501,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 8653153450281945988, guid: 4054dc889e717194a8ef07c9047879d2, type: 3}
   _turret: {fileID: 6261481625025165700}
   _muzzlePosition: {fileID: 6032910575836555161}
+  _hpGauge: {fileID: 0}
   _player: {fileID: 0}
   _turretRotateSpeed: 5
   _attackPatterns:
@@ -525,7 +526,6 @@ MonoBehaviour:
   _laserRotationSpeed: 3
   _laserDamageInterval: 0.1
   _laserLine: {fileID: 8964624490280985592}
-  _hpGauge: {fileID: 0}
 --- !u!120 &8964624490280985592
 LineRenderer:
   serializedVersion: 2

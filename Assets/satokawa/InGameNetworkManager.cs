@@ -144,7 +144,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             if(newEnemy.TryGetComponent(out EnemyBoss boss))
             {
                 _bossHPGauge.SetTarget(newEnemy);
-                boss._hpGauge = _bossHPGauge;
+                boss.SetHPGage(_bossHPGauge);
             }
             photonView.RPC("AddEnemy", RpcTarget.All, newEnemy.GetComponent<PhotonView>().ViewID);
         }
