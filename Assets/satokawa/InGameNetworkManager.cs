@@ -22,7 +22,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("敵の生成位置と敵オブジェクト")] private CloneData[] _enemyClone;
     [SerializeField, Header("アイテムをの生成位置とアイテムオブジェクト")] private CloneData[] _itemClone;
     [SerializeField, Header("壊せる壁プレハブ")] private GameObject _wallPrefab;
-    [SerializeField,Header("PlayerのHPGaugeController")] private HPGaugeController _hpGauge;
+    [SerializeField,Header("PlayerのHPGaugeController")] private HPGaugeController _playerHPGauge;
+    [SerializeField, Header("ボスのHPゲージ　ボス戦以外はNullにする")] private HPGaugeController _bossHPGauge;
     public int _playerNumber { get; private set; }//何番目にルームに入ったか
     private bool _isAllLoaded;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -121,10 +122,10 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
 
         GameObject newPlayer = PhotonNetwork.Instantiate(_playerPrefab.name, position, rotation);
         PhotonView view = newPlayer.GetComponent<PhotonView>();
-        _hpGauge.SetTarget(newPlayer);
+        _playerHPGauge.SetTarget(newPlayer);
         if(newPlayer.TryGetComponent(out PlayerController playerController))
         {
-            playerController._hpGauge = _hpGauge;
+            playerController._hpGauge = _playerHPGauge;
         }
         DOVirtual.DelayedCall(0.1f, () => photonView.RPC("AddPlayer", RpcTarget.All, view.ViewID));//TODO:今はゴリ押しでやってるけどタイトルできたらちゃんと書く
     }
@@ -140,6 +141,11 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         foreach (CloneData enemyClone in _enemyClone)
         {
             GameObject newEnemy = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
+            if(newEnemy.TryGetComponent(out EnemyBoss boss))
+            {
+                _bossHPGauge.SetTarget(newEnemy);
+                boss._hpGauge = _bossHPGauge;
+            }
             photonView.RPC("AddEnemy", RpcTarget.All, newEnemy.GetComponent<PhotonView>().ViewID);
         }
     }

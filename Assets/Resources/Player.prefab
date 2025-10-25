@@ -586,6 +586,7 @@ MonoBehaviour:
   _maxAttackPower: 2
   _maxMoveSpeed: 400
   _minBulletdInterval: 0.5
+  _hpGauge: {fileID: 0}
 --- !u!114 &5466267992034881535
 MonoBehaviour:
   m_ObjectHideFlags: 0
