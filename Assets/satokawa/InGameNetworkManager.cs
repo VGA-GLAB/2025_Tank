@@ -22,6 +22,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("敵の生成位置と敵オブジェクト")] private CloneData[] _enemyClone;
     [SerializeField, Header("アイテムをの生成位置とアイテムオブジェクト")] private CloneData[] _itemClone;
     [SerializeField, Header("壊せる壁プレハブ")] private GameObject _wallPrefab;
+    [SerializeField,Header("PlayerのHPGaugeController")] private HPGaugeController _hpGauge;
     public int _playerNumber { get; private set; }//何番目にルームに入ったか
     private bool _isAllLoaded;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,7 +37,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom)
         {
             _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-            CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, $"isLoaded{_playerNumber}", 1);
+            CustomPropertiesManager.SetNetValue( $"isLoaded{_playerNumber}", 1);
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -65,10 +66,10 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         photonView.RPC(nameof(CreateWall), RpcTarget.All);
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            CustomPropertiesManager.SetNetValue(player, $"isLoaded{player.ActorNumber}", 0);
+            CustomPropertiesManager.SetNetValue($"isLoaded{player.ActorNumber}", 0);
         }
     }
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    public void Update()
     {
         if (_isAllLoaded)
         {
@@ -77,14 +78,13 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         _isAllLoaded = true;
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            int data = (int)CustomPropertiesManager.GetNetValue(player, $"isLoaded{player.ActorNumber}", out bool found);
+            int data = (int)CustomPropertiesManager.GetNetValue($"isLoaded{player.ActorNumber}", out bool found);
             if (!found || data == 0)
             {
                 _isAllLoaded = false;
                 break;
             }
         }
-
     }
 
     public override void OnConnectedToMaster()
@@ -94,7 +94,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-        CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, $"isLoaded{_playerNumber}", 1);
+        CustomPropertiesManager.SetNetValue($"isLoaded{_playerNumber}", 1);
         StartCoroutine(WaitAllLoaded());
     }
 
@@ -121,6 +121,11 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
 
         GameObject newPlayer = PhotonNetwork.Instantiate(_playerPrefab.name, position, rotation);
         PhotonView view = newPlayer.GetComponent<PhotonView>();
+        _hpGauge.SetTarget(newPlayer);
+        if(newPlayer.TryGetComponent(out PlayerController playerController))
+        {
+            playerController._hpGauge = _hpGauge;
+        }
         DOVirtual.DelayedCall(0.1f, () => photonView.RPC("AddPlayer", RpcTarget.All, view.ViewID));//TODO:今はゴリ押しでやってるけどタイトルできたらちゃんと書く
     }
     /// <summary>
