@@ -11,22 +11,26 @@ public class BulletControl : MonoBehaviourPunCallbacks
     [SerializeField] private float _bulletSpeed;//弾が進むスピード
     [SerializeField] public int _attack;//攻撃力　クローンする時に入れる
     [SerializeField] private float destroyDistance;
+    [SerializeField] private Vector3 _rotationPower;
     private Rigidbody rb;
     private Vector3 startPosition;
+    private Vector3 forwardDirection;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         startPosition = this.transform.position;
+        forwardDirection = this.transform.forward;
     }
     // Update is called once per frame
     void Update()
     {
-        rb.linearVelocity = this.transform.forward * _bulletSpeed;
+        rb.linearVelocity = forwardDirection * _bulletSpeed;
         if (Vector3.Distance(this.transform.position, startPosition) > destroyDistance)
         {
             Delete();
         }
+        rb.AddTorque(_rotationPower * Time.deltaTime,ForceMode.Impulse);
     }
     private void OnTriggerEnter(Collider collision)
     {
