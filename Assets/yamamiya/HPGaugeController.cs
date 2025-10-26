@@ -4,14 +4,12 @@ using UnityEngine.UI;
 public class HPGaugeController : MonoBehaviour
 {
     [SerializeField] private GameObject _target;
-    [SerializeField] private Image _hpGauge;
-    private Camera _camera;
+    [SerializeField] private Image _hpImage;
     private ITank _tank;
     private float _startHP;
 
     private void Start()
     {
-        _camera = Camera.main;
         if (_target != null)
         {
             SetTarget(_target);
@@ -45,9 +43,9 @@ public class HPGaugeController : MonoBehaviour
 
         if (_tank.Hp <= 0f)
         {
-            _hpGauge.fillAmount = 0f;
+            _hpImage.fillAmount = 0f;
             return;
         }
-        _hpGauge.fillAmount = _tank.Hp / _startHP;
+        _hpImage.fillAmount = _tank.Hp / _startHP;
     }
 }
