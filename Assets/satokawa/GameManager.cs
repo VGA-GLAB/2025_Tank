@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Pun.Demo.SlotRacer.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -38,11 +40,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         //残機数をCustomPropertyに保存
         if (PhotonNetwork.IsMasterClient)
         {
-            _livesText.text = CustomPropertiesManager.GetNetValue(PhotonNetwork.LocalPlayer, "lives", out bool found).ToString();
+            CustomPropertiesManager.GetNetValue("lives", out bool found).ToString();
             if (!found)
             {
-                CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, "lives", _lives);
-                _livesText.text = _lives.ToString();
+                CustomPropertiesManager.SetNetValue("lives", _lives);
             }
         }
     }
@@ -215,7 +216,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// <returns>ture 1以上 false 0以下</returns>
     private bool ReduceLives()
     {
-        int lives = (int)CustomPropertiesManager.GetNetValue(PhotonNetwork.LocalPlayer, "lives", out bool found);
+        int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
+        Debug.Log($"残り{lives}機 get");
         if (!found)
         {
             Debug.LogError("残機数を取得できませんでした");
@@ -223,16 +225,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (lives > 0)
         {
             lives--;
-            CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, "lives", lives);
-            _livesText.text = CustomPropertiesManager.GetNetValue(PhotonNetwork.LocalPlayer, "lives", out found).ToString();
+            CustomPropertiesManager.SetNetValue("lives", lives);
+            Debug.Log($"残り{lives}機 -");
             return true;
         }
         else
         {
-            CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, "lives", _lives);
-            _livesText.text = CustomPropertiesManager.GetNetValue(PhotonNetwork.LocalPlayer, "lives", out found).ToString();
+            CustomPropertiesManager.SetNetValue("lives", _lives);
             return false;
         }
+       
     }
     /// <summary>
     /// 残機を増やす
@@ -240,13 +242,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// <param name="value">増加量 基本は1</param>
     public void AddLives(int value = 1)
     {
-        int livs = (int)CustomPropertiesManager.GetNetValue(PhotonNetwork.LocalPlayer, "lives", out bool found);
+        int livs = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
         if (!found)
         {
             Debug.LogError("残機数を取得できませんでした");
         }
         livs += value;
-        CustomPropertiesManager.SetNetValue(PhotonNetwork.LocalPlayer, "lives", livs);
+        CustomPropertiesManager.SetNetValue("lives", livs);
     }
     /// <summary>
     ///[PunRPC] ゲームクリア処理　
@@ -259,5 +261,22 @@ public class GameManager : MonoBehaviourPunCallbacks
             return;
         }
         PhotonNetwork.LoadLevel(_nextScene);
+    }
+    /// <summary>
+    /// カスタムプロパティの変更があったら残機数を取得しUIに表示
+    /// </summary>
+    /// <param name="propertiesThatChanged"></param>
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        // 更新されたルームのカスタムプロパティのペアを取得
+        foreach (var prop in propertiesThatChanged)
+        {
+            if (prop.Key is string key && key == "lives")
+            {
+                _livesText.text = prop.Value.ToString();
+            }
+            Debug.Log($"{prop.Key}: {prop.Value}");
+        }
+
     }
 }

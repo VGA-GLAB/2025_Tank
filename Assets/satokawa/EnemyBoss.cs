@@ -27,6 +27,7 @@ public class EnemyBoss : EnemyBase
     [SerializeField] private float _laserRotationSpeed;
     [SerializeField] private float _laserDamageInterval;
     [SerializeField] private LineRenderer _laserLine;
+    
 
     private float _patternTimer;
     private int _patternIndex;
@@ -238,5 +239,5 @@ public class EnemyBoss : EnemyBase
         }
     }
     public override void Move() { }
-    
+    public void SetHPGage(HPGaugeController gauge)  => _hpGauge = gauge;
 }
