@@ -1,17 +1,27 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HPGaugeController : MonoBehaviour
 {
     [SerializeField] private GameObject _target;
-    [SerializeField] private Image _hpGauge;
-    private Camera _camera;
+    [SerializeField] private Image _hpImage;
+    [SerializeField] private Image _burnImage;
+
+    [Header("DOTweenの設定")]
+    [SerializeField] private float _duration = 0.5f;
+    [SerializeField, Tooltip("振動する強さ")] private float _strength = 10f;
+    [SerializeField, Tooltip("振動数")] private int _vibrate = 100;
+
+    [Header("HPゲージ演出の設定")]
+    [SerializeField] private float _burnDelay = 0.5f;
+    [SerializeField] private float _burnDurationDivisor = 2f;
+
     private ITank _tank;
     private float _startHP;
 
     private void Start()
     {
-        _camera = Camera.main;
         if (_target != null)
         {
             SetTarget(_target);
@@ -34,7 +44,7 @@ public class HPGaugeController : MonoBehaviour
     }
 
     /// <summary>
-    /// HPゲージを現在のHP似合わせて更新。
+    /// HPゲージを現在のターゲットのHPに合わせて更新。
     /// </summary>
     public void UpdateHPGauge()
     {
@@ -42,12 +52,33 @@ public class HPGaugeController : MonoBehaviour
         {
             return;
         }
-
+        var burnDuraction = _duration / _burnDurationDivisor;
         if (_tank.Hp <= 0f)
         {
-            _hpGauge.fillAmount = 0f;
+            GaugeEffect(0f, burnDuraction);
             return;
         }
-        _hpGauge.fillAmount = _tank.Hp / _startHP;
+
+        var value = _tank.Hp / _startHP;
+        GaugeEffect(value, burnDuraction);
+    }
+
+    /// <summary>
+    /// HPゲージとバーンゲージのアニメーション効果を適用させる。
+    /// </summary>
+    /// <param name="value">HPゲージの表示割合</param>
+    /// <param name="burnDuraction">バーンゲージおよび振動の演出時間</param>
+    private void GaugeEffect(float value, float burnDuraction)
+    {
+        // HPゲージのFillAmountをアニメーションで更新
+        _hpImage.DOFillAmount(value, _duration)
+                    .OnComplete(() =>
+                    {
+                        // HPゲージ更新後_burnDelay分遅らせてバーンゲージも同じ割合にアニメーション。
+                        _burnImage.DOFillAmount(value, burnDuraction)
+                        .SetDelay(_burnDelay);
+                    });
+        // HPゲージの更新に合わせて、ゲージ全体を振動させる
+        this.transform.DOShakePosition(burnDuraction, _strength, _vibrate);
     }
 }
