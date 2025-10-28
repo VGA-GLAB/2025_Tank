@@ -7,7 +7,7 @@ public class HPGaugeController : MonoBehaviour
     [SerializeField] private GameObject _target;
     [SerializeField] private Image _hpImage;
     [SerializeField] private Image _burnImage;
-
+    [SerializeField] private RectTransform _rectTransform;
     [Header("DOTweenの設定")]
     [SerializeField] private float _duration = 0.5f;
     [SerializeField, Tooltip("振動する強さ")] private float _strength = 10f;
@@ -25,6 +25,13 @@ public class HPGaugeController : MonoBehaviour
         if (_target != null)
         {
             SetTarget(_target);
+        }
+        if(_rectTransform == null)
+        {
+            if(this.TryGetComponent(out RectTransform rect))
+            {
+                rect = _rectTransform;
+            }
         }
     }
 
@@ -79,6 +86,6 @@ public class HPGaugeController : MonoBehaviour
                         .SetDelay(_burnDelay);
                     });
         // HPゲージの更新に合わせて、ゲージ全体を振動させる
-        this.transform.DOShakePosition(burnDuraction, _strength, _vibrate);
+        _rectTransform.DOShakeAnchorPos(burnDuraction, _strength, _vibrate);
     }
 }

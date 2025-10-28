@@ -132,7 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletSpeed: 10
   _attack: 1
-  destroyDistance: 100
+  _destroyDistance: 50
   _rotationPower: {x: 30, y: 30, z: 30}
 --- !u!114 &-8658519106274961758
 MonoBehaviour:

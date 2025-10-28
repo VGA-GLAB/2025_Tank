@@ -647,7 +647,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
-  _hpGauge: {fileID: 7883893547533657813}
+  _hpImage: {fileID: 7883893547533657813}
+  _burnImage: {fileID: 8686369673547873159}
+  _rectTransform: {fileID: 8953407454500902540}
+  _duration: 0.5
+  _strength: 10
+  _vibrate: 100
+  _burnDelay: 0.5
+  _burnDurationDivisor: 2
 --- !u!1 &6870693603263425441
 GameObject:
   m_ObjectHideFlags: 0
@@ -890,4 +897,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
-  _hpGauge: {fileID: 5574192938394129387}
+  _hpImage: {fileID: 5574192938394129387}
+  _burnImage: {fileID: 8906324616885835807}
+  _rectTransform: {fileID: 1822278053129775339}
+  _duration: 0.5
+  _strength: 10
+  _vibrate: 100
+  _burnDelay: 0.5
+  _burnDurationDivisor: 2

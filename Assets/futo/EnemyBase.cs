@@ -17,7 +17,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     [SerializeField] protected GameObject _bulletPrefab;
     [SerializeField] protected GameObject _turret;
     [SerializeField] protected Transform _muzzlePosition;
-
+    [SerializeField] protected HPGaugeController _hpGauge;
     [Header("ターゲット設定")]
     [SerializeField] private GameObject _player;
 
@@ -53,6 +53,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
         {
             Die();
         }
+        _hpGauge.UpdateHPGauge();
     }
 
     /// <summary>

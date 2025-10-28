@@ -65,14 +65,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 7482667652216324306, guid: 0764c183b00b92b4dbad60c1d8b84b4a, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3066591044126389082
@@ -167,7 +167,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
-  _hpGauge: {fileID: 8133113863116542545}
+  _hpImage: {fileID: 8133113863116542545}
+  _burnImage: {fileID: 6485166309049097773}
+  _rectTransform: {fileID: 4172160783834742535}
+  _duration: 0.5
+  _strength: 10
+  _vibrate: 100
+  _burnDelay: 0.5
+  _burnDurationDivisor: 2
 --- !u!114 &7600371520061519201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,7 +271,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &471461517277245285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +361,6 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1

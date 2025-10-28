@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using DG.Tweening;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
 
     private Vector2 _moveInput;
     private GameManager _gameManager;
-
+    public HPGaugeController _hpGauge;
     private void Start()
     {
         if (_rigidbody == null)
@@ -84,10 +85,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     public void Hit(int attack)
     {
         _hp -= attack;
+        if (photonView.IsMine && _hpGauge != null)
+        {
+            _hpGauge.UpdateHPGauge();
+        }
         if (_hp <= 0)
         {
             Die();
         }
+
     }
     public void OnPhotonDeastroy(PhotonMessageInfo info)
     {
@@ -96,7 +102,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
 
     public void BuffStatus(Buff buff, float amount)
     {
-        switch(buff)
+        switch (buff)
         {
             case Buff.Hp:
                 _hp += (int)amount;
@@ -114,14 +120,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                 break;
             case Buff.MoveSpeed:
                 _moveSpeed += amount;
-                if( _moveSpeed > _maxMoveSpeed)
+                if (_moveSpeed > _maxMoveSpeed)
                 {
                     _moveSpeed = _maxMoveSpeed;
                 }
                 break;
             case Buff.BulletInterval:
                 _bulletInterval -= amount;
-                if(_bulletInterval < _minBulletdInterval)
+                if (_bulletInterval < _minBulletdInterval)
                 {
                     _bulletInterval = _minBulletdInterval;
                 }
