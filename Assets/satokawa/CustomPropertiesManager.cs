@@ -4,7 +4,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 public static class CustomPropertiesManager
 {
-    private static Hashtable propsToSet = new();
+    private static Hashtable _propsToSet = new();
     /// <summary>
     /// CustomPropertiesにkey,valueをセットする
     /// </summary>
@@ -13,9 +13,9 @@ public static class CustomPropertiesManager
     /// <param name="value">値</param>
     public static void SetNetValue(string key, float value)
     {
-        propsToSet[key] = value;
-        PhotonNetwork.CurrentRoom.SetCustomProperties(propsToSet);
-        propsToSet.Clear();
+        _propsToSet[key] = value;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(_propsToSet);
+        _propsToSet.Clear();
     }
     /// <summary>
     /// CustomPropertiesからkeyに対応するfloatを取得する
