@@ -14,46 +14,22 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     [System.Serializable]
     public class CloneData
     {
-        [Header("クローンするPrefab")]
-        public GameObject clonePrefab;
-
-        [Header("ステージ上にあるクローンする場所")]
-        public Transform clonePosition;
+        [Header("クローンするPrefab")] public GameObject clonePrefab;
+        [Header("ステージ上にあるクローンする場所")] public Transform clonePosition;
     }
-    [SerializeField, Header("プレイヤーPrefab    !!Resourcesフォルダに入れる!!")]
-    private GameObject _playerPrefab;
-
-    [SerializeField, Header("プレイヤーの生成位置")]
-    private Transform[] _playerClonePosition;
-
-    [SerializeField, Header("敵の生成位置と敵オブジェクト")]
-    private CloneData[] _enemyClone;
-
-    [SerializeField, Header("アイテムをの生成位置とアイテムオブジェクト")]
-    private CloneData[] _itemClone;
-
-    [SerializeField, Header("壊せる壁プレハブ")]
-    private GameObject _wallPrefab;
-
-    [SerializeField, Header("PlayerのHPGaugeController")]
-    private HPGaugeController _playerHPGauge;
-
-    [SerializeField, Header("ボスのHPゲージ　ボス戦以外はNullにする")]
-    private HPGaugeController _bossHPGauge;
-
-    [SerializeField, Header("ゲームマネージャー")]
-    private GameManager _gameManager;
-
+    [SerializeField, Header("プレイヤーPrefab    !!Resourcesフォルダに入れる!!")] private GameObject _playerPrefab;
+    [SerializeField, Header("プレイヤーの生成位置")] private Transform[] _playerClonePosition;
+    [SerializeField, Header("敵の生成位置と敵オブジェクト")] private CloneData[] _enemyClone;
+    [SerializeField, Header("アイテムをの生成位置とアイテムオブジェクト")] private CloneData[] _itemClone;
+    [SerializeField, Header("壊せる壁プレハブ")] private GameObject _wallPrefab;
+    [SerializeField,Header("PlayerのHPGaugeController")] private HPGaugeController _playerHPGauge;
+    [SerializeField, Header("ボスのHPゲージ　ボス戦以外はNullにする")] private HPGaugeController _bossHPGauge;
     public int _playerNumber { get; private set; }//何番目にルームに入ったか
     private bool _isAllLoaded;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-        if(_gameManager == null)
-        {
-            _gameManager = FindAnyObjectByType<GameManager>();
-        }
     }
     void Start()
     {
@@ -62,7 +38,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom)
         {
             _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-            CustomPropertiesManager.SetNetValue($"isLoaded{_playerNumber}", 1);
+            CustomPropertiesManager.SetNetValue( $"isLoaded{_playerNumber}", 1);
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -93,7 +69,6 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         {
             CustomPropertiesManager.SetNetValue($"isLoaded{player.ActorNumber}", 0);
         }
-        _gameManager.ToggleTimer(true);
     }
     public void Update()
     {
@@ -148,7 +123,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         GameObject newPlayer = PhotonNetwork.Instantiate(_playerPrefab.name, position, rotation);
         PhotonView view = newPlayer.GetComponent<PhotonView>();
         _playerHPGauge.SetTarget(newPlayer);
-        if (newPlayer.TryGetComponent(out PlayerController playerController))
+        if(newPlayer.TryGetComponent(out PlayerController playerController))
         {
             playerController._hpGauge = _playerHPGauge;
         }
@@ -166,7 +141,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         foreach (CloneData enemyClone in _enemyClone)
         {
             GameObject newEnemy = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
-            if (newEnemy.TryGetComponent(out EnemyBoss boss))
+            if(newEnemy.TryGetComponent(out EnemyBoss boss))
             {
                 _bossHPGauge.SetTarget(newEnemy);
                 boss.SetHPGage(_bossHPGauge);
@@ -194,17 +169,17 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void CreateWall()
     {
-
+      
         GameObject[] objects = GameObject.FindGameObjectsWithTag("DestructibleWall");
-        if (objects.Length == 0)
+        if(objects.Length == 0)
         {
             return;
         }
         Transform[] walls = objects.Select(obj => obj.transform).ToArray();
         Transform parent = walls[0].parent;
-        foreach (GameObject obj in objects)
+        foreach(GameObject obj in objects)
         {
-            Destroy(obj);
+           Destroy(obj);
         }
 
         //生成はマスターだけが行う
@@ -219,7 +194,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         }
 
     }
-
+    
     [PunRPC]
     public void ReturnToTitle()
     {

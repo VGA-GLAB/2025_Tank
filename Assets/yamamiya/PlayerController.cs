@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [Header("コンポーネント")]
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private BulletShooter _bulletShooter;
+
     [Header("バフの上限設定")]
     [SerializeField] private int _maxHp;
     [SerializeField] private int _maxAttackPower;
