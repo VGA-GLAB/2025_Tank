@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DG.Tweening;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Pun.Demo.SlotRacer.Utils;
@@ -10,12 +11,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("次のステージ（Scene）")] private string _nextScene;
     [SerializeField, Header("リスポーン時間")] private float _respawnTime;
     [SerializeField, Header("残機数")] private int _lives;
+    [SerializeField ,Header("リザルトマネージャー")] private ResultManager _resultManager;
     [SerializeField] private TextMeshProUGUI _livesText;
     public List<PlayerController> Players { get; private set; }
     public List<EnemyBase> Enemys { get; private set; }
 
     private bool _isRespawnTimer = false;
-    private float _timer;
+    private float _respawnTimer;
+    private bool _isGameTimer = false;
+    private float _gameTimer;
     private InGameNetworkManager _networkManager;
     private void Awake()
     {
@@ -47,17 +51,27 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
     }
+    public void ToggleTimer(bool b)
+    {
+        _isGameTimer = b;
+    }
+
     public void Update()
     {
         //リスポーンタイマーを動かし時間になったらNetworkmanagerにPlayerを作ってもらう
         if (_isRespawnTimer)
         {
-            _timer += Time.deltaTime;
-            if (_timer > _respawnTime)
+            _respawnTimer += Time.deltaTime;
+            if (_respawnTimer > _respawnTime)
             {
                 _networkManager.CreatePlayerTank();
                 _isRespawnTimer = false;
             }
+        }
+
+        if( _isGameTimer )
+        {
+            _gameTimer += Time.deltaTime;
         }
 
         if (PhotonNetwork.AutomaticallySyncScene)
@@ -140,7 +154,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         else if (diePlayer.GetComponent<PhotonView>().IsMine)
         {
             _isRespawnTimer = true;
-            _timer = 0;
+            _respawnTimer = 0;
         }
     }
     /// <summary>
@@ -180,7 +194,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         if (!isEnemyActive && PhotonNetwork.IsMasterClient)
         {
-            GameClear();
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
+            });
         }
     }
 
@@ -253,8 +270,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// <summary>
     ///[PunRPC] ゲームクリア処理　
     /// </summary>
-    private void GameClear()
+    public void GameClear()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
+
         if (_nextScene == "Title")
         {
             photonView.RPC("ReturnToTitle", RpcTarget.All);

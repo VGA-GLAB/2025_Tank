@@ -961,6 +961,7 @@ MonoBehaviour:
   _wallPrefab: {fileID: 6053443035484031607, guid: e461fc9ed184e3046878d501ad5a20a7, type: 3}
   _playerHPGauge: {fileID: 1668076666}
   _bossHPGauge: {fileID: 1668076665}
+  _gameManager: {fileID: 1644447652}
 --- !u!114 &1644447652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -976,6 +977,7 @@ MonoBehaviour:
   _nextScene: Title
   _respawnTime: 10
   _lives: 0
+  _resultManager: {fileID: 1668076667}
   _livesText: {fileID: 2129521101}
 --- !u!114 &1644447653
 MonoBehaviour:
@@ -1115,9 +1117,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 413566502473991043, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: _gameManager
+      value: 
+      objectReference: {fileID: 1644447652}
     - target: {fileID: 1439435780582656192, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_Name
       value: InGameUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3869902648596084454, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: sceneViewId
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4341538849656563535, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_Pivot.x
@@ -1228,6 +1238,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e710adc63a03fa4fac2c9aafad5a2a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1668076667 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 413566502473991043, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+  m_PrefabInstance: {fileID: 1668076664}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c808cc80d8ab584d9a1b45c8363c290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2031004418

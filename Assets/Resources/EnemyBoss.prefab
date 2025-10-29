@@ -502,6 +502,7 @@ MonoBehaviour:
   _turret: {fileID: 6261481625025165700}
   _muzzlePosition: {fileID: 6032910575836555161}
   _hpGauge: {fileID: 0}
+  killEffect: {fileID: 0}
   _player: {fileID: 0}
   _turretRotateSpeed: 5
   _attackPatterns:
