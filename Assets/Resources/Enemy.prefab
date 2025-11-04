@@ -256,7 +256,6 @@ MonoBehaviour:
   _turret: {fileID: 7865886444252179200}
   _muzzlePosition: {fileID: 3648757676546276357}
   _hpGauge: {fileID: 1724786511514502748}
-  killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
   _player: {fileID: 0}
 --- !u!1 &5476156238292867432
 GameObject:
