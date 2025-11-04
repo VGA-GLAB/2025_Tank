@@ -185,12 +185,6 @@ public class CRIAudioManager
                 return default;
             }
 
-            if(_instance._soundDic.Count <= 0)
-            {
-                Debug.Log("初期化を行う");
-                Initialize();
-            }
-
             CueInfo info = _instance._soundDic[cueSheet].GetCueInfo(cueName);
             _atomExPlayer.SetCue(_instance._soundDic[cueSheet].GetAcb(), info.id);
             _atomExPlayer.SetPreDelayTime(delay);
