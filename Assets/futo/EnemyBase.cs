@@ -18,6 +18,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     [SerializeField] protected GameObject _turret;
     [SerializeField] protected Transform _muzzlePosition;
     [SerializeField] protected HPGaugeController _hpGauge;
+    [SerializeField] private ParticleSystem killEffect;
     [Header("ターゲット設定")]
     [SerializeField] private GameObject _player;
 
@@ -41,6 +42,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     {
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
+            Instantiate(killEffect.gameObject, this.transform.position, Quaternion.identity);
             gameManager.GetComponent<PhotonView>().RPC("CheckEnemeyActive", RpcTarget.All);
             PhotonNetwork.Destroy(this.gameObject);
         }
@@ -49,6 +51,8 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     public void Hit(int attack)
     {
         _hp -= attack;
+       
+
         if (_hp <= 0)
         {
             Die();
