@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class BuffItem : ItemBase
 {
-    [SerializeField] Buff _toBuff;
-    [SerializeField] float _buffAmount;
+    [SerializeField] private  Buff _toBuff;
+    [SerializeField] private float _buffAmount;
+    [SerializeField] private ParticleSystem _buffParticle;
 
     [PunRPC]
     public override void HitAction(int viewID)
@@ -18,6 +19,9 @@ public class BuffItem : ItemBase
         if (hitObject.TryGetComponent(out PlayerController target))
         {
             target.BuffStatus(_toBuff, _buffAmount);
+            GameObject newParticle =  Instantiate(_buffParticle.gameObject,target.transform);
+            newParticle.transform.localPosition = Vector3.zero;
+            newParticle.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
         }
         else
         {

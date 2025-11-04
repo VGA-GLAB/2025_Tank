@@ -43,7 +43,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
 
     [SerializeField, Header("ゲームマネージャー")]
     private GameManager _gameManager;
-
+    [SerializeField]
+    private CountdownController _countdownController;
     public int _playerNumber { get; private set; }//何番目にルームに入ったか
     private bool _isAllLoaded;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -53,6 +54,10 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         if(_gameManager == null)
         {
             _gameManager = FindAnyObjectByType<GameManager>();
+        }
+        if(_countdownController == null)
+        {
+            _countdownController = FindAnyObjectByType<CountdownController>();
         }
     }
     void Start()
@@ -85,6 +90,13 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         yield return new WaitUntil(() => _isAllLoaded);
 
         // 条件が揃ったらここが実行される
+        _countdownController.StartCountdown(StartInGame);
+    }
+    /// <summary>
+    /// カウントダウンから呼ばれる
+    /// </summary>
+    public void StartInGame()
+    {
         photonView.RPC(nameof(CreatePlayerTank), RpcTarget.All);
         CreateEnemyTank();
         CreateItem();

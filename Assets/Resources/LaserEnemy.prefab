@@ -669,6 +669,8 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 8653153450281945988, guid: 4054dc889e717194a8ef07c9047879d2, type: 3}
   _turret: {fileID: 2178415578740822083}
   _muzzlePosition: {fileID: 8466740685891646967}
+  _hpGauge: {fileID: 0}
+  killEffect: {fileID: 0}
   _player: {fileID: 0}
   _attackInterval: 1
   _laserAngle: 120
@@ -972,4 +974,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 7016225858247885064}
-  _hpGauge: {fileID: 2213497994749593599}
+  _hpImage: {fileID: 0}
+  _burnImage: {fileID: 0}
+  _rectTransform: {fileID: 0}
+  _duration: 0.5
+  _strength: 10
+  _vibrate: 100
+  _burnDelay: 0.5
+  _burnDurationDivisor: 2
