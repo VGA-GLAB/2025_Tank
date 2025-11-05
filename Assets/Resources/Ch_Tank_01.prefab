@@ -118,6 +118,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2025118200063039287}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2995241383798657200}
   m_SourcePrefab: {fileID: 100100000, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
 --- !u!1 &4022215392809981793 stripped
 GameObject:
@@ -364,6 +367,7 @@ MonoBehaviour:
   _turnSpeed: 100
   _rigidbody: {fileID: 0}
   _bulletShooter: {fileID: 0}
+  _animator: {fileID: 0}
   _maxHp: 10
   _maxAttackPower: 2
   _maxMoveSpeed: 400
@@ -384,6 +388,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 8653153450281945988, guid: 4054dc889e717194a8ef07c9047879d2, type: 3}
   _shotPosition: {fileID: 8075388653806337728}
   _turret: {fileID: 7828477970547969869}
+  _animator: {fileID: 0}
 --- !u!114 &2025118200063039287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,6 +403,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _turret: {fileID: 7828477970547969869}
   _camera: {fileID: 0}
+--- !u!95 &2995241383798657200
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4022215392809981793}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b8d708e4690f3d44ba02e517e73a0b43, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &7828477970547969869 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6319950485947852157, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
