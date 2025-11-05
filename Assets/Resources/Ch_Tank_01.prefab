@@ -79,6 +79,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3416400609385885712, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3416400609385885712, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.423
+      objectReference: {fileID: 0}
+    - target: {fileID: -397318846519739872, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -397318846519739872, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.423
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
       propertyPath: m_Name
       value: Ch_Tank_01
@@ -86,6 +102,18 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4167280743394806330, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.423
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876023681238672744, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876023681238672744, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.423
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -174,7 +202,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.89632225, y: 1.0069498, z: 0.9775834}
-  m_Center: {x: 0, y: 0.53319484, z: -0.011208296}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3003644334268197457
 MonoBehaviour:
   m_ObjectHideFlags: 0

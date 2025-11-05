@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("リスポーン時間")] private float _respawnTime;
     [SerializeField, Header("残機数")] private int _lives;
     [SerializeField ,Header("リザルトマネージャー")] private ResultManager _resultManager;
+    [SerializeField ,Header("CursorManager")] private CursorManager _cursorManager;
     [SerializeField] private TextMeshProUGUI _livesText;
     public List<PlayerController> Players { get; private set; }
     public List<EnemyBase> Enemys { get; private set; }
@@ -30,6 +31,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.InRoom)
         {
             SetupAfterJoiningRoom();
+        }
+        if(_cursorManager == null)
+        {
+            _cursorManager = FindAnyObjectByType<CursorManager>();
         }
     }
     public override void OnJoinedRoom()
@@ -196,6 +201,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             DOVirtual.DelayedCall(1f, () =>
             {
+                _cursorManager.EnableDefaultCursor();
                 _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
             });
         }
