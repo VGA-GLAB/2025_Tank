@@ -125,6 +125,7 @@ MonoBehaviour:
   _toBuff: 2
   _buffAmount: 50
   _buffParticle: {fileID: 4044501535920784448, guid: 06e2da13904771348ae3fadb4c879b7a, type: 3}
+  _particleColor: {r: 0.44705886, g: 0.7019608, b: 0.7843138, a: 1}
 --- !u!114 &-516339762638107648
 MonoBehaviour:
   m_ObjectHideFlags: 0
