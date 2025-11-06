@@ -5,6 +5,7 @@ using static CriWare.CriAtomEx;
 using System.Linq;
 using System;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 
 /// <summary>
@@ -176,6 +177,13 @@ public class CRIAudioManager
             _atomExPlayer.SetVolume(_volume);
         }
 
+        /// <summary>
+        /// 指定したキューシート内のキューを再生します。
+        /// </summary>
+        /// <param name="cueSheet">再生するキューシート名</param>
+        /// <param name="cueName">再生するキュー名</param>
+        /// <param name="delay">再生開始までの遅延時間(ミリ秒)</param>
+        /// <returns></returns>
         public virtual CriAtomExPlayback Play(string cueSheet, string cueName, float delay = 0.0f)
         {
             //準備待ちの時は準備終わり次第再生
@@ -204,6 +212,30 @@ public class CRIAudioManager
     public class BGMPlayer : SoundPlayer
     {
         public BGMPlayer() : base(SoundType.BGM) { }
+
+        /// <summary>
+        /// BGMを再生します。すでに再生中の場合は停止し、完全に停止するまで待ってから新たに再生します。
+        /// </summary>
+        /// <param name="cueSheet">再生するキューシート名</param>
+        /// <param name="cueName">再生するキュー名</param>
+        /// <param name="delay">再生開始までの遅延時間(ミリ秒)</param>
+        /// <returns></returns>
+        public async UniTask PlayBGMAsync(string cueSheet, string cueName, float delay = 0.0f)
+        {
+            // _atomExPlayerがnullじゃなくなるまで待機。
+            //await UniTask.WaitUntil(() => _atomExPlayer != null);
+
+            // すでに再生中の場合は停止を要求。
+            if (_atomExPlayer.GetStatus() == CriAtomExPlayer.Status.Playing)
+            {
+                _atomExPlayer.Stop();
+            }
+            // _atomExPlayerのステータスがStopになるまで待機。
+            await UniTask.WaitUntil(() => _atomExPlayer.GetStatus() == CriAtomExPlayer.Status.Stop);
+            
+            // BGM再生。
+            base.Play(cueSheet, cueName, delay);
+        }
     }
 
     /// <summary>
