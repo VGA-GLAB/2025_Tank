@@ -1367,7 +1367,6 @@ MonoBehaviour:
   _playerHPGauge: {fileID: 1027502600}
   _bossHPGauge: {fileID: 0}
   _gameManager: {fileID: 1644447652}
-  _countdownController: {fileID: 0}
 --- !u!114 &1644447652
 MonoBehaviour:
   m_ObjectHideFlags: 0
