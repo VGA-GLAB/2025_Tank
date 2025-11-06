@@ -1,23 +1,38 @@
 ﻿using DG.Tweening;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CountdownController : MonoBehaviour
+public class CountdownController : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TextMeshProUGUI _countdownText;
     [SerializeField] private float _maxScale;
     [SerializeField] private float _minScale;
-    [SerializeField,Range(0,1)] private float _moveSpeed;
+    [SerializeField, Range(0, 1)] private float _moveSpeed;
     [SerializeField] private Ease _easing;
     [SerializeField] private Color _normalColor = new Color(1f, 0.95f, 0.8f); // 柔らかベージュ
     [SerializeField] private Color _lastColor = new Color(1f, 1f, 0.9f);      // やや明るめ
 
-    public void StartCountdown(UnityAction callback)
+    public void RequestStartCountdown(UnityAction callback)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(StartCountdownRPC), RpcTarget.All);
+            _callback = callback;
+        }
+    }
+
+    private static UnityAction _callback;
+    [PunRPC]
+    public void StartCountdownRPC()
     {
         if (!_countdownText.TryGetComponent(out RectTransform rect))
         {
-            callback.Invoke();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                _callback?.Invoke();
+            }
             return;
         }
 
@@ -51,7 +66,10 @@ public class CountdownController : MonoBehaviour
                     _countdownText.color = _normalColor;
                     _countdownText.alpha = 1f;
                     _countdownText.gameObject.SetActive(false);
-                    callback?.Invoke();
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        _callback?.Invoke();
+                    }
                 });
         });
 

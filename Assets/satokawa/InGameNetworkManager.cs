@@ -90,7 +90,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         yield return new WaitUntil(() => _isAllLoaded);
 
         // 条件が揃ったらここが実行される
-        _countdownController.StartCountdown(StartInGame);
+        _countdownController.RequestStartCountdown(StartInGame);
     }
     /// <summary>
     /// カウントダウンから呼ばれる
