@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         if(_cursorManager == null)
         {
-            _cursorManager = FindAnyObjectByType<CursorManager>();
+            _cursorManager = FindAnyObjectByType<CursorManager>();  
         }
     }
     public override void OnJoinedRoom()
@@ -49,11 +49,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         //残機数をCustomPropertyに保存
         if (PhotonNetwork.IsMasterClient)
         {
-            CustomPropertiesManager.GetNetValue("lives", out bool found).ToString();
+            int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
             if (!found)
             {
                 CustomPropertiesManager.SetNetValue("lives", _lives);
             }
+            _livesText.text = lives.ToString();
         }
     }
     public void ToggleTimer(bool b)
@@ -136,7 +137,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             return;
         }
-
+        if (diePlayer.GetComponent<PhotonView>().IsMine)
+        {
+            PhotonNetwork.Destroy(diePlayer.gameObject);
+        }
         bool isPlayerActive = false;
         foreach (PlayerController tank in Players)
         {
@@ -245,7 +249,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Debug.LogError("残機数を取得できませんでした");
         }
-        if (lives > 0)
+        if (lives > 1)
         {
             lives--;
             CustomPropertiesManager.SetNetValue("lives", lives);

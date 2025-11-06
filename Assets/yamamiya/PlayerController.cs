@@ -85,7 +85,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             DOVirtual.DelayedCall(1f, () =>
             {
                 _gameManager.GetComponent<PhotonView>().RPC("CheckPlayerActive", RpcTarget.All, photonView.ViewID);
-                PhotonNetwork.Destroy(this.gameObject);
             });
         }
     }
