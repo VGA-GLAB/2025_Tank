@@ -62,12 +62,12 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     }
     void Start()
     {
-
         //接続の状態によって処理を分岐
         if (PhotonNetwork.InRoom)
         {
             _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
             CustomPropertiesManager.SetNetValue($"isLoaded{_playerNumber}", 1);
+            Debug.Log("再読み込み済み");
 
             if (PhotonNetwork.IsMasterClient)
             {

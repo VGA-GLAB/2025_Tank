@@ -56,6 +56,9 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             _livesText.text = lives.ToString();
         }
+
+        PhotonNetwork.AutomaticallySyncScene = true;
+        Debug.Log("初期設定");
     }
     public void ToggleTimer(bool b)
     {
@@ -135,6 +138,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerController diePlayer = GetPlayerController(diePlayerID);
         if (diePlayer == null)
         {
+            Debug.LogError("diPlayerID not find");
             return;
         }
         if (diePlayer.GetComponent<PhotonView>().IsMine)
@@ -149,11 +153,13 @@ public class GameManager : MonoBehaviourPunCallbacks
                 isPlayerActive = true;
             }
         }
+
         if (!isPlayerActive && PhotonNetwork.IsMasterClient)
         {
             if (ReduceLives())
             {
                 Retry();
+                photonView.RPC(nameof(Retry), RpcTarget.All);
             }
             else
             {
@@ -216,13 +222,19 @@ public class GameManager : MonoBehaviourPunCallbacks
     ///[PunRPC] リトライ処理
     /// 現在のステージをリロードする
     /// </summary>
+
+    [PunRPC]
     private void Retry()
     {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            return;
-        }
-        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().name);
+        //if (!PhotonNetwork.IsMasterClient)
+        //{
+        //    return;
+        //}
+        Debug.Log("再読み込み中");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //string activeScene = SceneManager.GetActiveScene().name;
+        //Debug.Log(activeScene);
+        //PhotonNetwork.LoadLevel(activeScene);
     }
     /// <summary>
     /// [PunRPC] ゲームオーバー処理 　タイトルに戻す
@@ -234,6 +246,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             return;
         }
+
         photonView.RPC("ReturnToTitle", RpcTarget.All);
         //PhotonNetwork.LoadLevel("Title"); //TODO :　どこのシーンに戻るか決める
     }
@@ -304,7 +317,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 _livesText.text = prop.Value.ToString();
             }
-            Debug.Log($"{prop.Key}: {prop.Value}");
         }
 
     }
