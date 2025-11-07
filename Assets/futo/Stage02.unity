@@ -1698,6 +1698,7 @@ MonoBehaviour:
   _respawnTime: 10
   _lives: 2
   _resultManager: {fileID: 2122035346}
+  _cursorManager: {fileID: 0}
   _livesText: {fileID: 2122035347}
 --- !u!114 &368338762
 MonoBehaviour:
