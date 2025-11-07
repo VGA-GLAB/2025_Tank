@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ChildRotationSync : MonoBehaviour, IPunObservable
 {
-    [SerializeField] private Transform rotateTarget; // 回転したい子オブジェクト（自分自身でも可）
-    [SerializeField] private float smooth = 10f;     // 補間速度
+    [SerializeField] private Transform _rotateTarget; // 回転したい子オブジェクト（自分自身でも可）
+    [SerializeField] private float _smooth = 10f;     // 補間速度
 
     private PhotonView pv;
     private Quaternion networkRotation;
@@ -12,8 +12,8 @@ public class ChildRotationSync : MonoBehaviour, IPunObservable
     void Awake()
     {
         pv = GetComponent<PhotonView>();
-        if (rotateTarget == null) rotateTarget = transform;
-        networkRotation = rotateTarget.localRotation;
+        if (_rotateTarget == null) _rotateTarget = transform;
+        networkRotation = _rotateTarget.localRotation;
     }
 
     void Update()
@@ -22,10 +22,10 @@ public class ChildRotationSync : MonoBehaviour, IPunObservable
         if (pv.IsMine) return;
 
         // 他プレイヤーの回転を補間で反映
-        rotateTarget.localRotation = Quaternion.Lerp(
-            rotateTarget.localRotation,
+        _rotateTarget.localRotation = Quaternion.Lerp(
+            _rotateTarget.localRotation,
             networkRotation,
-            Time.deltaTime * smooth
+            Time.deltaTime * _smooth
         );
     }
 
@@ -34,7 +34,7 @@ public class ChildRotationSync : MonoBehaviour, IPunObservable
         if (stream.IsWriting)
         {
             // 所有者だけ送信
-            stream.SendNext(rotateTarget.localRotation);
+            stream.SendNext(_rotateTarget.localRotation);
         }
         else
         {
