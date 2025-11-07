@@ -42,7 +42,11 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     {
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
-            Instantiate(killEffect.gameObject, this.transform.position, Quaternion.identity);
+            if(killEffect != null)
+            {
+                 Instantiate(killEffect.gameObject, this.transform.position, Quaternion.identity);
+            }
+
             gameManager.GetComponent<PhotonView>().RPC("CheckEnemeyActive", RpcTarget.All);
             PhotonNetwork.Destroy(this.gameObject);
         }
@@ -51,13 +55,14 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     public void Hit(int attack)
     {
         _hp -= attack;
-       
+
 
         if (_hp <= 0)
         {
             Die();
         }
         _hpGauge.UpdateHPGauge();
+
     }
 
     /// <summary>

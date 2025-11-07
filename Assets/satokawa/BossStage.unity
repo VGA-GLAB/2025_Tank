@@ -950,7 +950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a091b24402d514248befe25ff1d8a115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: 6221667203085804515, guid: 3bb7064c13b5aae4bb313c86ec9cf8f4, type: 3}
+  _playerPrefab: {fileID: 4022215392809981793, guid: 10ecace0940e6604da98bb2a9648534e, type: 3}
   _playerClonePosition:
   - {fileID: 1035344560}
   - {fileID: 1097711393}
@@ -962,6 +962,7 @@ MonoBehaviour:
   _playerHPGauge: {fileID: 1668076666}
   _bossHPGauge: {fileID: 1668076665}
   _gameManager: {fileID: 1644447652}
+  _countdownController: {fileID: 0}
 --- !u!114 &1644447652
 MonoBehaviour:
   m_ObjectHideFlags: 0

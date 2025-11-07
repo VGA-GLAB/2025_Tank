@@ -124,6 +124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _toBuff: 3
   _buffAmount: 0
+  _buffParticle: {fileID: 4044501535920784448, guid: 06e2da13904771348ae3fadb4c879b7a, type: 3}
+  _particleColor: {r: 0.59607846, g: 0.40784317, b: 0.76470596, a: 1}
 --- !u!114 &-5267425150323387922
 MonoBehaviour:
   m_ObjectHideFlags: 0

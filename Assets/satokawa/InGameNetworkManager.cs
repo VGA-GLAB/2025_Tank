@@ -62,12 +62,12 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     }
     void Start()
     {
-
         //接続の状態によって処理を分岐
         if (PhotonNetwork.InRoom)
         {
             _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
             CustomPropertiesManager.SetNetValue($"isLoaded{_playerNumber}", 1);
+            Debug.Log("再読み込み済み");
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -90,7 +90,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         yield return new WaitUntil(() => _isAllLoaded);
 
         // 条件が揃ったらここが実行される
-        _countdownController.StartCountdown(StartInGame);
+        _countdownController.RequestStartCountdown(StartInGame);
     }
     /// <summary>
     /// カウントダウンから呼ばれる

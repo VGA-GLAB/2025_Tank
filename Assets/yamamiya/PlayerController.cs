@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [Header("コンポーネント")]
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private BulletShooter _bulletShooter;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private ParticleSystem _killEffect;
     [Header("バフの上限設定")]
     [SerializeField] private int _maxHp;
     [SerializeField] private int _maxAttackPower;
@@ -46,6 +48,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         if (_bulletShooter == null)
         {
             _bulletShooter = GetComponent<BulletShooter>();
+        }
+        if(_animator == null)
+        {
+            _animator = GetComponent<Animator>();
         }
 
         _bulletShooter.IntializeAttackSettings(_attackPower, _bulletInterval);
@@ -74,10 +80,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     /// </summary>
     public void Die()
     {
+        
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
-            _gameManager.GetComponent<PhotonView>().RPC("CheckPlayerActive", RpcTarget.All, photonView.ViewID);
-            PhotonNetwork.Destroy(this.gameObject);
+            _animator.SetTrigger("Dead");
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                Instantiate(_killEffect,this.transform.position, Quaternion.identity);
+                _gameManager.GetComponent<PhotonView>().RPC("CheckPlayerActive", RpcTarget.All, photonView.ViewID);
+            });
         }
     }
     [PunRPC]
