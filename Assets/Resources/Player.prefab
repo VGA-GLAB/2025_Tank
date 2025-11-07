@@ -582,6 +582,8 @@ MonoBehaviour:
   _turnSpeed: 100
   _rigidbody: {fileID: 0}
   _bulletShooter: {fileID: 5466267992034881535}
+  _animator: {fileID: 0}
+  _killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
   _maxHp: 10
   _maxAttackPower: 2
   _maxMoveSpeed: 400
@@ -602,6 +604,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 8653153450281945988, guid: 4054dc889e717194a8ef07c9047879d2, type: 3}
   _shotPosition: {fileID: 3967533780019351136}
   _turret: {fileID: 7148234765819206465}
+  _animator: {fileID: 0}
 --- !u!114 &-6033837540963901182
 MonoBehaviour:
   m_ObjectHideFlags: 0

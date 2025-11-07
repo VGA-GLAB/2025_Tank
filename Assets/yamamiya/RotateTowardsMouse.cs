@@ -32,20 +32,32 @@ public class RotateTowardsMouse : MonoBehaviourPunCallbacks
     {
         _currentMousePosition = Pointer.current.position.ReadValue();
         Ray ray = _camera.ScreenPointToRay(_currentMousePosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+
+        // タレットの位置を通る水平面を作る
+        Plane groundPlane = new Plane(Vector3.up, _turret.position);
 
         float distance;
         if (groundPlane.Raycast(ray, out distance))
         {
             Vector3 hitPoint = ray.GetPoint(distance);
 
-            Vector3 direction = hitPoint - _turret.position;
-            direction.y = 0f;
+            // ローカル空間に変換
+            Vector3 localHit = _turret.parent.InverseTransformPoint(hitPoint);
+            Vector3 localDir = localHit - _turret.localPosition;
 
-            if (direction.sqrMagnitude != 0)
+            // 水平距離と高さを求めてピッチ角を計算
+            float horizontalDistance = new Vector2(localDir.z, localDir.y).magnitude;
+            if (horizontalDistance > 0.001f)
             {
-                _turret.rotation = Quaternion.LookRotation(direction);
+                float angleX = -Mathf.Atan2(localDir.y, localDir.z) * Mathf.Rad2Deg;
+
+                // X軸だけ回転
+                _turret.localRotation = Quaternion.Euler(angleX, 0f, 0f);
             }
         }
+
+
+
+
     }
 }

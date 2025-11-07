@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("リスポーン時間")] private float _respawnTime;
     [SerializeField, Header("残機数")] private int _lives;
     [SerializeField ,Header("リザルトマネージャー")] private ResultManager _resultManager;
+    [SerializeField ,Header("CursorManager")] private CursorManager _cursorManager;
     [SerializeField] private TextMeshProUGUI _livesText;
     public List<PlayerController> Players { get; private set; }
     public List<EnemyBase> Enemys { get; private set; }
@@ -31,6 +32,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             SetupAfterJoiningRoom();
         }
+        if(_cursorManager == null)
+        {
+            _cursorManager = FindAnyObjectByType<CursorManager>();  
+        }
     }
     public override void OnJoinedRoom()
     {
@@ -44,12 +49,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         //残機数をCustomPropertyに保存
         if (PhotonNetwork.IsMasterClient)
         {
-            CustomPropertiesManager.GetNetValue("lives", out bool found).ToString();
+            int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
             if (!found)
             {
                 CustomPropertiesManager.SetNetValue("lives", _lives);
             }
+            _livesText.text = lives.ToString();
         }
+
+        PhotonNetwork.AutomaticallySyncScene = true;
+        Debug.Log("初期設定");
     }
     public void ToggleTimer(bool b)
     {
@@ -129,9 +138,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         PlayerController diePlayer = GetPlayerController(diePlayerID);
         if (diePlayer == null)
         {
+            Debug.LogError("diPlayerID not find");
             return;
         }
-
+        if (diePlayer.GetComponent<PhotonView>().IsMine)
+        {
+            PhotonNetwork.Destroy(diePlayer.gameObject);
+        }
         bool isPlayerActive = false;
         foreach (PlayerController tank in Players)
         {
@@ -140,11 +153,13 @@ public class GameManager : MonoBehaviourPunCallbacks
                 isPlayerActive = true;
             }
         }
+
         if (!isPlayerActive && PhotonNetwork.IsMasterClient)
         {
             if (ReduceLives())
             {
                 Retry();
+                photonView.RPC(nameof(Retry), RpcTarget.All);
             }
             else
             {
@@ -196,6 +211,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             DOVirtual.DelayedCall(1f, () =>
             {
+                _cursorManager.EnableDefaultCursor();
                 _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
             });
         }
@@ -206,13 +222,19 @@ public class GameManager : MonoBehaviourPunCallbacks
     ///[PunRPC] リトライ処理
     /// 現在のステージをリロードする
     /// </summary>
+
+    [PunRPC]
     private void Retry()
     {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            return;
-        }
-        PhotonNetwork.LoadLevel(SceneManager.GetActiveScene().name);
+        //if (!PhotonNetwork.IsMasterClient)
+        //{
+        //    return;
+        //}
+        Debug.Log("再読み込み中");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //string activeScene = SceneManager.GetActiveScene().name;
+        //Debug.Log(activeScene);
+        //PhotonNetwork.LoadLevel(activeScene);
     }
     /// <summary>
     /// [PunRPC] ゲームオーバー処理 　タイトルに戻す
@@ -224,6 +246,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             return;
         }
+
         photonView.RPC("ReturnToTitle", RpcTarget.All);
         //PhotonNetwork.LoadLevel("Title"); //TODO :　どこのシーンに戻るか決める
     }
@@ -239,7 +262,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             Debug.LogError("残機数を取得できませんでした");
         }
-        if (lives > 0)
+        if (lives > 1)
         {
             lives--;
             CustomPropertiesManager.SetNetValue("lives", lives);
@@ -294,7 +317,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 _livesText.text = prop.Value.ToString();
             }
-            Debug.Log($"{prop.Key}: {prop.Value}");
         }
 
     }

@@ -211,8 +211,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.89632225, y: 0.6805601, z: 0.9775834}
-  m_Center: {x: 0.005604267, y: -0.043432713, z: -0.011208296}
+  m_Size: {x: 0.89632225, y: 1.0220101, z: 0.9775834}
+  m_Center: {x: 0.005604267, y: 0.12729228, z: -0.011208296}
 --- !u!195 &210776074583552066
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hp: 3
-  _attack: 1
+  _attack: 10
   _attackRange: 8
   _moveSpeed: 1
   _bulletInterval: 1.5
@@ -256,6 +256,7 @@ MonoBehaviour:
   _turret: {fileID: 7865886444252179200}
   _muzzlePosition: {fileID: 3648757676546276357}
   _hpGauge: {fileID: 1724786511514502748}
+  killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
   _player: {fileID: 0}
 --- !u!1 &5476156238292867432
 GameObject:

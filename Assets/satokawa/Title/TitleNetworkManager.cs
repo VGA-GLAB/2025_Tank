@@ -31,15 +31,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if (PhotonNetwork.IsConnected && !PhotonNetwork.OfflineMode)
-        {
-            _refreshTimer += Time.deltaTime;
-            if (_refreshTimer >= 10f) // 5秒おき
-            {
-                _refreshTimer = 0;
-                PhotonNetwork.JoinLobby(); // 再参加＝RoomList再取得
-            }
-        }
+      
     }
     public void RoomDataReload()
     {
@@ -79,6 +71,9 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedLobby()
     {
+        _cachedRoomList.Clear();   
+        _roomList.Clear();         
+
         _serverJoinButton.interactable = true;
         _logUI.SetActive(false);
         _uIManager.ChangeScreen(1);
@@ -104,6 +99,8 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     /// </summary>
     public override void OnJoinedRoom()
     {
+
+        Debug.Log(PhotonNetwork.IsMasterClient ? "マスター" : "非マスター" + PhotonNetwork.LocalPlayer.ActorNumber);
         _logUI.SetActive(false);
         _roomName.text = "ルーム名:\n" + PhotonNetwork.CurrentRoom.Name;
         _uIManager.ChangeScreen(3);
