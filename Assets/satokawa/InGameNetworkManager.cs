@@ -242,11 +242,13 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ReturnToTitle()
     {
+        Debug.Log("Titlr");
         StartCoroutine(DisconnectAndReturn());
     }
 
     private IEnumerator DisconnectAndReturn()
     {
+        yield return new WaitForSeconds(0.5f);
         PhotonNetwork.Disconnect();
         yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
         SceneManager.LoadScene("Title");

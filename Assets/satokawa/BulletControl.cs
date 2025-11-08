@@ -48,7 +48,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
             }
 
         }
-        if (collision.collider.gameObject.CompareTag("Wall") && _reflectionCount > 0)
+        if (collision.collider.gameObject.CompareTag("Wall") && _reflectionCount > 0)   
         {
             Vector3 normal = collision.contacts[0].normal;
 
