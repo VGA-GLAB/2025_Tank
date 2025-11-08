@@ -252,5 +252,6 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.Disconnect();
         yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
         SceneManager.LoadScene("Title");
+       
     }
 }

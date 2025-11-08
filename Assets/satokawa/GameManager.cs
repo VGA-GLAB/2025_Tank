@@ -246,7 +246,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             return;
         }
-
+        _cursorManager.EnableDefaultCursor();
         photonView.RPC("ReturnToTitle", RpcTarget.All);
         //PhotonNetwork.LoadLevel("Title"); //TODO :　どこのシーンに戻るか決める
     }
@@ -299,6 +299,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         Debug.Log("a");
         if (_nextScene == "Title")
         {
+            _cursorManager.EnableDefaultCursor();
             _networkManager.ReturnToTitle();
             return;
         }
