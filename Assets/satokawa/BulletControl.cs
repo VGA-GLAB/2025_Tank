@@ -12,6 +12,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
     [SerializeField] public int _attack;//攻撃力　クローンする時に入れる
     [SerializeField] private float _destroyDistance;
     [SerializeField] private Vector3 _rotationPower;
+    [SerializeField] private int _reflectionCount;
     private Rigidbody _rb;
     private Vector3 _startPosition;
     private Vector3 _forwardDirection;
@@ -32,20 +33,33 @@ public class BulletControl : MonoBehaviourPunCallbacks
         }
         _rb.AddTorque(_rotationPower * Time.deltaTime,ForceMode.Impulse);
     }
-    private void OnTriggerEnter(Collider collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        if(collision.TryGetComponent(out BulletControl bullet) || collision.TryGetComponent(out ItemBase item))
+        if(collision.collider.TryGetComponent(out BulletControl bullet) || collision.collider.TryGetComponent(out ItemBase item))
         {
             //弾とアイテムは無視
             return;
         }
         if (photonView.IsMine)
         {
-            if(collision.TryGetComponent(out ITank tank))
+            if(collision.collider.TryGetComponent(out ITank tank))
             {
-                collision.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack);
-
+                collision.collider.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack);
             }
+
+        }
+        if (collision.collider.gameObject.CompareTag("Wall") && _reflectionCount > 0)
+        {
+            Vector3 normal = collision.contacts[0].normal;
+
+            // 反射ベクトル
+            _forwardDirection = Vector3.Reflect(_forwardDirection, normal).normalized;
+
+            // Rigidbody に反映
+            _rb.angularVelocity = _forwardDirection * _bulletSpeed;
+
+            _reflectionCount--;
+            return;
         }
         Delete();
 
