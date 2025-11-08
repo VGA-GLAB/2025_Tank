@@ -180,11 +180,18 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             GameObject newEnemy = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
             if (newEnemy.TryGetComponent(out EnemyBoss boss))
             {
-                _bossHPGauge.SetTarget(newEnemy);
-                boss.SetHPGage(_bossHPGauge);
+                photonView.RPC(nameof(SetBossHPGauge),RpcTarget.All, boss.GetComponent<PhotonView>().ViewID);
             }
             photonView.RPC("AddEnemy", RpcTarget.All, newEnemy.GetComponent<PhotonView>().ViewID);
         }
+    }
+    [PunRPC]
+    public void SetBossHPGauge(int viewID)
+    {
+        PhotonView photonView = PhotonView.Find(viewID);
+        if (photonView == null) Debug.LogError("ViewError");
+        _bossHPGauge.SetTarget(photonView.gameObject);
+        photonView.GetComponent<EnemyBoss>().SetHPGage(_bossHPGauge);
     }
     /// <summary>
     /// マスターのみがアイテムを生成

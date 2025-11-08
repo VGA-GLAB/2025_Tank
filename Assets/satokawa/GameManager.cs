@@ -47,15 +47,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void SetupAfterJoiningRoom()
     {
         //残機数をCustomPropertyに保存
-        if (PhotonNetwork.IsMasterClient)
-        {
+        //if (PhotonNetwork.IsMasterClient)
+        //{
             int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
             if (!found)
             {
                 CustomPropertiesManager.SetNetValue("lives", _lives);
             }
             _livesText.text = lives.ToString();
-        }
+        //}
 
         PhotonNetwork.AutomaticallySyncScene = true;
         Debug.Log("初期設定");
