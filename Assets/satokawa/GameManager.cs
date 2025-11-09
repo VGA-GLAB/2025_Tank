@@ -327,4 +327,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
 
     }
+    public float GetTime()
+    {
+        return _gameTimer;
+    }
 }

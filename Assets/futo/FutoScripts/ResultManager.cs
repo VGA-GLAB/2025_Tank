@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using UnityEngine.Events;
 using DG.Tweening;
+using TMPro;
 public class ResultManager : MonoBehaviour
 {
     [Header("タイム設定")]
@@ -16,6 +17,7 @@ public class ResultManager : MonoBehaviour
     [SerializeField] private GameObject _resultPnanel;
     [SerializeField] private Image[] _starImage;
     [SerializeField] private Button _nextButton;
+    [SerializeField] private TextMeshProUGUI _timeText;
     [SerializeField] private GameManager _gameManager;
     private List<Animator> _animators;
     private int _starCount;
@@ -40,6 +42,8 @@ public class ResultManager : MonoBehaviour
     public void ShowResult(float clearTime)
     {
         _resultPnanel.SetActive(true);
+        float time = _gameManager.GetTime();
+        _timeText.text = (int)(time / 60) + ":" + (int)(time % 60);
         if(!_resultPnanel.TryGetComponent(out RectTransform pnanelRect))
         {
             StartCoroutine(ShowStar(_starCount));

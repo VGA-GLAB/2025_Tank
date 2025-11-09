@@ -127,7 +127,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            PhotonNetwork.LoadLevel("Stage1");           // マスターだけ呼ぶ
+            PhotonNetwork.LoadLevel("Stage01");           // マスターだけ呼ぶ
         }
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
