@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/futo/Stage05.unity
     guid: ed4917c20fc8bc3408f7aa6be0db614e
+  - enabled: 1
+    path: Assets/futo/StageBoss.unity
+    guid: e41fceec1b4a5984bb00a75855cd528b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_UseUCBPForAssetBundles: 0
