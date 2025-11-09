@@ -583,5 +583,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6528b4525578fbf48b5f59c3dad4d8be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateTarget: {fileID: 7828477970547969869}
-  smooth: 10
+  _rotateTarget: {fileID: 0}
+  _smooth: 10

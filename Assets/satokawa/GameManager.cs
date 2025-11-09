@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("次のステージ（Scene）")] private string _nextScene;
     [SerializeField, Header("リスポーン時間")] private float _respawnTime;
     [SerializeField, Header("残機数")] private int _lives;
-    [SerializeField ,Header("リザルトマネージャー")] private ResultManager _resultManager;
-    [SerializeField ,Header("CursorManager")] private CursorManager _cursorManager;
+    [SerializeField, Header("リザルトマネージャー")] private ResultManager _resultManager;
+    [SerializeField, Header("CursorManager")] private CursorManager _cursorManager;
     [SerializeField] private TextMeshProUGUI _livesText;
     public List<PlayerController> Players { get; private set; }
     public List<EnemyBase> Enemys { get; private set; }
@@ -32,9 +32,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             SetupAfterJoiningRoom();
         }
-        if(_cursorManager == null)
+        if (_cursorManager == null)
         {
-            _cursorManager = FindAnyObjectByType<CursorManager>();  
+            _cursorManager = FindAnyObjectByType<CursorManager>();
         }
     }
     public override void OnJoinedRoom()
@@ -47,15 +47,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void SetupAfterJoiningRoom()
     {
         //残機数をCustomPropertyに保存
-        if (PhotonNetwork.IsMasterClient)
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
+        if (!found)
         {
-            int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
-            if (!found)
-            {
-                CustomPropertiesManager.SetNetValue("lives", _lives);
-            }
-            _livesText.text = lives.ToString();
+            CustomPropertiesManager.SetNetValue("lives", _lives);
         }
+        _livesText.text = lives.ToString();
+        //}
 
         PhotonNetwork.AutomaticallySyncScene = true;
         Debug.Log("初期設定");
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if( _isGameTimer )
+        if (_isGameTimer)
         {
             _gameTimer += Time.deltaTime;
         }
@@ -246,7 +246,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             return;
         }
-
+        _cursorManager.EnableDefaultCursor();
         photonView.RPC("ReturnToTitle", RpcTarget.All);
         //PhotonNetwork.LoadLevel("Title"); //TODO :　どこのシーンに戻るか決める
     }
@@ -274,7 +274,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             CustomPropertiesManager.SetNetValue("lives", _lives);
             return false;
         }
-       
+
     }
     /// <summary>
     /// 残機を増やす
@@ -293,16 +293,23 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// <summary>
     ///[PunRPC] ゲームクリア処理　
     /// </summary>
-    public void GameClear()
+    [PunRPC]
+    public void MoveNextScene()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-
+        Debug.Log("a");
         if (_nextScene == "Title")
         {
-            photonView.RPC("ReturnToTitle", RpcTarget.All);
+            _cursorManager.EnableDefaultCursor();
+            _networkManager.ReturnToTitle();
             return;
         }
+        if (!PhotonNetwork.IsMasterClient) return;
+
         PhotonNetwork.LoadLevel(_nextScene);
+    }
+    public void GameClear()
+    {
+        photonView.RPC(nameof(MoveNextScene), RpcTarget.All);
     }
     /// <summary>
     /// カスタムプロパティの変更があったら残機数を取得しUIに表示

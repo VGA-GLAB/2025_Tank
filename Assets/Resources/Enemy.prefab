@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hp: 3
-  _attack: 10
+  _attack: 1
   _attackRange: 8
   _moveSpeed: 1
   _bulletInterval: 1.5

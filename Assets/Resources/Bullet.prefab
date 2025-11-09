@@ -134,6 +134,7 @@ MonoBehaviour:
   _attack: 1
   _destroyDistance: 50
   _rotationPower: {x: 30, y: 30, z: 30}
+  _reflectionCount: 1
 --- !u!114 &-8658519106274961758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +189,7 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
