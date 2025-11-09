@@ -17,6 +17,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/satokawa/BossStage.unity
     guid: 742548bc4de46104cbe026afe5876194
+  - enabled: 1
+    path: Assets/futo/Stage01.unity
+    guid: 8d63cce4905a9b440a9977eea5b46b54
+  - enabled: 1
+    path: Assets/futo/Stage02.unity
+    guid: c72827b5c48116a4d9a6b9e274ead708
+  - enabled: 1
+    path: Assets/futo/Stage03.unity
+    guid: d9788ee617d82554d82e943450054aaf
+  - enabled: 1
+    path: Assets/futo/Stage04.unity
+    guid: ba7effd38e153144592824f24962760a
+  - enabled: 1
+    path: Assets/futo/Stage05.unity
+    guid: ed4917c20fc8bc3408f7aa6be0db614e
+  - enabled: 1
+    path: Assets/futo/StageBoss.unity
+    guid: e41fceec1b4a5984bb00a75855cd528b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_UseUCBPForAssetBundles: 0
