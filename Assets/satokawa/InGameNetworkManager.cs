@@ -43,6 +43,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
 
     [SerializeField, Header("ゲームマネージャー")]
     private GameManager _gameManager;
+    [SerializeField, Header("プレイヤーすべての合計HP")]
+    private int _allPlayerHP;
     [SerializeField]
     private CountdownController _countdownController;
     public int _playerNumber { get; private set; }//何番目にルームに入ったか
@@ -159,11 +161,17 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
 
         GameObject newPlayer = PhotonNetwork.Instantiate(_playerPrefab.name, position, rotation);
         PhotonView view = newPlayer.GetComponent<PhotonView>();
-        _playerHPGauge.SetTarget(newPlayer);
+
         if (newPlayer.TryGetComponent(out PlayerController playerController))
         {
             playerController._hpGauge = _playerHPGauge;
+            if (_allPlayerHP != 0)
+            {
+                int playerHP = _allPlayerHP / PhotonNetwork.PlayerList.Length;
+                playerController.SetHP(playerHP);
+            }
         }
+        _playerHPGauge.SetTarget(newPlayer);
         DOVirtual.DelayedCall(0.1f, () => photonView.RPC("AddPlayer", RpcTarget.All, view.ViewID));//TODO:今はゴリ押しでやってるけどタイトルできたらちゃんと書く
     }
     /// <summary>
