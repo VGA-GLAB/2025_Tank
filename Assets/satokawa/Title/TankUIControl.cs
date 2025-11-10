@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 public class TankUIControl : MonoBehaviour
 {
-    [SerializeField] private GameObject[] _tankObject;
+    [SerializeField] private RawImage[] _tankImage;
     [SerializeField] private Material[] _tankMaterial;
     [SerializeField] private Material _hiddenMaterial;
     [SerializeField] private Button _startButton;
@@ -12,15 +12,15 @@ public class TankUIControl : MonoBehaviour
     {
         int i = 1;
         int playerNumber = PhotonNetwork.CurrentRoom.PlayerCount;
-        foreach (GameObject tank in _tankObject)
+        foreach (RawImage image in _tankImage)
         {
             if (i <= playerNumber)
             {
-                ChangeMaterial(_tankMaterial[i - 1], tank);
+                image.color = Color.white;
             }
             else
             {
-                ChangeMaterial(_hiddenMaterial, tank);
+                image.color = Color.black;
             }
             i++;
         }
