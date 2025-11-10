@@ -236,6 +236,11 @@ public class EnemyBoss : EnemyBase
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
             GameObject bullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.LookRotation(_muzzlePosition.transform.forward ));
+            if(bullet.TryGetComponent(out BulletControl bulletControl))
+            {
+                bulletControl._attack = _attack;
+                bulletControl._ignoreTarget = BulletControl.Target.Enemy;
+            }
         }
     }
     public override void Move() { }

@@ -74,6 +74,7 @@ public class EnemyStandard : EnemyBase
             if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
             {
                 component._attack = AttackPower;
+                component._ignoreTarget = BulletControl.Target.Enemy;
             }
             _attackTimer = 0;
         }

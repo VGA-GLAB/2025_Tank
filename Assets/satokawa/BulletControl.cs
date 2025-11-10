@@ -13,15 +13,21 @@ public class BulletControl : MonoBehaviourPunCallbacks
     [SerializeField] private float _destroyDistance;
     [SerializeField] private Vector3 _rotationPower;
     [SerializeField] private int _reflectionCount;
+    [SerializeField] public Target _ignoreTarget = Target.None;
     private Rigidbody _rb;
     private Vector3 _startPosition;
     private Vector3 _forwardDirection;
+    public enum Target
+    {
+        None,Player,Enemy,
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _startPosition = this.transform.position;
         _forwardDirection = this.transform.forward;
+        if (_ignoreTarget == Target.None) Debug.LogWarning("弾が無視するタンクを設定していません");
     }
     // Update is called once per frame
     void Update()
@@ -40,9 +46,23 @@ public class BulletControl : MonoBehaviourPunCallbacks
             //弾とアイテムは無視
             return;
         }
+        bool isIgnore = false;
+        switch (_ignoreTarget)
+        {
+            case Target.Player:
+                if (collision.collider.TryGetComponent<PlayerController>(out var player))
+                    isIgnore = true;
+                break;
+
+            case Target.Enemy:
+                if (collision.collider.TryGetComponent<EnemyBase>(out var enemy))
+                    isIgnore = true;
+                break;
+        }
+
         if (photonView.IsMine)
         {
-            if(collision.collider.TryGetComponent(out ITank tank))
+            if(collision.collider.TryGetComponent(out ITank tank) && !isIgnore)
             {
                 collision.collider.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack);
             }

@@ -99,9 +99,10 @@ public class FlankingEnemy : EnemyBase
         {
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.identity);
             newBullet.transform.forward = _muzzlePosition.forward;
-            if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
+            if (newBullet.TryGetComponent(out BulletControl component))
             {
                 component._attack = _attack;
+                component._ignoreTarget = BulletControl.Target.Enemy;
             }
             _attackTimer = 0f;
         }
