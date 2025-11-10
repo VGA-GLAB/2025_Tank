@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 4983365}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (5)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1042,7 +1042,7 @@ GameObject:
   - component: {fileID: 268936532}
   m_Layer: 0
   m_Name: RightWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1566,8 +1566,9 @@ MonoBehaviour:
     clonePosition: {fileID: 467848697}
   _wallPrefab: {fileID: 1966890450968499561, guid: 129253a2e009eeb4cb2368a55e24cf3b, type: 3}
   _playerHPGauge: {fileID: 2122035348}
-  _bossHPGauge: {fileID: 0}
+  _bossHPGauge: {fileID: 1428854957}
   _gameManager: {fileID: 368338761}
+  _allPlayerHP: 0
   _countdownController: {fileID: 0}
 --- !u!4 &368338763
 Transform:
@@ -2114,7 +2115,7 @@ GameObject:
   - component: {fileID: 422190575}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (5)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2491,7 +2492,7 @@ GameObject:
   - component: {fileID: 445012423}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (9)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2716,7 +2717,7 @@ GameObject:
   - component: {fileID: 479724159}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (7)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2994,7 +2995,7 @@ GameObject:
   - component: {fileID: 497801901}
   m_Layer: 0
   m_Name: LeftWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3404,7 +3405,7 @@ GameObject:
   - component: {fileID: 668952951}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (6)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4200,7 +4201,7 @@ GameObject:
   - component: {fileID: 888678492}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (5)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4464,7 +4465,7 @@ GameObject:
   - component: {fileID: 992869676}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (6)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4945,7 +4946,7 @@ GameObject:
   - component: {fileID: 1145480358}
   m_Layer: 0
   m_Name: TopWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5757,6 +5758,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413039376}
   m_Mesh: {fileID: -8472372975725010141, guid: 2596c8f5c8ce0b64790b15c2d46d77ca, type: 3}
+--- !u!114 &1428854957 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4257392257988487048, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+  m_PrefabInstance: {fileID: 2122035345}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e710adc63a03fa4fac2c9aafad5a2a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1476461702
 GameObject:
   m_ObjectHideFlags: 0
@@ -5769,7 +5781,7 @@ GameObject:
   - component: {fileID: 1476461704}
   m_Layer: 0
   m_Name: Buttomwall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6805,7 +6817,7 @@ GameObject:
   - component: {fileID: 1741613428}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (6)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6985,6 +6997,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1753369031}
   m_Mesh: {fileID: -5543473744260587458, guid: 33dfb54c0e2c11949bb63ce39e29391a, type: 3}
+--- !u!1 &1789751758 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7573993724064172963, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+  m_PrefabInstance: {fileID: 2086293502}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1794302655
 GameObject:
   m_ObjectHideFlags: 0
@@ -7171,7 +7188,7 @@ GameObject:
   - component: {fileID: 1799114920}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (8)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7640,6 +7657,115 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061951078}
   m_Mesh: {fileID: -5543473744260587458, guid: 33dfb54c0e2c11949bb63ce39e29391a, type: 3}
+--- !u!1001 &2086293502
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2448198829399664688, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: _hpGauge
+      value: 
+      objectReference: {fileID: 1428854957}
+    - target: {fileID: 2448198829399664688, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: _laserAngle
+      value: 179
+      objectReference: {fileID: 0}
+    - target: {fileID: 2448198829399664688, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: _laserDistance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2448198829399664688, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: _laserRotationSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2448198829399664688, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: _laserDamageInterval
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2448198829399664688, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: _attackPatterns.Array.data[2]._attackCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2448198829399664688, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: _attackPatterns.Array.data[0]._attackInterval
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2448198829399664688, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: _attackPatterns.Array.data[3]._attackInterval
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4260967103460825556, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5565320619867326601, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7573993724064172963, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
+      propertyPath: m_Name
+      value: EnemyBoss
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
 --- !u!1 &2097128315
 GameObject:
   m_ObjectHideFlags: 0
@@ -7770,6 +7896,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4257392257988487048, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 1789751758}
     - target: {fileID: 4341538849656563535, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -7856,7 +7986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6227659566941581292, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8647842926262115011, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_fontAsset
@@ -8006,3 +8136,4 @@ SceneRoots:
   - {fileID: 2122035345}
   - {fileID: 174274049}
   - {fileID: 176818212}
+  - {fileID: 2086293502}
