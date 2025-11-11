@@ -372,6 +372,8 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 8653153450281945988, guid: 4054dc889e717194a8ef07c9047879d2, type: 3}
   _turret: {fileID: 8606004562235513022}
   _muzzlePosition: {fileID: 8880201577603088873}
+  _hpGauge: {fileID: 0}
+  killEffect: {fileID: 0}
   _player: {fileID: 0}
   _buckShotAngle: 45
 --- !u!1 &8606004562235513022

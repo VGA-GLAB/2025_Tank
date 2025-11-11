@@ -7675,11 +7675,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2448198829399664688, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
       propertyPath: _laserDistance
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2448198829399664688, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
       propertyPath: _laserRotationSpeed
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2448198829399664688, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
       propertyPath: _laserDamageInterval
@@ -7707,15 +7707,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7723,7 +7723,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.27
+      value: 0.91
       objectReference: {fileID: 0}
     - target: {fileID: 5696561966487061354, guid: f03921e7e310a884cb43a8136f77755a, type: 3}
       propertyPath: m_LocalPosition.z
