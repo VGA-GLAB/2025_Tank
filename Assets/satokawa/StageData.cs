@@ -3,15 +3,15 @@
 [CreateAssetMenu(fileName = "StageData")]
 public class StageData : ScriptableObject
 {
-    public string _number;
-    public string _name;
-    public Sprite _image;
+    public string Number;
+    public string Name;
+    public Sprite Image;
     [Header("敵の数")]
-    public int _normalEnemy;
-    public int _laserEnemy;
-    public int _buckshotEnemy;
-    public int _flankingEnemy;
-    public int _bossEnemy;
+    public int NormalEnemy;
+    public int LaserEnemy;
+    public int BuckshotEnemy;
+    public int FlankingEnemy;
+    public int BossEnemy;
 
 
 }

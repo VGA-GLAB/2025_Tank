@@ -33,15 +33,15 @@ public class StageListView : MonoBehaviour
     {
         if (index >= _stageList.Length) return;
 
-        _stageNumber.text = _stageList[index]._number;
-        _stageName.text = _stageList[index]._name;
-        _stageImage.sprite = _stageList[index]._image;
+        _stageNumber.text = _stageList[index].Number;
+        _stageName.text = _stageList[index].Name;
+        _stageImage.sprite = _stageList[index].Image;
         
-        _normalEnemy.text = "×" + _stageList[index]._normalEnemy;
-        _laserEnemy.text = "×" + _stageList[index]._laserEnemy;
-        _buckshotEnemy.text = "×" + _stageList[index]._buckshotEnemy;
-        _flankingEnemy.text = "×" + _stageList[index]._flankingEnemy;
-        _bossEnemy.text = "×" + _stageList[index]._bossEnemy;
+        _normalEnemy.text = "×" + _stageList[index].NormalEnemy;
+        _laserEnemy.text = "×" + _stageList[index].LaserEnemy;
+        _buckshotEnemy.text = "×" + _stageList[index].BuckshotEnemy;
+        _flankingEnemy.text = "×" + _stageList[index].FlankingEnemy;
+        _bossEnemy.text = "×" + _stageList[index].BossEnemy;
     }
     public void ShowList()
     {
@@ -54,7 +54,7 @@ public class StageListView : MonoBehaviour
             newObject.GetComponent<Button>().onClick.AddListener(() => ShowInfo(i)); 
             if(newObject.TryGetComponent(out Image image))
             {
-                image.sprite = stage._image;
+                image.sprite = stage.Image;
             }
             index++;
         }

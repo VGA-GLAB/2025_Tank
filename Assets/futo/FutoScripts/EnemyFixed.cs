@@ -61,8 +61,7 @@ public class EnemyFixed : EnemyBase
             newBullet.transform.forward = _muzzlePosition.forward;
             if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
             {
-                component._attack = AttackPower;
-                component._ignoreTarget = BulletControl.Target.Enemy;
+                component.SetBulletData(_attack, BulletControl.Target.Enemy);
             }
             _attackTimer = 0;
         }

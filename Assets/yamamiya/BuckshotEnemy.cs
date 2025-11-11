@@ -97,7 +97,7 @@ public class BuckshotEnemy : EnemyBase
         newBullet.transform.forward = direction;
         if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
         {
-            component._attack = _attack;
+            component.SetBulletData(_attack, BulletControl.Target.Enemy);
         }
     }
 }

@@ -101,8 +101,7 @@ public class FlankingEnemy : EnemyBase
             newBullet.transform.forward = _muzzlePosition.forward;
             if (newBullet.TryGetComponent(out BulletControl component))
             {
-                component._attack = _attack;
-                component._ignoreTarget = BulletControl.Target.Enemy;
+                component.SetBulletData(_attack, BulletControl.Target.Enemy);
             }
             _attackTimer = 0f;
         }

@@ -9,11 +9,11 @@ using UnityEngine;
 public class BulletControl : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float _bulletSpeed;//弾が進むスピード
-    [SerializeField] public int _attack;//攻撃力　クローンする時に入れる
+    [SerializeField] private  int _attack;//攻撃力　クローンする時に入れる
     [SerializeField] private float _destroyDistance;
     [SerializeField] private Vector3 _rotationPower;
     [SerializeField] private int _reflectionCount;
-    [SerializeField] public Target _ignoreTarget = Target.None;
+    [SerializeField] private Target _ignoreTarget = Target.None;
     private Rigidbody _rb;
     private Vector3 _startPosition;
     private Vector3 _forwardDirection;
@@ -83,6 +83,11 @@ public class BulletControl : MonoBehaviourPunCallbacks
         }
         Delete();
 
+    }
+    public void SetBulletData(int attack, Target target)
+    {
+        _attack = attack;
+        _ignoreTarget = target;
     }
     /// <summary>
     /// 生成したのが自分だったら銃弾を消す
