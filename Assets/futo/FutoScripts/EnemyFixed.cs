@@ -43,7 +43,7 @@ public class EnemyFixed : EnemyBase
             _turret.transform.LookAt(_playerPosition);
         }
 
-        if (!_agent.pathPending && _agent.remainingDistance < 0.5f)
+        if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
         {
             GoNextPoint();
         }
@@ -72,7 +72,10 @@ public class EnemyFixed : EnemyBase
     {
         if (_patrolPoint.Length == 0) return;
 
-        _agent.destination = _patrolPoint[_destpoint].position;
+        if (!_agent.SetDestination(_patrolPoint[_destpoint].position))
+        {
+            Debug.LogError("経路探索失敗");
+        }
 
         _destpoint = (_destpoint + 1) % _patrolPoint.Length;
     }
