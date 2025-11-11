@@ -988,7 +988,7 @@ GameObject:
   - component: {fileID: 268936532}
   m_Layer: 0
   m_Name: RightWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1504,7 +1504,7 @@ MonoBehaviour:
     clonePosition: {fileID: 2066801402}
   - clonePrefab: {fileID: 4421280240951079713, guid: f9c8121c913c60a47b347bd2f0682e22, type: 3}
     clonePosition: {fileID: 956212843}
-  - clonePrefab: {fileID: 4421280240951079713, guid: f9c8121c913c60a47b347bd2f0682e22, type: 3}
+  - clonePrefab: {fileID: 4383457566349286545, guid: d4a18fd5372989c47970a89b926ab4ff, type: 3}
     clonePosition: {fileID: 781954537}
   _itemClone:
   - clonePrefab: {fileID: 2414042231499467189, guid: 23fe3126deafe1d4198175121845760b, type: 3}
@@ -1544,7 +1544,7 @@ GameObject:
   - component: {fileID: 378971666}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2230,6 +2230,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637205654}
   m_Mesh: {fileID: -8472372975725010141, guid: 2596c8f5c8ce0b64790b15c2d46d77ca, type: 3}
+--- !u!1 &658322284
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 658322285}
+  m_Layer: 0
+  m_Name: Patlo
+  m_TagString: PatrolPoint
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &658322285
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658322284}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.56, y: 1.31, z: -1.61}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &681203466
 GameObject:
   m_ObjectHideFlags: 0
@@ -2414,7 +2445,7 @@ GameObject:
   - component: {fileID: 721042545}
   m_Layer: 0
   m_Name: Wall (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2556,7 +2587,7 @@ GameObject:
   - component: {fileID: 737603852}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2947,7 +2978,7 @@ GameObject:
   - component: {fileID: 1009235298}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3172,7 +3203,7 @@ GameObject:
   - component: {fileID: 1084697805}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3364,7 +3395,7 @@ GameObject:
   - component: {fileID: 1100732779}
   m_Layer: 0
   m_Name: LeftWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4260,7 +4291,7 @@ GameObject:
   - component: {fileID: 1460874945}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4345,7 +4376,7 @@ GameObject:
   - component: {fileID: 1476461704}
   m_Layer: 0
   m_Name: Buttomwall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4947,7 +4978,7 @@ GameObject:
   - component: {fileID: 1752462676}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5107,6 +5138,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 174274049}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &1873800845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1873800846}
+  m_Layer: 0
+  m_Name: Patlo (1)
+  m_TagString: PatrolPoint
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1873800846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873800845}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.65, y: 1.31, z: 3.48}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1956029547
 GameObject:
   m_ObjectHideFlags: 0
@@ -5120,7 +5182,7 @@ GameObject:
   - component: {fileID: 1956029549}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5463,7 +5525,7 @@ GameObject:
   - component: {fileID: 2061715892}
   m_Layer: 0
   m_Name: TopWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5916,6 +5978,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5512497247543410054, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5574192938394129387, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_FillAmount
       value: 1
@@ -5923,6 +5989,14 @@ PrefabInstance:
     - target: {fileID: 6227659566941581292, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6870693603263425441, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8609613784774601913, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8647842926262115011, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_fontAsset
@@ -6073,3 +6147,5 @@ SceneRoots:
   - {fileID: 174274049}
   - {fileID: 1579362107}
   - {fileID: 176818212}
+  - {fileID: 658322285}
+  - {fileID: 1873800846}

@@ -347,7 +347,6 @@ GameObject:
   - component: {fileID: 5694981901441737633}
   - component: {fileID: 2849153295962291729}
   - component: {fileID: 5650745439520056014}
-  - component: {fileID: 8623326106133195195}
   m_Layer: 0
   m_Name: FlankingEnemy
   m_TagString: Untagged
@@ -502,23 +501,13 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 8653153450281945988, guid: 4054dc889e717194a8ef07c9047879d2, type: 3}
   _turret: {fileID: 6147682664793463946}
   _muzzlePosition: {fileID: 8538304466899396778}
+  _hpGauge: {fileID: 0}
+  killEffect: {fileID: 0}
   _player: {fileID: 0}
   _flankOffset: 3
   _behindDistance: 5
   _viewAngleThreshold: -0.5
   _updateInterval: 0.5
---- !u!114 &8623326106133195195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7169039763227611115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5dcf6060039e1440a82bcf974dc23fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7629728026646684410
 PrefabInstance:
   m_ObjectHideFlags: 0
