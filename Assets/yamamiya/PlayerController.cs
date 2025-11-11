@@ -110,6 +110,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         Debug.Log($"Destroyed by actor: {info.Sender}");
     }
 
+    public void SetHP(int value)
+    {
+        _hp = value;
+    }
+
     public void BuffStatus(Buff buff, float amount)
     {
         switch (buff)

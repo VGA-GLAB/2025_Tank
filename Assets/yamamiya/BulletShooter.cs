@@ -59,7 +59,7 @@ public class BulletShooter : MonoBehaviour
 
             if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
             {
-                component._attack = _attack;
+                component.SetBulletData(_attack, BulletControl.Target.Player);
             }
         }
     }

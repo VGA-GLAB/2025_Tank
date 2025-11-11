@@ -3,6 +3,7 @@ using Photon.Pun;
 using System.Collections.Generic;
 using DG.Tweening;
 using System;
+using System.ComponentModel;
 /// <summary>
 /// ボス敵のクラス
 /// </summary>
@@ -236,6 +237,10 @@ public class EnemyBoss : EnemyBase
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
             GameObject bullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.LookRotation(_muzzlePosition.transform.forward ));
+            if(bullet.TryGetComponent(out BulletControl bulletControl))
+            {
+                bulletControl.SetBulletData(_attack, BulletControl.Target.Enemy);
+            }
         }
     }
     public override void Move() { }
