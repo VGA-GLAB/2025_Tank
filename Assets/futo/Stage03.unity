@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 39699801}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 55195906}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -420,7 +420,7 @@ GameObject:
   - component: {fileID: 82515238}
   m_Layer: 0
   m_Name: Wall (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -834,7 +834,7 @@ GameObject:
   - component: {fileID: 97786573}
   m_Layer: 0
   m_Name: Wall (10)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1132,7 +1132,7 @@ GameObject:
   - component: {fileID: 202674853}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1342,7 +1342,7 @@ GameObject:
   - component: {fileID: 226315810}
   m_Layer: 0
   m_Name: Wall (6)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1483,7 +1483,7 @@ GameObject:
   - component: {fileID: 268936532}
   m_Layer: 0
   m_Name: RightWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1549,7 +1549,7 @@ GameObject:
   - component: {fileID: 277150720}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (7)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1657,7 +1657,7 @@ GameObject:
   - component: {fileID: 277978159}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1765,7 +1765,7 @@ GameObject:
   - component: {fileID: 284458351}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (4)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2483,7 +2483,7 @@ GameObject:
   - component: {fileID: 378971666}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3525,7 +3525,7 @@ GameObject:
   - component: {fileID: 497801901}
   m_Layer: 0
   m_Name: LeftWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3934,7 +3934,7 @@ GameObject:
   - component: {fileID: 570677906}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4363,7 +4363,7 @@ GameObject:
   - component: {fileID: 721042545}
   m_Layer: 0
   m_Name: Wall (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4419,7 +4419,7 @@ GameObject:
   - component: {fileID: 737603852}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4708,7 +4708,7 @@ GameObject:
   - component: {fileID: 823576010}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4967,7 +4967,7 @@ GameObject:
   - component: {fileID: 862842807}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (9)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5261,7 +5261,7 @@ GameObject:
   - component: {fileID: 976936382}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5434,7 +5434,7 @@ GameObject:
   - component: {fileID: 1009235298}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5626,7 +5626,7 @@ GameObject:
   - component: {fileID: 1039490450}
   m_Layer: 0
   m_Name: Wall (9)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5799,7 +5799,7 @@ GameObject:
   - component: {fileID: 1081733531}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5886,7 +5886,7 @@ GameObject:
   - component: {fileID: 1084697805}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6079,7 +6079,7 @@ GameObject:
   - component: {fileID: 1145195496}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6164,7 +6164,7 @@ GameObject:
   - component: {fileID: 1145480358}
   m_Layer: 0
   m_Name: TopWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6497,7 +6497,7 @@ GameObject:
   - component: {fileID: 1183207634}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6701,7 +6701,7 @@ GameObject:
   - component: {fileID: 1233113735}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7018,7 +7018,7 @@ GameObject:
   - component: {fileID: 1257662233}
   m_Layer: 0
   m_Name: Wall (8)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7161,7 +7161,7 @@ GameObject:
   - component: {fileID: 1288224286}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (5)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7470,7 +7470,7 @@ GameObject:
   - component: {fileID: 1434334283}
   m_Layer: 0
   m_Name: Wall (4)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7526,7 +7526,7 @@ GameObject:
   - component: {fileID: 1460874945}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7611,7 +7611,7 @@ GameObject:
   - component: {fileID: 1476461704}
   m_Layer: 0
   m_Name: Buttomwall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8895,7 +8895,7 @@ GameObject:
   - component: {fileID: 1718230621}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8981,7 +8981,7 @@ GameObject:
   - component: {fileID: 1734193088}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9068,7 +9068,7 @@ GameObject:
   - component: {fileID: 1741613428}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (6)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9174,7 +9174,7 @@ GameObject:
   - component: {fileID: 1752462676}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9316,7 +9316,7 @@ GameObject:
   - component: {fileID: 1758524097}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9573,7 +9573,7 @@ GameObject:
   - component: {fileID: 1803537828}
   m_Layer: 0
   m_Name: Wall (5)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9630,7 +9630,7 @@ GameObject:
   - component: {fileID: 1818956269}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (8)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9737,7 +9737,7 @@ GameObject:
   - component: {fileID: 1824554361}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9823,7 +9823,7 @@ GameObject:
   - component: {fileID: 1867595458}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9939,7 +9939,7 @@ GameObject:
   - component: {fileID: 1892906475}
   m_Layer: 0
   m_Name: Wall (7)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10112,7 +10112,7 @@ GameObject:
   - component: {fileID: 1956029549}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10198,7 +10198,7 @@ GameObject:
   - component: {fileID: 1960380243}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10370,7 +10370,7 @@ GameObject:
   - component: {fileID: 1990788382}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_01 (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10660,7 +10660,7 @@ GameObject:
   - component: {fileID: 2070144487}
   m_Layer: 0
   m_Name: BgMD_BuildingBlocks_02 (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10956,6 +10956,10 @@ PrefabInstance:
     - target: {fileID: 1439435780582656192, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_Name
       value: InGameUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1439435780582656192, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2504006750640323932, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_Type
