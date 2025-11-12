@@ -28,7 +28,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [Header("コンポーネント")]
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private BulletShooter _bulletShooter;
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Animator _tankAnimator;
+    [SerializeField] private Animator _hamsterAnimator;
     [SerializeField] private ParticleSystem _killEffect;
     [Header("バフの上限設定")]
     [SerializeField] private int _maxHp;
@@ -49,9 +50,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         {
             _bulletShooter = GetComponent<BulletShooter>();
         }
-        if(_animator == null)
+        if(_tankAnimator == null)
         {
-            _animator = GetComponent<Animator>();
+            _tankAnimator = GetComponent<Animator>();
         }
 
         _bulletShooter.IntializeAttackSettings(_attackPower, _bulletInterval);
@@ -80,13 +81,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     /// </summary>
     public void Die()
     {
-        
+
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
-            _animator.SetTrigger("Dead");
+            //Sound:Player DieSE （当たった瞬間はここ）
+            _tankAnimator.SetTrigger("Dead");
+            _hamsterAnimator.SetTrigger("Dead");
             DOVirtual.DelayedCall(1f, () =>
             {
-                Instantiate(_killEffect,this.transform.position, Quaternion.identity);
+                //Sound:Player DieSE （消える時はここ）
+                Instantiate(_killEffect, this.transform.position, Quaternion.identity);
                 _gameManager.GetComponent<PhotonView>().RPC("CheckPlayerActive", RpcTarget.All, photonView.ViewID);
             });
         }
@@ -94,6 +98,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [PunRPC]
     public void Hit(int attack)
     {
+        //Sound:Player HitSE
         _hp -= attack;
         if (photonView.IsMine && _hpGauge != null)
         {
@@ -102,6 +107,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         if (_hp <= 0)
         {
             Die();
+        }
+        else
+        {
+            _hamsterAnimator.SetTrigger("Hit");
         }
 
     }
