@@ -7,11 +7,12 @@ public class StageData : ScriptableObject
     public string Name;
     public Sprite Image;
     [Header("敵の数")]
-    public int NormalEnemy;
-    public int LaserEnemy;
-    public int BuckshotEnemy;
-    public int FlankingEnemy;
-    public int BossEnemy;
+    public int NormalEnemy;//Enemy
+    public int LaserEnemy;//Laser
+    public int BuckshotEnemy;//ショットガン
+    public int FlankingEnemy;//背後
+    public int FixedEnemy;//固定
+    public int BossEnemy;//ボス
 
 
 }

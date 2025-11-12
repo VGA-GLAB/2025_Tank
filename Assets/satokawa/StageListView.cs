@@ -17,6 +17,7 @@ public class StageListView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _laserEnemy;
     [SerializeField] private TextMeshProUGUI _buckshotEnemy;
     [SerializeField] private TextMeshProUGUI _flankingEnemy;
+    [SerializeField] private TextMeshProUGUI _fixedEnemy;
     [SerializeField] private TextMeshProUGUI _bossEnemy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,6 +42,7 @@ public class StageListView : MonoBehaviour
         _laserEnemy.text = "×" + _stageList[index].LaserEnemy;
         _buckshotEnemy.text = "×" + _stageList[index].BuckshotEnemy;
         _flankingEnemy.text = "×" + _stageList[index].FlankingEnemy;
+        _fixedEnemy.text = "×" + _stageList[index].FixedEnemy;
         _bossEnemy.text = "×" + _stageList[index].BossEnemy;
     }
     public void ShowList()
