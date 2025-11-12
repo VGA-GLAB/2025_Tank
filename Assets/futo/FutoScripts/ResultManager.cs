@@ -6,7 +6,7 @@ using Photon.Pun;
 using UnityEngine.Events;
 using DG.Tweening;
 using TMPro;
-public class ResultManager : MonoBehaviour
+public class ResultManager : MonoBehaviourPunCallbacks
 {
     [Header("タイム設定")]
     [SerializeField] private float _threeStarTime;
@@ -16,6 +16,8 @@ public class ResultManager : MonoBehaviour
     [Header("コンポーネント設定")]
     [SerializeField] private GameObject _resultPnanel;
     [SerializeField] private Image[] _starImage;
+    [SerializeField] private Button _titleButton;
+    [SerializeField] private Button _replayButton;
     [SerializeField] private Button _nextButton;
     [SerializeField] private TextMeshProUGUI _timeText;
     [SerializeField] private GameManager _gameManager;
@@ -36,7 +38,12 @@ public class ResultManager : MonoBehaviour
             _gameManager = FindAnyObjectByType<GameManager>();
         }
 
+        _titleButton.onClick.AddListener(_gameManager.GameOver);
+        _replayButton.onClick.AddListener(() => _gameManager.GetComponent<PhotonView>().RPC("Retry", RpcTarget.All));
         _nextButton.onClick.AddListener(_gameManager.GameClear);
+        _titleButton.interactable = PhotonNetwork.IsMasterClient;
+        _replayButton.interactable = PhotonNetwork.IsMasterClient;
+        _nextButton.interactable = PhotonNetwork.IsMasterClient;
     }
     [PunRPC]
     public void ShowResult(float clearTime)
