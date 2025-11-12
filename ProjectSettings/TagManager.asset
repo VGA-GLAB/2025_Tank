@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - Wall
   - PatrolPoint
+  - PatrolPoint2
   layers:
   - Default
   - TransparentFX
