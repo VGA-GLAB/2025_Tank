@@ -22,6 +22,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     }
     [SerializeField, Header("プレイヤーPrefab    !!Resourcesフォルダに入れる!!")]
     private GameObject _playerPrefab;
+    [field:SerializeField, Header("プレイヤーのマテリアル")]
+    public Material[] _playerMaterials { get; private set; }
 
     [SerializeField, Header("プレイヤーの生成位置")]
     private Transform[] _playerClonePosition;
@@ -169,6 +171,15 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             {
                 int playerHP = _allPlayerHP / PhotonNetwork.PlayerList.Length;
                 playerController.SetHP(playerHP);
+            }
+        }
+
+        //マテリアル変更
+        for(int i = 0; i < newPlayer.transform.childCount; i++)
+        {
+            if(newPlayer.transform.GetChild(i).TryGetComponent(out SkinnedMeshRenderer renderer))
+            {
+                renderer.material = _playerMaterials[_playerNumber -1];
             }
         }
         _playerHPGauge.SetTarget(newPlayer);

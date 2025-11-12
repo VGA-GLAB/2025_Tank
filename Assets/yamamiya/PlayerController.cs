@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
 
     private Vector2 _moveInput;
     private GameManager _gameManager;
+    private InGameNetworkManager _inGameNetworkManager;
     public HPGaugeController _hpGauge;
     private void Start()
     {
@@ -57,6 +58,18 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
 
         _bulletShooter.IntializeAttackSettings(_attackPower, _bulletInterval);
         _gameManager = FindAnyObjectByType<GameManager>();
+        _inGameNetworkManager = FindAnyObjectByType<InGameNetworkManager>();
+
+        if (!photonView.IsMine)
+        {
+            for (int i = 0; i < this.transform.childCount; i++)
+            {
+                if (this.transform.GetChild(i).TryGetComponent(out SkinnedMeshRenderer renderer))
+                {
+                    renderer.material = _inGameNetworkManager._playerMaterials[photonView.OwnerActorNr - 1];
+                }
+            }
+        }
     }
 
     private void Update()
