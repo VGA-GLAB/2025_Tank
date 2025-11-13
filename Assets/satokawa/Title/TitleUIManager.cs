@@ -23,5 +23,17 @@ public class TitleUIManager : MonoBehaviour
         _stageSelectSingle.SetActive(number == 2);
         _stageSelectMulti.SetActive(number == 3);
     }
+    public void OnButtonClick()
+    {
+
+    }
+    public void CloseGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif 
+    }
 
 }

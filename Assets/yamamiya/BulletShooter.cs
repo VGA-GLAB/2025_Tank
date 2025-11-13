@@ -7,7 +7,7 @@ public class BulletShooter : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefab;//必ずResourcesフォルダにいえる
     [SerializeField] private Transform _shotPosition;
     [SerializeField] private Transform _turret;
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Animator _tankAnimator;
     private int _attack;
     private float _bulletInterval;
     private float _intervalTimer;
@@ -15,9 +15,9 @@ public class BulletShooter : MonoBehaviour
     private void Start()
     {
         _intervalTimer = 0;
-        if(_animator == null)
+        if(_tankAnimator == null)
         {
-            _animator = GetComponent<Animator>();
+            _tankAnimator = GetComponent<Animator>();
         }
     }
 
@@ -52,7 +52,8 @@ public class BulletShooter : MonoBehaviour
     {
         if (_intervalTimer <= 0)
         {
-            _animator.SetTrigger("Shot");
+            //Sound: 弾発射
+            _tankAnimator.SetTrigger("Shot");
             _intervalTimer = _bulletInterval;
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _shotPosition.position, _turret.rotation);
             newBullet.transform.forward = _turret.forward;

@@ -28,7 +28,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [Header("コンポーネント")]
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private BulletShooter _bulletShooter;
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Animator _tankAnimator;
+    [SerializeField] private Animator _hamsterAnimator;
     [SerializeField] private ParticleSystem _killEffect;
     [Header("バフの上限設定")]
     [SerializeField] private int _maxHp;
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
 
     private Vector2 _moveInput;
     private GameManager _gameManager;
+    private InGameNetworkManager _inGameNetworkManager;
     public HPGaugeController _hpGauge;
     private void Start()
     {
@@ -49,13 +51,25 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         {
             _bulletShooter = GetComponent<BulletShooter>();
         }
-        if(_animator == null)
+        if(_tankAnimator == null)
         {
-            _animator = GetComponent<Animator>();
+            _tankAnimator = GetComponent<Animator>();
         }
 
         _bulletShooter.IntializeAttackSettings(_attackPower, _bulletInterval);
         _gameManager = FindAnyObjectByType<GameManager>();
+        _inGameNetworkManager = FindAnyObjectByType<InGameNetworkManager>();
+
+        if (!photonView.IsMine)
+        {
+            for (int i = 0; i < this.transform.childCount; i++)
+            {
+                if (this.transform.GetChild(i).TryGetComponent(out SkinnedMeshRenderer renderer))
+                {
+                    renderer.material = _inGameNetworkManager._playerMaterials[photonView.OwnerActorNr - 1];
+                }
+            }
+        }
     }
 
     private void Update()
@@ -68,6 +82,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             _rigidbody.AddForce(this.transform.forward * z, ForceMode.Impulse);
 
             this.transform.Rotate(0, x, 0);
+            //Sound:キャタピラ
         }
     }
 
@@ -80,13 +95,16 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     /// </summary>
     public void Die()
     {
-        
+
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
-            _animator.SetTrigger("Dead");
+            //Sound:Player DieSE （当たった瞬間はここ）
+            _tankAnimator.SetTrigger("Dead");
+            _hamsterAnimator.SetTrigger("Dead");
             DOVirtual.DelayedCall(1f, () =>
             {
-                Instantiate(_killEffect,this.transform.position, Quaternion.identity);
+                //Sound:Player DieSE （消える時はここ）
+                Instantiate(_killEffect, this.transform.position, Quaternion.identity);
                 _gameManager.GetComponent<PhotonView>().RPC("CheckPlayerActive", RpcTarget.All, photonView.ViewID);
             });
         }
@@ -102,6 +120,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         if (_hp <= 0)
         {
             Die();
+        }
+        else
+        {
+            _hamsterAnimator.SetTrigger("Hit");
         }
 
     }

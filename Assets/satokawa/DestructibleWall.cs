@@ -12,6 +12,7 @@ public class DestructibleWall : MonoBehaviourPunCallbacks, ITank
     }
     public void Die()
     {
+        //Sound: 壊せる壁壁
         if(photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
             PhotonNetwork.Destroy(this.gameObject);

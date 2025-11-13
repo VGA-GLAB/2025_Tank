@@ -224,7 +224,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// </summary>
 
     [PunRPC]
-    private void Retry()
+    public void Retry()
     {
         //if (!PhotonNetwork.IsMasterClient)
         //{
@@ -240,7 +240,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// [PunRPC] ゲームオーバー処理 　タイトルに戻す
     /// </summary>
 
-    private void GameOver()
+    public void GameOver()
     {
         if (!PhotonNetwork.IsMasterClient)
         {
