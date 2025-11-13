@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 817e0960130503a4c88c247ce84695a9, type: 3}
   m_Name: 1-4
   m_EditorClassIdentifier: 
-  Number: "\u30C1\u30C3\u30D7\u30D6\u30ED\u30C3\u30AF\u57FA\u5730"
-  Name: 1-4
+  Number: 1-4
+  Name: "\u30C1\u30C3\u30D7\u30D6\u30ED\u30C3\u30AF\u57FA\u5730"
   Image: {fileID: 21300000, guid: c5783e331eac0b74c9b178c9262f013b, type: 3}
   NormalEnemy: 2
   LaserEnemy: 2

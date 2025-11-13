@@ -86,6 +86,7 @@ public class ResultManager : MonoBehaviourPunCallbacks
         {
             yield return new WaitForSeconds(1);
             _animators[i].SetBool("ShowStar", true);
+            //Sound: 星
         }
     }
 }

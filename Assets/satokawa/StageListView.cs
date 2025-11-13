@@ -9,6 +9,7 @@ public class StageListView : MonoBehaviour
     [SerializeField] private RectTransform _content;
     [SerializeField] private Button _buttonPrefab;
     [SerializeField] private StageData[] _stageList;
+    [SerializeField] private TitleUIManager _titleUIManager;
     [Header("Info")]
     [SerializeField] private TextMeshProUGUI _stageNumber;
     [SerializeField] private TextMeshProUGUI _stageName;
@@ -22,6 +23,10 @@ public class StageListView : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if(_titleUIManager == null)
+        {
+            _titleUIManager = FindAnyObjectByType<TitleUIManager>();
+        }
         ShowList();
     }
 
@@ -53,7 +58,9 @@ public class StageListView : MonoBehaviour
         {
             GameObject newObject = Instantiate(_buttonPrefab.gameObject, _content);
             int i = index;
-            newObject.GetComponent<Button>().onClick.AddListener(() => ShowInfo(i)); 
+            Button button = newObject.GetComponent<Button>();
+            button.onClick.AddListener(() => ShowInfo(i)); 
+            button.onClick.AddListener(_titleUIManager.OnButtonClick);
             if(newObject.TryGetComponent(out Image image))
             {
                 image.sprite = stage.Image;

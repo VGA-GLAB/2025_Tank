@@ -52,6 +52,7 @@ public class BulletShooter : MonoBehaviour
     {
         if (_intervalTimer <= 0)
         {
+            //Sound: 弾発射
             _tankAnimator.SetTrigger("Shot");
             _intervalTimer = _bulletInterval;
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _shotPosition.position, _turret.rotation);

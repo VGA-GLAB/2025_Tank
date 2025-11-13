@@ -71,12 +71,13 @@ public class EnemyBoss : EnemyBase
         switch (pattern._attackType)
         {
             case AttackType.SingleShot:
+                //Sound: 弾発射
                 Shot(this.transform.forward);
                 _patternTimer = 0f;
                 break;
 
             case AttackType.Buckshot:
-
+                //Sound: 弾発射
                 Shot(this.transform.forward);
 
                 Quaternion rightAngle = Quaternion.Euler(0, _buckshotAngle, 0);
@@ -92,6 +93,7 @@ public class EnemyBoss : EnemyBase
 
                 if (_isRaserTween)
                 {
+                    //Sound: ボスレーザー
                     return;
                 }
                 isCompletedImmediately = false;
@@ -219,6 +221,7 @@ public class EnemyBoss : EnemyBase
             }
             if (tank != null && _laserTimer > _laserDamageInterval)
             {
+                //Sound：レーザーダメージ
                 hit.collider.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack);
                 _laserTimer = 0;
             }
@@ -236,6 +239,7 @@ public class EnemyBoss : EnemyBase
     {
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
+            
             GameObject bullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.LookRotation(_muzzlePosition.transform.forward ));
             if(bullet.TryGetComponent(out BulletControl bulletControl))
             {

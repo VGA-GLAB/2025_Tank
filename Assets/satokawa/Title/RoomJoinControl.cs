@@ -19,11 +19,15 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     [SerializeField] private Button _joinButton;
     [SerializeField] private Transform _roomListContent;
     [SerializeField] private GameObject _roomListPrefab;
+    [SerializeField] private TitleUIManager _titleUIManager;
     private RoomItemView _selectedRoom;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        if (_titleUIManager == null)
+        {
+            _titleUIManager = FindAnyObjectByType<TitleUIManager>();
+        }
     }
     public override void OnEnable()
     {
@@ -112,6 +116,7 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
                 {
                     SelectRoom(itemView);
                     itemView.OutLineActive(true);
+                    _titleUIManager.OnButtonClick();
                 });
             }
         }

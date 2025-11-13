@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 817e0960130503a4c88c247ce84695a9, type: 3}
   m_Name: 1-1
   m_EditorClassIdentifier: 
-  Number: "\u59CB\u307E\u308A\u306E\u30CF\u30E0\u30BF\u30F3\u30AF\uFF01"
-  Name: 1-1
+  Number: 1-1
+  Name: "\u59CB\u307E\u308A\u306E\u30CF\u30E0\u30BF\u30F3\u30AF\uFF01"
   Image: {fileID: 21300000, guid: 8ee21d7f59fde5e4da167ce7836ec1fa, type: 3}
   NormalEnemy: 2
   LaserEnemy: 0

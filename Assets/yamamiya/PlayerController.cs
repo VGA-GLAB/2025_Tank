@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             _rigidbody.AddForce(this.transform.forward * z, ForceMode.Impulse);
 
             this.transform.Rotate(0, x, 0);
+            //Sound:キャタピラ
         }
     }
 
@@ -111,7 +112,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [PunRPC]
     public void Hit(int attack)
     {
-        //Sound:Player HitSE
         _hp -= attack;
         if (photonView.IsMine && _hpGauge != null)
         {

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 817e0960130503a4c88c247ce84695a9, type: 3}
   m_Name: 1-Final
   m_EditorClassIdentifier: 
-  Number: "\u4F1D\u8AAC\u3078"
-  Name: 1-F
+  Number: 1-F
+  Name: "\u30DC\u30B9\u6226"
   Image: {fileID: 0}
   NormalEnemy: 0
   LaserEnemy: 0
   BuckshotEnemy: 0
   FlankingEnemy: 0
+  FixedEnemy: 0
   BossEnemy: 1
