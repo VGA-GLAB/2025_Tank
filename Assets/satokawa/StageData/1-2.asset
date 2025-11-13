@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 817e0960130503a4c88c247ce84695a9, type: 3}
   m_Name: 1-2
   m_EditorClassIdentifier: 
-  _number: 1-2
-  _name: "\u306F\u3058\u307E\u308A2"
-  _image: {fileID: 21300000, guid: 7e80044c0d6f51d4595ebfdc3bd85251, type: 3}
-  _normalEnemy: 4
-  _laserEnemy: 0
-  _buckshotEnemy: 0
-  _flankingEnemy: 0
-  _bossEnemy: 0
+  Number: 1-2
+  Name: "\u30D6\u30ED\u30C3\u30AF\u30AC\u30FC\u30C7\u30F3"
+  Image: {fileID: 21300000, guid: c5c7a2fe517dc2f4089e450ba16a655d, type: 3}
+  NormalEnemy: 2
+  LaserEnemy: 0
+  BuckshotEnemy: 0
+  FlankingEnemy: 2
+  FixedEnemy: 0
+  BossEnemy: 0
