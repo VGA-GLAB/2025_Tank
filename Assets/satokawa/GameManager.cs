@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             CustomPropertiesManager.SetNetValue("lives", _lives);
         }
-        _livesText.text = lives.ToString();
+        _livesText.text =  "×" +lives.ToString();
         //}
 
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -322,7 +322,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if (prop.Key is string key && key == "lives")
             {
-                _livesText.text = prop.Value.ToString();
+                _livesText.text = "×" + prop.Value.ToString();
             }
         }
 

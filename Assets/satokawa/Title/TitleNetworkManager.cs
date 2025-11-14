@@ -43,7 +43,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
             PhotonNetwork.Disconnect();
 
         PhotonNetwork.OfflineMode = true;
-        SceneManager.LoadScene("Stage1");
+        SceneManager.LoadScene("Stage01");
     }
     public void JoinMaster()
     {
