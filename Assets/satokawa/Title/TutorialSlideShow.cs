@@ -25,6 +25,8 @@ public class TutorialSlideShow : MonoBehaviour
     public void OnClick(bool next)
     {
         if (_isMove) return;
+
+        //Sound:ページをめくる音
         _isMove = true;
         _slideImage.sprite = _images[_viewIndex];
         _slideImage.gameObject.SetActive(true);

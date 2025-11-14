@@ -41,13 +41,13 @@ public class ResultManager : MonoBehaviourPunCallbacks
         _titleButton.onClick.AddListener(_gameManager.GameOver);
         _replayButton.onClick.AddListener(() => _gameManager.GetComponent<PhotonView>().RPC("Retry", RpcTarget.All));
         _nextButton.onClick.AddListener(_gameManager.GameClear);
-        _titleButton.interactable = PhotonNetwork.IsMasterClient;
-        _replayButton.interactable = PhotonNetwork.IsMasterClient;
-        _nextButton.interactable = PhotonNetwork.IsMasterClient;
     }
     [PunRPC]
     public void ShowResult(float clearTime)
     {
+        _titleButton.interactable = PhotonNetwork.IsMasterClient;
+        _replayButton.interactable = PhotonNetwork.IsMasterClient;
+        _nextButton.interactable = PhotonNetwork.IsMasterClient;
         _resultPnanel.SetActive(true);
         float time = _gameManager.GetTime();
         _timeText.text = (int)(time / 60) + ":" + (int)(time % 60);
