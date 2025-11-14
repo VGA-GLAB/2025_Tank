@@ -219,6 +219,10 @@ public class EnemyBoss : EnemyBase
                 stopDistance = hit.distance;
                 break;
             }
+            if (hit.collider.TryGetComponent(out EnemyBase enemy))
+            {
+                continue;
+            }
             if (tank != null && _laserTimer > _laserDamageInterval)
             {
                 //Sound：レーザーダメージ
