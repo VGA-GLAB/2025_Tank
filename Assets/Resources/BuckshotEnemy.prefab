@@ -521,6 +521,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HPUI
       objectReference: {fileID: 0}
+    - target: {fileID: 3410178400486678466, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6208136250765690594, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

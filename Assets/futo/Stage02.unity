@@ -1713,6 +1713,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 4022215392809981793, guid: 10ecace0940e6604da98bb2a9648534e, type: 3}
+  <_playerMaterials>k__BackingField:
+  - {fileID: 2100000, guid: 6ceb6e446b2e25b48bd01b6a31ca4636, type: 2}
+  - {fileID: 2100000, guid: 40e32f726da64d04093c5fa44641a6d0, type: 2}
+  - {fileID: 2100000, guid: 0bd2dbea1eca2504c985eb7b4ee36e71, type: 2}
+  - {fileID: 2100000, guid: 1957f9a5bdd655b45accfe72fd76857a, type: 2}
   _playerClonePosition:
   - {fileID: 1869609118}
   - {fileID: 1491922487}
@@ -1728,9 +1733,9 @@ MonoBehaviour:
   - clonePrefab: {fileID: 4421280240951079713, guid: f9c8121c913c60a47b347bd2f0682e22, type: 3}
     clonePosition: {fileID: 2109454356}
   _itemClone:
-  - clonePrefab: {fileID: 2414042231499467189, guid: 23fe3126deafe1d4198175121845760b, type: 3}
+  - clonePrefab: {fileID: 954648628029189325, guid: bdbefe9684072fb489b2833f5c223673, type: 3}
     clonePosition: {fileID: 1186334524}
-  - clonePrefab: {fileID: 7764222559184344581, guid: bc7c59162eb61f54693ed40513acaf6a, type: 3}
+  - clonePrefab: {fileID: 7830121995438573076, guid: 6d721445aba3da14eb04e020a07d60cc, type: 3}
     clonePosition: {fileID: 2086230323}
   _wallPrefab: {fileID: 1966890450968499561, guid: 129253a2e009eeb4cb2368a55e24cf3b, type: 3}
   _playerHPGauge: {fileID: 2122035348}

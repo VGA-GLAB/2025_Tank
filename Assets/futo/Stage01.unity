@@ -1494,6 +1494,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 4022215392809981793, guid: 10ecace0940e6604da98bb2a9648534e, type: 3}
+  <_playerMaterials>k__BackingField:
+  - {fileID: 2100000, guid: 6ceb6e446b2e25b48bd01b6a31ca4636, type: 2}
   _playerClonePosition:
   - {fileID: 1869609118}
   - {fileID: 1491922487}
@@ -1507,9 +1509,9 @@ MonoBehaviour:
   - clonePrefab: {fileID: 959794993020328779, guid: aa3464139a95b3f468f57a1ca908818b, type: 3}
     clonePosition: {fileID: 781954537}
   _itemClone:
-  - clonePrefab: {fileID: 2414042231499467189, guid: 23fe3126deafe1d4198175121845760b, type: 3}
-    clonePosition: {fileID: 1186334524}
   - clonePrefab: {fileID: 7764222559184344581, guid: bc7c59162eb61f54693ed40513acaf6a, type: 3}
+    clonePosition: {fileID: 1186334524}
+  - clonePrefab: {fileID: 2414042231499467189, guid: 23fe3126deafe1d4198175121845760b, type: 3}
     clonePosition: {fileID: 2086230323}
   _wallPrefab: {fileID: 1966890450968499561, guid: 129253a2e009eeb4cb2368a55e24cf3b, type: 3}
   _playerHPGauge: {fileID: 2122035348}
@@ -5863,6 +5865,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 413566502473991043, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: _oneStarTime
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 413566502473991043, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: _twoStarTime
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 413566502473991043, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: _threeStarTime
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 1439435780582656192, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_Name
       value: InGameUI
@@ -5950,6 +5964,18 @@ PrefabInstance:
     - target: {fileID: 4341538849656563535, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5052025509536557670, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8647842926262115011, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: fe5d26bd14e726b4fb0bd7407b3f3b97, type: 2}
+    - target: {fileID: 8647842926262115011, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
