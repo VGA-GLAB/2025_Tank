@@ -588,7 +588,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 10
   m_Drag: 7
-  m_AngularDrag: 0.05
+  m_AngularDrag: 5
   m_CenterOfMass: {x: 0, y: -0.3, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -603,7 +603,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &6351591441678814774
 BoxCollider:
@@ -882,6 +882,7 @@ GameObject:
   - component: {fileID: 8517756291439493594}
   - component: {fileID: 3259382043739942966}
   - component: {fileID: 8627893667198515183}
+  - component: {fileID: 928153512681252508}
   m_Layer: 5
   m_Name: HPGauge
   m_TagString: Untagged
@@ -969,3 +970,15 @@ MonoBehaviour:
   _vibrate: 100
   _burnDelay: 0.5
   _burnDurationDivisor: 2
+--- !u!114 &928153512681252508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110211015295168906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5dcf6060039e1440a82bcf974dc23fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

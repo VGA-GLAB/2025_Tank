@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using Photon.Pun;
 using System;
 using UnityEngine;
@@ -132,6 +132,10 @@ public class LaserEnemy : EnemyBase
             {//遮蔽物に当たった
                 stopDistance = hit.distance;
                 break;
+            }
+            if (hit.collider.TryGetComponent(out EnemyBase enemy))
+            {
+                continue;
             }
             if (tank != null && _laserTimer > _laserDamageInterval)
             {
