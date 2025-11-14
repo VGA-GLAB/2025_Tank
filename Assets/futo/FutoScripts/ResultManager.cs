@@ -50,7 +50,12 @@ public class ResultManager : MonoBehaviourPunCallbacks
         _nextButton.interactable = PhotonNetwork.IsMasterClient;
         _resultPnanel.SetActive(true);
         float time = _gameManager.GetTime();
-        _timeText.text = (int)(time / 60) + ":" + (int)(time % 60);
+
+        int minute = Mathf.FloorToInt(time / 60);
+        int second = Mathf.FloorToInt(time % 60);
+
+        _timeText.text = $"{minute:00}:{second:00}";
+
         if(!_resultPnanel.TryGetComponent(out RectTransform pnanelRect))
         {
             StartCoroutine(ShowStar(_starCount));
