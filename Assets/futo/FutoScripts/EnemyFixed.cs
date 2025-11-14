@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class EnemyFixed : EnemyBase
 {
-    [SerializeField]　private Transform[] _patrolPoint;
+    [SerializeField] private Transform[] _patrolPoint;
+    [SerializeField] private string _patrolPointName;
 
     private int _destpoint = 0;
     private float _attackTimer;
@@ -81,7 +82,7 @@ public class EnemyFixed : EnemyBase
 
     private void FindPatrolPoint()
     {
-        GameObject[] points = GameObject.FindGameObjectsWithTag("PatrolPoint");
+        GameObject[] points = GameObject.FindGameObjectsWithTag(_patrolPointName);
 
         if (points.Length > 0)
         {

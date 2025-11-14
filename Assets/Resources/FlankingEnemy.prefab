@@ -95,7 +95,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a91bc0c19300cc44aaac58b7d94be30, type: 2}
+  - {fileID: 2100000, guid: 197d7b5db1777404488a6ee55203c0db, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -181,7 +181,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a91bc0c19300cc44aaac58b7d94be30, type: 2}
+  - {fileID: 2100000, guid: 197d7b5db1777404488a6ee55203c0db, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -271,7 +271,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a91bc0c19300cc44aaac58b7d94be30, type: 2}
+  - {fileID: 2100000, guid: 197d7b5db1777404488a6ee55203c0db, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -457,8 +457,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.89632225, y: 0.6805601, z: 0.9775834}
-  m_Center: {x: 0.005604267, y: -0.043432713, z: -0.011208296}
+  m_Size: {x: 0.89632225, y: 1.26, z: 0.9775834}
+  m_Center: {x: 0.005604267, y: 0.25, z: -0.011208296}
 --- !u!195 &2849153295962291729
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -493,7 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d76ae28a3305ec4a929ed855371c73e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 15
+  _hp: 3
   _attack: 1
   _attackRange: 8
   _moveSpeed: 1
@@ -501,8 +501,8 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 8653153450281945988, guid: 4054dc889e717194a8ef07c9047879d2, type: 3}
   _turret: {fileID: 6147682664793463946}
   _muzzlePosition: {fileID: 8538304466899396778}
-  _hpGauge: {fileID: 0}
-  killEffect: {fileID: 0}
+  _hpGauge: {fileID: 8672685855000547255}
+  killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
   _player: {fileID: 0}
   _flankOffset: 3
   _behindDistance: 5
@@ -523,6 +523,10 @@ PrefabInstance:
     - target: {fileID: 3410178400486678466, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
       propertyPath: m_Name
       value: HPUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3410178400486678466, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6208136250765690594, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
       propertyPath: m_Pivot.x
@@ -614,3 +618,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6208136250765690594, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
   m_PrefabInstance: {fileID: 7629728026646684410}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8672685855000547255 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1277242058326863181, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
+  m_PrefabInstance: {fileID: 7629728026646684410}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e710adc63a03fa4fac2c9aafad5a2a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

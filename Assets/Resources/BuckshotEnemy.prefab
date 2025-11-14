@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a91bc0c19300cc44aaac58b7d94be30, type: 2}
+  - {fileID: 2100000, guid: 0c0d5436fb00a444eb42a418298e6620, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -150,7 +150,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a91bc0c19300cc44aaac58b7d94be30, type: 2}
+  - {fileID: 2100000, guid: 0c0d5436fb00a444eb42a418298e6620, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -328,8 +328,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.89632225, y: 0.6805601, z: 0.9775834}
-  m_Center: {x: 0.005604267, y: -0.043432713, z: -0.011208296}
+  m_Size: {x: 0.89632225, y: 1.07, z: 0.9775834}
+  m_Center: {x: 0.005604267, y: 0.2, z: -0.011208296}
 --- !u!195 &824709194770700549
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -444,7 +444,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a91bc0c19300cc44aaac58b7d94be30, type: 2}
+  - {fileID: 2100000, guid: 0c0d5436fb00a444eb42a418298e6620, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -513,9 +513,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1086403667858590750}
     m_Modifications:
+    - target: {fileID: 1277242058326863181, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
+      propertyPath: _target
+      value: 
+      objectReference: {fileID: 4383457566349286545}
     - target: {fileID: 3410178400486678466, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
       propertyPath: m_Name
       value: HPUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3410178400486678466, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6208136250765690594, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
       propertyPath: m_Pivot.x

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3295556157623131394}
   - component: {fileID: 6847662592340574463}
   m_Layer: 0
-  m_Name: FixedEnemy
+  m_Name: FixedEnemy2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
   killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
   _player: {fileID: 0}
   _patrolPoint: []
-  _patrolPointName: PatrolPoint
+  _patrolPointName: PatrolPoint2
 --- !u!1 &3068908640560102971
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,10 +525,6 @@ PrefabInstance:
     - target: {fileID: 3410178400486678466, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
       propertyPath: m_Name
       value: HPUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 3410178400486678466, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6208136250765690594, guid: 445843a18e773b842a209282d4a18cd2, type: 3}
       propertyPath: m_Pivot.x
