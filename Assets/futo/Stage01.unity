@@ -1502,11 +1502,11 @@ MonoBehaviour:
   - {fileID: 1052367412}
   - {fileID: 1304353410}
   _enemyClone:
-  - clonePrefab: {fileID: 4421280240951079713, guid: f9c8121c913c60a47b347bd2f0682e22, type: 3}
+  - clonePrefab: {fileID: 2690232729289157067, guid: c21e4eb2973339a448db1b57f88c2008, type: 3}
     clonePosition: {fileID: 2066801402}
-  - clonePrefab: {fileID: 4421280240951079713, guid: f9c8121c913c60a47b347bd2f0682e22, type: 3}
+  - clonePrefab: {fileID: 2690232729289157067, guid: c21e4eb2973339a448db1b57f88c2008, type: 3}
     clonePosition: {fileID: 956212843}
-  - clonePrefab: {fileID: 959794993020328779, guid: aa3464139a95b3f468f57a1ca908818b, type: 3}
+  - clonePrefab: {fileID: 5593234167539396372, guid: 8baa394e5c619bc4380da79536e8210d, type: 3}
     clonePosition: {fileID: 781954537}
   _itemClone:
   - clonePrefab: {fileID: 7764222559184344581, guid: bc7c59162eb61f54693ed40513acaf6a, type: 3}
