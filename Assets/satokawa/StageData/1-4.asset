@@ -17,7 +17,7 @@ MonoBehaviour:
   Image: {fileID: 21300000, guid: 3e29ea07d86364f42b1b10e4200a3850, type: 3}
   NormalEnemy: 2
   LaserEnemy: 2
-  BuckshotEnemy: 0
+  BuckshotEnemy: 2
   FlankingEnemy: 0
-  FixedEnemy: 4
+  FixedEnemy: 2
   BossEnemy: 0
