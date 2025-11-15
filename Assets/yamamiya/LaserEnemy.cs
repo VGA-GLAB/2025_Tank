@@ -72,7 +72,7 @@ public class LaserEnemy : EnemyBase
 
         // 1. ターレットを指定角度へ回転 (首振り開始)
         sequence.Append(_turret.transform.DOLocalRotate(
-            new Vector3(0, startAngle, 0),
+            new Vector3(startAngle,0, 0),
             _attackInterval / 2
         ));
 
@@ -86,7 +86,7 @@ public class LaserEnemy : EnemyBase
 
         // 3. レーザーを出しながら反対側へ回転 (レーダー発射)
         sequence.Append(_turret.transform.DOLocalRotate(
-            new Vector3(0, endAngle, 0),
+            new Vector3(endAngle,0 , 0),
             _laserRotationSpeed
         ));
 
