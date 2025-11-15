@@ -27,6 +27,7 @@ public class TutorialSlideShow : MonoBehaviour
         if (_isMove) return;
 
         //Sound:ページをめくる音
+        CRIAudioManager.SE.Play("UI", "UI_slide");
         _isMove = true;
         _slideImage.sprite = _images[_viewIndex];
         _slideImage.gameObject.SetActive(true);
