@@ -137,6 +137,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     public void SetHP(int value)
     {
         _hp = value;
+        _maxHp = value;
     }
 
     public void BuffStatus(Buff buff, float amount)
