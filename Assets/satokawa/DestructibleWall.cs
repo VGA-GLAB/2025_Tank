@@ -13,7 +13,7 @@ public class DestructibleWall : MonoBehaviourPunCallbacks, ITank
     public void Die()
     {
         //Sound: 壊せる壁壁
-        //CRIAudioManager.SE.Play("SE", "wall_break");
+        CRIAudioManager.SE.Play("SE", "wall_break_");
         if(photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
             PhotonNetwork.Destroy(this.gameObject);
