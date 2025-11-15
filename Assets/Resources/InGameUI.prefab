@@ -1206,6 +1206,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 3310662442831544848, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310662442831544848, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9011b5e4fa47d1d41956a51f2e9639d7, type: 3}
+    - target: {fileID: 3795161481138308337, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3795161481138308337, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9011b5e4fa47d1d41956a51f2e9639d7, type: 3}
+    - target: {fileID: 3967369806775511086, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3967369806775511086, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9011b5e4fa47d1d41956a51f2e9639d7, type: 3}
     - target: {fileID: 4105276318324889167, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1226,6 +1250,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: a59bdaaa7446c2549bddc2b76518ed21, type: 3}
+    - target: {fileID: 5099595415952332101, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5099595415952332101, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -1358,6 +1386,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: a59bdaaa7446c2549bddc2b76518ed21, type: 3}
+    - target: {fileID: 7798091248673039035, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7798091248673039035, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
       propertyPath: m_Color.b
       value: 0
