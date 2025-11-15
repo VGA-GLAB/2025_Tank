@@ -1342,18 +1342,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TitleButton
       objectReference: {fileID: 0}
-    - target: {fileID: 7559757338787951711, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 7559757338787951711, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 7559757338787951711, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7798091248673039035, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
       propertyPath: m_Sprite
       value: 
