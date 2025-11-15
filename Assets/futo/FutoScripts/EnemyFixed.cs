@@ -49,7 +49,7 @@ public class EnemyFixed : EnemyBase
             float horizontalDistance = new Vector2(localDir.z, localDir.y).magnitude;
             if (horizontalDistance > 0.001f)
             {
-                float angleX = -Mathf.Atan2(localDir.y, localDir.z) * Mathf.Rad2Deg;
+                float angleX = -Mathf.Atan2(localDir.y, localDir.z) * Mathf.Rad2Deg;            
 
                 // X軸だけ回転
                 _turret.transform.localRotation = Quaternion.Euler(angleX, 0f, 0f);
