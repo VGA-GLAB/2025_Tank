@@ -425,7 +425,7 @@ MonoBehaviour:
   _killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
   _maxHp: 10
   _maxAttackPower: 2
-  _maxMoveSpeed: 400
+  _maxMoveSpeed: 600
   _minBulletdInterval: 0.5
   _hpGauge: {fileID: 0}
 --- !u!114 &9058052671625376573
