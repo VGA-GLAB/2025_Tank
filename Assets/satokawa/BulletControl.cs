@@ -65,6 +65,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
             if(collision.collider.TryGetComponent(out ITank tank) && !isIgnore)
             {
                 //Sound:弾のダメージ 
+                CRIAudioManager.SE.Play("SE", "hit");
                 collision.collider.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack);
             }
 

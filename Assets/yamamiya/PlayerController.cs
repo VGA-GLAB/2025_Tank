@@ -104,6 +104,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             DOVirtual.DelayedCall(1f, () =>
             {
                 //Sound:Player DieSE （消える時はここ）
+                CRIAudioManager.SE.Play("SE", "kill");
                 Instantiate(_killEffect, this.transform.position, Quaternion.identity);
                 _gameManager.GetComponent<PhotonView>().RPC("CheckPlayerActive", RpcTarget.All, photonView.ViewID);
             });
@@ -124,6 +125,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         else
         {
             _hamsterAnimator.SetTrigger("Hit");
+            CRIAudioManager.SE.Play("SE", "hit");
         }
 
     }

@@ -25,7 +25,7 @@ public class TitleUIManager : MonoBehaviour
     }
     public void OnButtonClick()
     {
-
+        CRIAudioManager.SE.Play("UI", "UI_select");
     }
     public void CloseGame()
     {
