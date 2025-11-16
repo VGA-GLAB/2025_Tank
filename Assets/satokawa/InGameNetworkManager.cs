@@ -183,6 +183,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             }
         }
         _playerHPGauge.SetTarget(newPlayer);
+        CRIAudioManager.BGM.Play("BGM", "bgm_ingame");
         DOVirtual.DelayedCall(0.1f, () => photonView.RPC("AddPlayer", RpcTarget.All, view.ViewID));//TODO:今はゴリ押しでやってるけどタイトルできたらちゃんと書く
     }
     /// <summary>
@@ -261,7 +262,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ReturnToTitle()
     {
-        Debug.Log("Titlr");
+        CRIAudioManager.BGM.Stop();
         StartCoroutine(DisconnectAndReturn());
     }
 

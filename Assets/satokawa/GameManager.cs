@@ -230,6 +230,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         //{
         //    return;
         //}
+        CRIAudioManager.BGM.Stop();
         Debug.Log("再読み込み中");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         //string activeScene = SceneManager.GetActiveScene().name;
@@ -297,6 +298,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void MoveNextScene()
     {
         Debug.Log("a");
+        CRIAudioManager.BGM.Stop();
         if (_nextScene == "Title")
         {
             _cursorManager.EnableDefaultCursor();
