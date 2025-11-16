@@ -1,4 +1,6 @@
-﻿public class OneUpItem : ItemBase
+﻿using Photon.Pun;
+
+public class OneUpItem : ItemBase
 {
     GameManager gameManager;
 
@@ -6,7 +8,7 @@
     {
         gameManager = FindAnyObjectByType<GameManager>();
     }
-
+    [PunRPC]
     public override void HitAction(int viewID)
     {
         gameManager.AddLives();
