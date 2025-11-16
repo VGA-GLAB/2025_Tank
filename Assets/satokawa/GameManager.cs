@@ -22,18 +22,20 @@ public class GameManager : MonoBehaviourPunCallbacks
     private bool _isGameTimer = false;
     private float _gameTimer;
     private InGameNetworkManager _networkManager;
+    private static int offllneLives = -1;
     private void Awake()
     {
         _networkManager = GetComponent<InGameNetworkManager>();
         Players = new List<PlayerController>();
         Enemys = new List<EnemyBase>();
 
-        if (PhotonNetwork.InRoom)
+         if (PhotonNetwork.InRoom)
         {
             SetupAfterJoiningRoom();
         }
+        
         if (_cursorManager == null)
-        {
+        {   
             _cursorManager = FindAnyObjectByType<CursorManager>();
         }
     }
@@ -49,6 +51,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         //残機数をCustomPropertyに保存
         //if (PhotonNetwork.IsMasterClient)
         //{
+
+        if (PhotonNetwork.OfflineMode)
+        {
+            if(offllneLives  == -1)
+            {
+                offllneLives = _lives;
+            }
+            _livesText.text = "×" + offllneLives.ToString();
+            return;
+        }
         int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
         if (!found)
         {
@@ -230,6 +242,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         //{
         //    return;
         //}
+        CRIAudioManager.BGM.Stop();
         Debug.Log("再読み込み中");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         //string activeScene = SceneManager.GetActiveScene().name;
@@ -256,6 +269,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// <returns>ture 1以上 false 0以下</returns>
     private bool ReduceLives()
     {
+        if (PhotonNetwork.OfflineMode)
+        {
+            offllneLives--;
+            _livesText.text = "×" + offllneLives.ToString();
+            return offllneLives > 0;
+        }
         int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
         Debug.Log($"残り{lives}機 get");
         if (!found)
@@ -282,6 +301,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// <param name="value">増加量 基本は1</param>
     public void AddLives(int value = 1)
     {
+        if (PhotonNetwork.OfflineMode)
+        {
+            offllneLives += value;
+            _livesText.text = "×" + offllneLives.ToString();
+            return;
+        }
         int livs = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
         if (!found)
         {
@@ -297,6 +322,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void MoveNextScene()
     {
         Debug.Log("a");
+        CRIAudioManager.BGM.Stop();
         if (_nextScene == "Title")
         {
             _cursorManager.EnableDefaultCursor();

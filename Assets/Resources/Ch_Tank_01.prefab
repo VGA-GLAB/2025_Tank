@@ -572,6 +572,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4834163550849429024}
+  - {fileID: 4447201294368548057}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -587,7 +588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6528b4525578fbf48b5f59c3dad4d8be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotateTarget: {fileID: 0}
+  _rotateTarget: {fileID: 7828477970547969869}
   _smooth: 10
 --- !u!1001 &8902715426672959440
 PrefabInstance:

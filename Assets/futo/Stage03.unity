@@ -2517,7 +2517,7 @@ MonoBehaviour:
   _playerHPGauge: {fileID: 2122035348}
   _bossHPGauge: {fileID: 0}
   _gameManager: {fileID: 368338761}
-  _allPlayerHP: 0
+  _allPlayerHP: 20
   _countdownController: {fileID: 0}
 --- !u!4 &368338763
 Transform:

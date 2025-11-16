@@ -45,11 +45,12 @@ public class ResultManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ShowResult(float clearTime)
     {
+        CRIAudioManager.BGM.Stop();
         _titleButton.interactable = PhotonNetwork.IsMasterClient;
         _replayButton.interactable = PhotonNetwork.IsMasterClient;
         _nextButton.interactable = PhotonNetwork.IsMasterClient;
         _resultPnanel.SetActive(true);
-        float time = _gameManager.GetTime();
+        float time = clearTime;
 
         int minute = Mathf.FloorToInt(time / 60);
         int second = Mathf.FloorToInt(time % 60);
@@ -92,7 +93,8 @@ public class ResultManager : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(1);
             _animators[i].SetBool("ShowStar", true);
             //Sound: 星
-            CRIAudioManager.SE.Play("SE", "star_get");
+            DOVirtual.DelayedCall(0.5f,() => CRIAudioManager.SE.Play("SE", "Star_get"));
+
         }
     }
 }
