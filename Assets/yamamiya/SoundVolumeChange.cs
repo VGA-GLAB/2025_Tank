@@ -21,13 +21,17 @@ public class SoundVolumeChanger : MonoBehaviour
 
     private void Start()
     {
-        _bgmVolSlider.value = 1f;
-        _seVolSlider.value = 1f;
-
+        //_bgmVolSlider.value = 1f;
+        //_seVolSlider.value = 0.3f;
         _bgmVolSlider.onValueChanged.AddListener(OnBGMVolumeChanged);
         _seVolSlider.onValueChanged.AddListener(OnSEVolumeChanged);
     }
+    private void OnEnable()
+    {
 
+        _bgmVolSlider.onValueChanged.Invoke(_bgmVolSlider.value);
+        _seVolSlider.onValueChanged.Invoke(_seVolSlider.value);
+    }
     private void OnBGMVolumeChanged(float value)
     {
         CRIAudioManager.BGM.SetVolume(value);
@@ -35,6 +39,7 @@ public class SoundVolumeChanger : MonoBehaviour
 
     private void OnSEVolumeChanged(float value)
     {
+        Debug.Log("se");
         CRIAudioManager.SE.SetVolume(value);
     }
 }
