@@ -45,7 +45,6 @@ public class ResultManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ShowResult(float clearTime)
     {
-        CRIAudioManager.BGM.Stop();
         _titleButton.interactable = PhotonNetwork.IsMasterClient;
         _replayButton.interactable = PhotonNetwork.IsMasterClient;
         _nextButton.interactable = PhotonNetwork.IsMasterClient;
@@ -85,6 +84,7 @@ public class ResultManager : MonoBehaviourPunCallbacks
 
             StartCoroutine(ShowStar(_starCount));
         });
+        CRIAudioManager.BGM.Stop();
     }
     private IEnumerator ShowStar(int starCount)
     {
@@ -93,7 +93,7 @@ public class ResultManager : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(1);
             _animators[i].SetBool("ShowStar", true);
             //Sound: 星
-            DOVirtual.DelayedCall(0.5f,() => CRIAudioManager.SE.Play("SE", "Star_get"));
+            CRIAudioManager.SE.Play("SE", "Star_get");
 
         }
     }
