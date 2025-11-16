@@ -45,11 +45,12 @@ public class ResultManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ShowResult(float clearTime)
     {
+        Debug.Log(clearTime);
         _titleButton.interactable = PhotonNetwork.IsMasterClient;
         _replayButton.interactable = PhotonNetwork.IsMasterClient;
         _nextButton.interactable = PhotonNetwork.IsMasterClient;
         _resultPnanel.SetActive(true);
-        float time = _gameManager.GetTime();
+        float time = clearTime;
 
         int minute = Mathf.FloorToInt(time / 60);
         int second = Mathf.FloorToInt(time % 60);
