@@ -79,7 +79,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
 
             // Rigidbody に反映
             _rb.angularVelocity = _forwardDirection * _bulletSpeed;
-
+            this.transform.forward = _forwardDirection;
             _reflectionCount--;
             return;
         }
