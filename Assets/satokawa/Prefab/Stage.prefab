@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8821898555991226488}
   - component: {fileID: 5596897483684919358}
   - component: {fileID: 55307075847546278}
-  - component: {fileID: 8580937957036294001}
+  - component: {fileID: 7856115596830930729}
   m_Layer: 5
   m_Name: Stage
   m_TagString: Untagged
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8580937957036294001
+--- !u!114 &7856115596830930729
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

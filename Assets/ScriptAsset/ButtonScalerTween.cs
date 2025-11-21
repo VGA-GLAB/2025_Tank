@@ -1,17 +1,17 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.EventSystems;
-using DG.Tweening; // © –Y‚ê‚¸‚É
+using DG.Tweening; // â† å¿˜ã‚Œãšã«
 
 public class ButtonScalerTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] protected float scaleUp = 1.1f;       // Šg‘å”{—¦
+    [SerializeField] protected float scaleUp = 1.1f;       // æ‹¡å¤§å€ç‡
     [SerializeField] protected float duration = 0.2f;      //
-                                          //ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌŠÔ
+                                          //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®æ™‚é–“
 
-    private Vector3 originalScale;
-    private Tween currentTween;
+    protected Vector3 originalScale;
+    protected Tween currentTween;
 
-    private void Start()
+    public virtual void Start()
     {
         originalScale = transform.localScale;
     }
@@ -20,13 +20,13 @@ public class ButtonScalerTween : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         currentTween?.Kill();
 
-        // Šg‘å
+        // æ‹¡å¤§
         currentTween = transform.DOScale(originalScale * scaleUp, duration).SetEase(Ease.OutBack);
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
     {
-        // k¬
+        // ç¸®å°
         currentTween?.Kill();
         currentTween = transform.DOScale(originalScale, duration).SetEase(Ease.OutBack);
     }
