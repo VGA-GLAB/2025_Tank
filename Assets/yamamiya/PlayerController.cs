@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             _tankAnimator = GetComponent<Animator>();
         }
 
-        _bulletShooter.IntializeAttackSettings(_attackPower, _bulletInterval);
+        _bulletShooter.InitializeAttackSettings(_attackPower, _bulletInterval);
         _gameManager = FindAnyObjectByType<GameManager>();
         _inGameNetworkManager = FindAnyObjectByType<InGameNetworkManager>();
 
