@@ -110,6 +110,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             CustomPropertiesManager.SetNetValue($"isLoaded{player.ActorNumber}", 0);
         }
         _gameManager.ToggleTimer(true);
+        CRIAudioManager.BGM.Play("BGM", "bgm_ingame");
     }
     public void Update()
     {
@@ -183,7 +184,6 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             }
         }
         _playerHPGauge.SetTarget(newPlayer);
-        CRIAudioManager.BGM.Play("BGM", "bgm_ingame");
         DOVirtual.DelayedCall(0.1f, () => photonView.RPC("AddPlayer", RpcTarget.All, view.ViewID));//TODO:今はゴリ押しでやってるけどタイトルできたらちゃんと書く
     }
     /// <summary>
