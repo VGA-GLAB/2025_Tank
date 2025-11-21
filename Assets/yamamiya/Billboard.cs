@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-
 public class Billboard : MonoBehaviour
 {
     private Camera _camera;
@@ -12,6 +11,6 @@ public class Billboard : MonoBehaviour
 
     private void Update()
     {
-        this.transform.LookAt(_camera.transform);
+        this.transform.rotation = _camera.transform.rotation;
     }
 }
