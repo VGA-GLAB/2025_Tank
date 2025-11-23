@@ -7,6 +7,15 @@ public class AttackIntervalGauge : MonoBehaviour
     [SerializeField] private Image _gauge;
 
     /// <summary>
+    /// ゲージをセットします。
+    /// </summary>
+    /// <param name="gauge"></param>
+    public void SetGauge(Image gauge)
+    {
+        _gauge = gauge;
+    }
+
+    /// <summary>
     /// ゲージのFillAmountをアニメーションで変更する
     /// </summary>
     /// <param name="value"></param>
