@@ -14,6 +14,9 @@ public class BulletControl : MonoBehaviourPunCallbacks
     [SerializeField] private Vector3 _rotationPower;
     [SerializeField] private int _reflectionCount;
     [SerializeField] private Target _ignoreTarget = Target.None;
+    [SerializeField] private TrailRenderer _trailRenderer;
+    [SerializeField] private Gradient _playerTrajectory;
+    [SerializeField] private Gradient _enemyTrajectory;
     private Rigidbody _rb;
     private Vector3 _startPosition;
     private Vector3 _forwardDirection;
@@ -28,6 +31,18 @@ public class BulletControl : MonoBehaviourPunCallbacks
         _startPosition = this.transform.position;
         _forwardDirection = this.transform.forward;
         if (_ignoreTarget == Target.None) Debug.LogWarning("弾が無視するタンクを設定していません");
+        if(_trailRenderer == null)
+        {
+            _trailRenderer = GetComponent<TrailRenderer>();
+        }
+        if(_ignoreTarget == Target.Player)
+        {
+            _trailRenderer.colorGradient = _playerTrajectory;
+        }
+        else if(_ignoreTarget == Target.Enemy)
+        {
+            _trailRenderer.colorGradient = _enemyTrajectory;
+        }
     }
     // Update is called once per frame
     void Update()
