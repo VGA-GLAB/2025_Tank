@@ -10,10 +10,11 @@ public class ButtonScalerTween : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     protected Vector3 originalScale;
     protected Tween currentTween;
-
+    protected RectTransform rect;
     public virtual void Start()
     {
         originalScale = transform.localScale;
+        rect = GetComponent<RectTransform>();
     }
 
     public virtual void OnPointerEnter(PointerEventData eventData)
@@ -21,13 +22,13 @@ public class ButtonScalerTween : MonoBehaviour, IPointerEnterHandler, IPointerEx
         currentTween?.Kill();
 
         // 拡大
-        currentTween = transform.DOScale(originalScale * scaleUp, duration).SetEase(Ease.OutBack);
+        currentTween = rect.DOScale(originalScale * scaleUp, duration).SetEase(Ease.OutBack);
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
     {
         // 縮小
         currentTween?.Kill();
-        currentTween = transform.DOScale(originalScale, duration).SetEase(Ease.OutBack);
+        currentTween = rect.DOScale(originalScale, duration).SetEase(Ease.OutBack);
     }
 }
