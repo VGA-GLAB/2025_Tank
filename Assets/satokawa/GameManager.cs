@@ -205,12 +205,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void CheckEnemeyActive()
     {
-        //マスターのみ実行
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            return;
-        }
-
         bool isEnemyActive = false;
         foreach (EnemyBase tank in Enemys)
         {
@@ -219,16 +213,20 @@ public class GameManager : MonoBehaviourPunCallbacks
                 isEnemyActive = true;
             }
         }
-        if (!isEnemyActive && PhotonNetwork.IsMasterClient)
+        if (!isEnemyActive )//&& PhotonNetwork.IsMasterClient)
         {
             DOVirtual.DelayedCall(1f, () =>
             {
                 _cursorManager.EnableDefaultCursor();
-                _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
+                _isRespawnTimer = false;
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
+                }
             });
         }
     }
-
+    
 
     /// <summary>
     ///[PunRPC] リトライ処理
@@ -321,6 +319,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void MoveNextScene()
     {
+        
         Debug.Log("a");
         CRIAudioManager.BGM.Stop();
         if (_nextScene == "Title")

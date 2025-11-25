@@ -1,13 +1,14 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SelectAnimation : ButtonScalerTween
 {
-    public bool enableLoopAnimation = true; 
-    public float _maxScale = 1.1f;
-    public float _duration = 0.5f;
-
+    [SerializeField] private bool _enableLoopAnimation = true;
+    [SerializeField] private float _maxScale = 1.1f;
+    [SerializeField] private float _duration = 0.5f;
+    [SerializeField] private Image _outLine;
     private RectTransform _rectTransform;
     private Vector3 _defaultScale;
     private Sequence _loopSequence;
@@ -19,7 +20,7 @@ public class SelectAnimation : ButtonScalerTween
         _rectTransform = GetComponent<RectTransform>();
         _defaultScale = _rectTransform.localScale;
 
-        if (enableLoopAnimation)
+        if (_enableLoopAnimation)
             StartLoopAnimation();
 
         SetLoopAnimation(false);
@@ -27,7 +28,7 @@ public class SelectAnimation : ButtonScalerTween
 
     private void StartLoopAnimation()
     {
-        if (!enableLoopAnimation) return;
+        if (!_enableLoopAnimation) return;
         if (_isHovered) return;
 
         _loopSequence?.Kill();
@@ -58,11 +59,11 @@ public class SelectAnimation : ButtonScalerTween
         _isHovered = false;
 
         currentTween?.Kill();
-        currentTween = transform.DOScale(originalScale, duration).SetEase(Ease.OutBack)
+        currentTween = rect.DOScale(originalScale, duration).SetEase(Ease.OutBack)
             .OnComplete(() =>
             {
                 // ループがONなら再開
-                if (enableLoopAnimation)
+                if (_enableLoopAnimation)
                     StartLoopAnimation();
             });
 
@@ -70,8 +71,8 @@ public class SelectAnimation : ButtonScalerTween
 
     public void SetLoopAnimation(bool active)
     {
-        enableLoopAnimation = active;
-
+        _enableLoopAnimation = active;
+        _outLine.gameObject.SetActive(active);
         if (!active)
         {
             StopLoopAnimation();

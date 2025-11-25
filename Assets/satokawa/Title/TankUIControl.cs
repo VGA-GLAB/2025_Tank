@@ -17,27 +17,16 @@ public class TankUIControl : MonoBehaviour
             if (i <= playerNumber)
             {
                 image.color = Color.white;
+                
             }
             else
             {
                 image.color = Color.black;
             }
+            image.transform.GetChild(0).gameObject.SetActive(i == PhotonNetwork.LocalPlayer.ActorNumber);
             i++;
         }
 
         _startButton.interactable = PhotonNetwork.IsMasterClient;
-    }
-    private void ChangeMaterial(Material material, GameObject tank)
-    {
-        Transform[] allChildren = tank.GetComponentsInChildren<Transform>(true);
-
-        foreach (Transform child in allChildren)
-        {
-            if (child == tank) continue; // 親自身を除外したい場合
-            if (child.TryGetComponent(out MeshRenderer meshRenderer))
-            {
-                meshRenderer.material = material;
-            }
-        }
     }
 }
