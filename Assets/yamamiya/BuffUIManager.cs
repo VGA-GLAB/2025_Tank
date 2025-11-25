@@ -4,7 +4,7 @@ using UnityEngine;
 public class BuffUIManager : MonoBehaviour
 {
     [SerializeField] private BuffIconEntry[] _buffIconPrefabs;
-    [SerializeField] private GameObject _getBuffPanel;
+    [SerializeField] private GameObject _buffIconParent;
 
     private Dictionary<Buff, GameObject> _buffPrefabs = new Dictionary<Buff, GameObject>();
     private Dictionary<Buff, BuffIconCounter> _buffCountDictionary = new Dictionary<Buff, BuffIconCounter>();
@@ -48,7 +48,7 @@ public class BuffUIManager : MonoBehaviour
     {
         if (_buffPrefabs.TryGetValue(buff, out GameObject buffItem))
         {
-            var newBuffIcon = Instantiate(buffItem, _getBuffPanel.transform, false);
+            var newBuffIcon = Instantiate(buffItem, _buffIconParent.transform, false);
             if (newBuffIcon.TryGetComponent(out BuffIconCounter buffCount))
             {
                 buffCount.IncrementBuffCount();
