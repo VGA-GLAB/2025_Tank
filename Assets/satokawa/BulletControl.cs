@@ -20,6 +20,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
     private Rigidbody _rb;
     private Vector3 _startPosition;
     private Vector3 _forwardDirection;
+    private int _frameCounter = 3;
     public enum Target
     {
         None,Player,Enemy,
@@ -47,6 +48,8 @@ public class BulletControl : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        if(_frameCounter > 0) _frameCounter--;
+
         _rb.linearVelocity = _forwardDirection * _bulletSpeed;
         if (Vector3.Distance(this.transform.position, _startPosition) > _destroyDistance)
         {
@@ -56,6 +59,10 @@ public class BulletControl : MonoBehaviourPunCallbacks
     }
     private void OnCollisionEnter(Collision collision)
     {
+        if(_frameCounter > 0)
+        {
+            Delete();
+        }
         if(collision.collider.TryGetComponent(out BulletControl bullet) || collision.collider.TryGetComponent(out ItemBase item))
         {
             //弾とアイテムは無視
