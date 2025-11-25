@@ -218,9 +218,11 @@ public class GameManager : MonoBehaviourPunCallbacks
             DOVirtual.DelayedCall(1f, () =>
             {
                 _cursorManager.EnableDefaultCursor();
-                _resultManager.ShowResult(_gameTimer);
                 _isRespawnTimer = false;
-                //_resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
+                }
             });
         }
     }

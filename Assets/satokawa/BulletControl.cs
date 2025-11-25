@@ -59,10 +59,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(_frameCounter > 0)
-        {
-            Delete();
-        }
+       
         if(collision.collider.TryGetComponent(out BulletControl bullet) || collision.collider.TryGetComponent(out ItemBase item))
         {
             //弾とアイテムは無視
@@ -84,7 +81,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
 
         if (photonView.IsMine)
         {
-            if(collision.collider.TryGetComponent(out ITank tank) && !isIgnore)
+            if(!isIgnore && collision.collider.TryGetComponent(out ITank tank))
             {
                 //Sound:弾のダメージ 
                 CRIAudioManager.SE.Play("SE", "hit");
@@ -92,7 +89,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
             }
 
         }
-        if (collision.collider.gameObject.CompareTag("Wall") && _reflectionCount > 0)   
+        if (_frameCounter == 0 && collision.collider.gameObject.CompareTag("Wall") && _reflectionCount > 0)   
         {
             Vector3 normal = collision.contacts[0].normal;
 
