@@ -79,9 +79,11 @@ public class BuckshotEnemy : EnemyBase
 
     public override void Attack()
     {
+        
         _attackTimer += Time.deltaTime;
         if (_attackTimer >= _bulletInterval)
         {
+            base.Attack();
             // 正面方向に弾を生成
             GenerateBullet(_muzzlePosition.forward);
 
