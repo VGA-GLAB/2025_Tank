@@ -18,6 +18,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     [SerializeField] protected GameObject _turret;
     [SerializeField] protected Transform _muzzlePosition;
     [SerializeField] protected HPGaugeController _hpGauge;
+    [SerializeField] protected Animator _animator;
     [SerializeField] private ParticleSystem killEffect;
     [Header("ターゲット設定")]
     [SerializeField] private GameObject _player;
@@ -35,6 +36,10 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
         if (_agent == null)
         {
             _agent = GetComponent<NavMeshAgent>();
+        }
+        if(_animator == null)
+        {
+            _animator = GetComponent<Animator>();
         }
         _agent.speed = MoveSpeed;
     }
@@ -141,7 +146,10 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     /// <summary>
     /// 敵の攻撃処理
     /// </summary>
-    public abstract void Attack();
+    public virtual void Attack()
+    {
+        _animator.SetTrigger("Shot");
+    }
 
 #if UNITY_EDITOR
     private void OnValidate()

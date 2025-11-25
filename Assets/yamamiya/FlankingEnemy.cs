@@ -106,9 +106,11 @@ public class FlankingEnemy : EnemyBase
 
     public override void Attack()
     {
+       
         _attackTimer += Time.deltaTime;
         if (_attackTimer >= _bulletInterval)
         {
+            base.Attack();
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.identity);
             newBullet.transform.forward = _muzzlePosition.forward;
             if (newBullet.TryGetComponent(out BulletControl component))
