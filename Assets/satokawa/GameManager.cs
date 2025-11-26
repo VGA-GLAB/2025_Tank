@@ -166,16 +166,23 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
 
-        if (!isPlayerActive && PhotonNetwork.IsMasterClient)
+        if (!isPlayerActive)
         {
             if (ReduceLives())
             {
-                Retry();
-                photonView.RPC(nameof(Retry), RpcTarget.All);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC(nameof(Retry), RpcTarget.All);
+                }
             }
             else
             {
-                GameOver();
+                _cursorManager.EnableDefaultCursor();
+                _isRespawnTimer = false;
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    _resultManager.GetComponent<PhotonView>().RPC("ShowGameOverResult", RpcTarget.All);
+                }
             }
         }
         else if (diePlayer.GetComponent<PhotonView>().IsMine)
@@ -246,6 +253,15 @@ public class GameManager : MonoBehaviourPunCallbacks
         //string activeScene = SceneManager.GetActiveScene().name;
         //Debug.Log(activeScene);
         //PhotonNetwork.LoadLevel(activeScene);
+    }
+    public void ReStart()
+    {
+        if(PhotonNetwork.IsMasterClient && SceneManager.GetActiveScene().name == "Stage01")
+        {
+            photonView.RPC(nameof(Retry), RpcTarget.All);
+        }
+        CRIAudioManager.BGM.Stop();
+        PhotonNetwork.LoadLevel("Stage01");
     }
     /// <summary>
     /// [PunRPC] ゲームオーバー処理 　タイトルに戻す
