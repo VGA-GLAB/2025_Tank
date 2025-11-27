@@ -20,6 +20,7 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     [SerializeField] private Transform _roomListContent;
     [SerializeField] private GameObject _roomListPrefab;
     [SerializeField] private TitleUIManager _titleUIManager;
+    [SerializeField] private TextMeshProUGUI _noRoom;
     private RoomItemView _selectedRoom;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,6 +36,7 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
         _errorText.text = "";
         _roomNameInput.text = "";
         _createButton.interactable = true;
+        _joinButton.interactable = false;
     }
     void Update()
     {
@@ -61,11 +63,11 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     /// <returns>true 適切　flase 問題を起こす可能性がある</returns>
     public bool CheckNameInput(string roomName, out string errorMessage)
     {
-        if (roomName.Length < 1 )
+        if (roomName.Length < 1)
         {
             errorMessage = "1文字以上にしてください。";
             return false;
-        } 
+        }
         if (roomName.Length > 10)
         {
             errorMessage = "10文字以下にしてください。";
@@ -105,12 +107,12 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
         foreach (RoomInfo info in roomList)
         {
             GameObject newPanel = Instantiate(_roomListPrefab, _roomListContent);
-            if(newPanel.TryGetComponent(out RoomItemView itemView))
+            if (newPanel.TryGetComponent(out RoomItemView itemView))
             {
                 itemView.SetRoomData(info);
             }
 
-            if(newPanel.TryGetComponent(out Button button))
+            if (newPanel.TryGetComponent(out Button button))
             {
                 button.onClick.AddListener(() =>
                 {
@@ -120,22 +122,27 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
                 });
             }
         }
+        _noRoom.gameObject.SetActive(roomList.Count == 0);
     }
     public void SelectRoom(RoomItemView room)
     {
-        if(room == null)
+        if (room == null)
         {
             return;
         }
-        if(_selectedRoom != null)
+        if (_selectedRoom != null)
         {
             _selectedRoom.OutLineActive(false);
+        }
+        else
+        {
+            _joinButton.interactable = true;
         }
         _selectedRoom = room;
     }
     public void JoinSelectRoom()
     {
-        if(_selectedRoom == null)
+        if (_selectedRoom == null)
         {
             return;
         }

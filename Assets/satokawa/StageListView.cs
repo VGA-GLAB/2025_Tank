@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using TMPro;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,8 @@ public class StageListView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _flankingEnemy;
     [SerializeField] private TextMeshProUGUI _fixedEnemy;
     [SerializeField] private TextMeshProUGUI _bossEnemy;
+
+    private SelectAnimation _selectAnimation;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -59,7 +62,13 @@ public class StageListView : MonoBehaviour
             GameObject newObject = Instantiate(_buttonPrefab.gameObject, _content);
             int i = index;
             Button button = newObject.GetComponent<Button>();
-            button.onClick.AddListener(() => ShowInfo(i)); 
+            button.onClick.AddListener(() => ShowInfo(i));
+            button.onClick.AddListener(() =>
+            {
+                ShowInfo(i);
+                ChangeSelect(button.gameObject);
+                _titleUIManager.OnButtonClick();
+            });
             button.onClick.AddListener(_titleUIManager.OnButtonClick);
             if(newObject.TryGetComponent(out Image image))
             {
@@ -68,6 +77,20 @@ public class StageListView : MonoBehaviour
             index++;
         }
         ShowInfo(0);
+    }
+    public void ChangeSelect(GameObject obj)
+    {
+        if(!obj.TryGetComponent(out SelectAnimation selectAnimation ))
+        {
+            return;
+        }
+        if(_selectAnimation != null)
+        {
+            _selectAnimation.SetLoopAnimation(false);
+        }
+        _selectAnimation = selectAnimation;
+        selectAnimation.SetLoopAnimation(true);
+        
     }
     public void DeleteChild()
     {

@@ -11,6 +11,7 @@ public class BulletShooter : MonoBehaviour
     private int _attack;
     private float _bulletInterval;
     private float _intervalTimer;
+    private bool _isFiring;
 
     private void Start()
     {
@@ -23,6 +24,11 @@ public class BulletShooter : MonoBehaviour
 
     private void Update()
     {
+        if (_isFiring)
+        {
+            ShotBullet();
+        }
+
         if (_intervalTimer > 0)
         {
             _intervalTimer -= Time.deltaTime;
@@ -31,7 +37,14 @@ public class BulletShooter : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext context)
     {
-        ShotBullet();
+        if (context.started)
+        {
+            _isFiring = true;
+        }
+        else if (context.canceled)
+        {
+            _isFiring = false;
+        }
     }
 
     /// <summary>
@@ -39,7 +52,7 @@ public class BulletShooter : MonoBehaviour
     /// </summary>
     /// <param name="atk">攻撃力</param>
     /// <param name="bulletInterval">砲弾の連射インターバル</param>
-    public void IntializeAttackSettings(int atk, float bulletInterval)
+    public void InitializeAttackSettings(int atk, float bulletInterval)
     {
         _attack = atk;
         _bulletInterval = bulletInterval;
