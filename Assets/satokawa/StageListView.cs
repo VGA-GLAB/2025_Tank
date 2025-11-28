@@ -66,7 +66,11 @@ public class StageListView : MonoBehaviour
             button.onClick.AddListener(_titleUIManager.OnButtonClick);
             if(index == 0)
             {
-               DOVirtual.DelayedCall(0.1f,() => button.onClick.Invoke());
+               DOVirtual.DelayedCall(0.1f,() =>
+               {
+                   ShowInfo(i);
+                   ChangeSelect(button.gameObject);
+               });
             }
             if(newObject.transform.Find("Image").TryGetComponent(out Image image))
             {
