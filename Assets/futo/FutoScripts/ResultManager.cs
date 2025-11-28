@@ -43,6 +43,7 @@ public class ResultManager : MonoBehaviourPunCallbacks
         _nextButton.onClick.AddListener(_gameManager.GameClear);
 
         _titleGameOverButton.onClick.AddListener(_gameManager.GameOver);
+        _reStart.onClick.AddListener(_gameManager.ReStart);
         //_replayButtonにステージ１から始める処理
 
         _detailText[0].text = $"{_oneStarTime}秒以下";
