@@ -608,7 +608,8 @@ MonoBehaviour:
   _maxAttackPower: 2
   _maxMoveSpeed: 600
   _minBulletdInterval: 0.5
-  _hpGauge: {fileID: 0}
+  HPGauge: {fileID: 0}
+  BuffUI: {fileID: 0}
 --- !u!114 &9058052671625376573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,6 +626,7 @@ MonoBehaviour:
   _shotPosition: {fileID: 8075388653806337728}
   _turret: {fileID: 7828477970547969869}
   _tankAnimator: {fileID: 2995241383798657200}
+  IntervalGauge: {fileID: 0}
 --- !u!114 &2025118200063039287
 MonoBehaviour:
   m_ObjectHideFlags: 0

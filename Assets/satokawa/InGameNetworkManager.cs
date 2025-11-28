@@ -46,6 +46,9 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("バレットインターバルゲージ")]
     private AttackIntervalGauge _attackIntervalGauge;
 
+    [SerializeField, Header("バフアイテムUI")]
+    private BuffUIManager _buffUIManager; 
+
     [SerializeField, Header("ゲームマネージャー")]
     private GameManager _gameManager;
     [SerializeField, Header("プレイヤーすべての合計HP")]
@@ -69,6 +72,10 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         if(_attackIntervalGauge == null)
         {
             _attackIntervalGauge = FindAnyObjectByType<AttackIntervalGauge>();
+        }
+        if(_buffUIManager == null)
+        {
+            _buffUIManager = FindAnyObjectByType<BuffUIManager>();
         }
     }
     void Start()
@@ -174,7 +181,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
 
         if (newPlayer.TryGetComponent(out PlayerController playerController))
         {
-            playerController._hpGauge = _playerHPGauge;
+            playerController.HPGauge = _playerHPGauge;
+            playerController.BuffUI = _buffUIManager;   
             if (_allPlayerHP != 0)
             {
                 int playerHP = _allPlayerHP / PhotonNetwork.PlayerList.Length;

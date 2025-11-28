@@ -43,7 +43,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     private Vector2 _moveInput;
     private GameManager _gameManager;
     private InGameNetworkManager _inGameNetworkManager;
-    public HPGaugeController _hpGauge;
+    public HPGaugeController HPGauge;
+    public BuffUIManager BuffUI;
     private void Start()
     {
         if (_rigidbody == null)
@@ -122,9 +123,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     public void Hit(int attack)
     {
         _hp -= attack;
-        if (photonView.IsMine && _hpGauge != null)
+        if (photonView.IsMine && HPGauge != null)
         {
-            _hpGauge.UpdateHPGauge();
+            HPGauge.UpdateHPGauge();
         }
         if (_hp <= 0)
         {
@@ -159,9 +160,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                     _hp = _maxHp;
 
                 }
-                if (photonView.IsMine && _hpGauge != null)
+                if (photonView.IsMine && HPGauge != null)
                 {
-                    _hpGauge.UpdateHPGauge();
+                    HPGauge.UpdateHPGauge();
                 }
                 break;
             case Buff.Attack:
@@ -185,6 +186,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                     _bulletInterval = _minBulletdInterval;
                 }
                 break;
+                default:
+                return;
         }
+        BuffUI.AddBuff(buff);
     }
 }

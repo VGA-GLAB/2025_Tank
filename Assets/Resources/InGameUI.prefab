@@ -662,10 +662,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countdownText: {fileID: 8647842926262115011}
+  _upPositionY: 25
   _maxScale: 12
   _minScale: 4
-  _moveSpeed: 0.8
-  _easing: 12
+  _fadeInTime: 0.5
+  _fadeOutTime: 0.3
+  _waitTime: 0.2
+  _countScale: 5
   _normalColor: {r: 1, g: 0.58620816, b: 0.216981, a: 1}
   _lastColor: {r: 0, g: 0.8923898, b: 1, a: 1}
 --- !u!1 &1616397020292530715
@@ -1520,10 +1523,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: d3b4865587727524bb32418c0d753480, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -2488,6 +2491,7 @@ GameObject:
   - component: {fileID: 8003653940223222650}
   - component: {fileID: 6080413003019829806}
   - component: {fileID: 6216993891661445184}
+  - component: {fileID: 2279410797975824318}
   m_Layer: 5
   m_Name: BalletGauge
   m_TagString: Untagged
@@ -2553,6 +2557,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2279410797975824318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7420194052064849732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1103e04c3efd5524aa3c96da0aea2eee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gauge: {fileID: 322891559558940802}
 --- !u!1 &7561605651322935897
 GameObject:
   m_ObjectHideFlags: 0
@@ -3540,7 +3557,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6969309497892801306, guid: dcb1692f15c49c14c89772943efee2b0, type: 3}
+    - {fileID: 406310846883981264, guid: dcb1692f15c49c14c89772943efee2b0, type: 3}
+    - {fileID: 8243055708160605865, guid: dcb1692f15c49c14c89772943efee2b0, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcb1692f15c49c14c89772943efee2b0, type: 3}
