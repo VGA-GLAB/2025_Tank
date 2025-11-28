@@ -23,7 +23,6 @@ public class BuffUIManager : MonoBehaviour
             _buffPrefabs.Add(entry.Buff, entry.Prefab);
         }
     }
-
     /// <summary>
     /// バフをUIに追加します。または、既存のバフのカウントを増やします。
     /// </summary>
