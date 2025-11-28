@@ -43,6 +43,9 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("ボスのHPゲージ　ボス戦以外はNullにする")]
     private HPGaugeController _bossHPGauge;
 
+    [SerializeField, Header("バレットインターバルゲージ")]
+    private AttackIntervalGauge _attackIntervalGauge;
+
     [SerializeField, Header("ゲームマネージャー")]
     private GameManager _gameManager;
     [SerializeField, Header("プレイヤーすべての合計HP")]
@@ -62,6 +65,10 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         if(_countdownController == null)
         {
             _countdownController = FindAnyObjectByType<CountdownController>();
+        }
+        if(_attackIntervalGauge == null)
+        {
+            _attackIntervalGauge = FindAnyObjectByType<AttackIntervalGauge>();
         }
     }
     void Start()
@@ -173,6 +180,10 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
                 int playerHP = _allPlayerHP / PhotonNetwork.PlayerList.Length;
                 playerController.SetHP(playerHP);
             }
+        }
+        if(newPlayer.TryGetComponent(out BulletShooter bulletShooter))
+        {
+            bulletShooter.IntervalGauge = _attackIntervalGauge;
         }
 
         //マテリアル変更

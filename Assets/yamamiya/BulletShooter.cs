@@ -8,7 +8,7 @@ public class BulletShooter : MonoBehaviour
     [SerializeField] private Transform _shotPosition;
     [SerializeField] private Transform _turret;
     [SerializeField] private Animator _tankAnimator;
-    [SerializeField] private AttackIntervalGauge _attackIntervalGauge;
+    public AttackIntervalGauge IntervalGauge;
     private int _attack;
     private float _bulletInterval;
     private float _intervalTimer;
@@ -64,13 +64,15 @@ public class BulletShooter : MonoBehaviour
     /// </summary>
     private void ShotBullet()
     {
+        if (IntervalGauge == null) return;
+
         if (_intervalTimer <= 0f)
         {
             //Sound: 弾発射
             CRIAudioManager.SE.Play("SE", "shot");
             _tankAnimator.SetTrigger("Shot");
             _intervalTimer = _bulletInterval;
-            _attackIntervalGauge.AnimateFillAmount(1f, _bulletInterval);
+            IntervalGauge.AnimateFillAmount(1f, _bulletInterval);
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _shotPosition.position, _turret.rotation);
             newBullet.transform.forward = _turret.forward;
 
