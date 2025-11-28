@@ -1,7 +1,9 @@
 ﻿using DG.Tweening;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public enum Buff
 {
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [SerializeField] private Animator _tankAnimator;
     [SerializeField] private Animator _hamsterAnimator;
     [SerializeField] private ParticleSystem _killEffect;
+    [SerializeField] private RectTransform _playerMarker;
     [Header("バフの上限設定")]
     [SerializeField] private int _maxHp;
     [SerializeField] private int _maxAttackPower;
@@ -70,6 +73,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                 }
             }
         }
+        _playerMarker.gameObject.SetActive(photonView.IsMine);
     }
 
     private void Update()
@@ -84,6 +88,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             this.transform.Rotate(0, x, 0);
             //Sound:キャタピラ
         }
+
+        Vector3 cameraPosition = Camera.main.transform.position;
+        cameraPosition.x = this.transform.position.x;
+        _playerMarker.transform.LookAt(cameraPosition);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -149,6 +157,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                 if (_hp > _maxHp)
                 {
                     _hp = _maxHp;
+
+                }
+                if (photonView.IsMine && _hpGauge != null)
+                {
+                    _hpGauge.UpdateHPGauge();
                 }
                 break;
             case Buff.Attack:

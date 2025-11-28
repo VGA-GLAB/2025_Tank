@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-using UnityEngine.Events;
 using DG.Tweening;
 using TMPro;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 public class ResultManager : MonoBehaviourPunCallbacks
 {
     [Header("タイム設定")]
@@ -15,24 +15,24 @@ public class ResultManager : MonoBehaviourPunCallbacks
 
     [Header("コンポーネント設定")]
     [SerializeField] private GameObject _resultPnanel;
+    [SerializeField] private GameObject _detailPanel;
+    [SerializeField] private GameObject _gameOverPanel;
+    [SerializeField] private TextMeshProUGUI[] _detailText;
     [SerializeField] private Image[] _starImage;
     [SerializeField] private Button _titleButton;
     [SerializeField] private Button _replayButton;
     [SerializeField] private Button _nextButton;
+    [SerializeField] private Button _titleGameOverButton;
+    [SerializeField] private Button _reStart;
     [SerializeField] private TextMeshProUGUI _timeText;
     [SerializeField] private GameManager _gameManager;
-    private List<Animator> _animators;
+    private bool _isdetail = false;
     private int _starCount;
     [Header("アニメーション")]
     [SerializeField] private float _moveduraion;
     [SerializeField] private Ease _moveEase;
     private void Start()
     {
-        _animators = new List<Animator>();
-        for (int i = 0; i < _starImage.Length; i++)
-        {
-            _animators.Add(_starImage[i].GetComponent<Animator>());
-        }
         if(_gameManager == null)
         {
             _gameManager = FindAnyObjectByType<GameManager>();
@@ -41,7 +41,15 @@ public class ResultManager : MonoBehaviourPunCallbacks
         _titleButton.onClick.AddListener(_gameManager.GameOver);
         _replayButton.onClick.AddListener(() => _gameManager.GetComponent<PhotonView>().RPC("Retry", RpcTarget.All));
         _nextButton.onClick.AddListener(_gameManager.GameClear);
+
+        _titleGameOverButton.onClick.AddListener(_gameManager.GameOver);
+        //_replayButtonにステージ１から始める処理
+
+        _detailText[0].text = $"{_oneStarTime}秒以下";
+        _detailText[1].text = $"{_twoStarTime}秒以下";
+        _detailText[2].text = $"{_threeStarTime}秒以下";
     }
+
     [PunRPC]
     public void ShowResult(float clearTime)
     {
@@ -86,15 +94,36 @@ public class ResultManager : MonoBehaviourPunCallbacks
         });
         CRIAudioManager.BGM.Stop();
     }
+
+    [PunRPC]
+    public void ShowGameOverResult()
+    {
+        _titleGameOverButton.interactable = PhotonNetwork.IsMasterClient;
+        _replayButton.interactable= PhotonNetwork.IsMasterClient;
+
+        _gameOverPanel.TryGetComponent(out RectTransform pnanelRect);
+
+        pnanelRect.anchoredPosition = Vector2.up * 1030;
+
+        pnanelRect.DOAnchorPosY(0, 1f).SetEase(_moveEase);
+    }
+
     private IEnumerator ShowStar(int starCount)
     {
         for (int i = 0;i < starCount;i++)
         {
             yield return new WaitForSeconds(1);
-            _animators[i].SetBool("ShowStar", true);
             //Sound: 星
+            _starImage[i].transform.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.FastBeyond360).SetEase(Ease.Linear);
+            _starImage[i].transform.DOScale(new Vector3(1.1f, 1.1f, 1f), 1f).SetEase(Ease.OutBack).SetUpdate(true);
             CRIAudioManager.SE.Play("SE", "Star_get");
 
         }
+    }
+
+    public void ShowDetail()
+    {
+        _isdetail = !_isdetail;
+        _detailPanel.SetActive(_isdetail);
     }
 }

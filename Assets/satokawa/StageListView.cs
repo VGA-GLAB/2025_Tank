@@ -1,6 +1,5 @@
-﻿using NUnit.Framework;
+﻿using DG.Tweening;
 using TMPro;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,14 +62,13 @@ public class StageListView : MonoBehaviour
             int i = index;
             Button button = newObject.GetComponent<Button>();
             button.onClick.AddListener(() => ShowInfo(i));
-            button.onClick.AddListener(() =>
-            {
-                ShowInfo(i);
-                ChangeSelect(button.gameObject);
-                _titleUIManager.OnButtonClick();
-            });
+            button.onClick.AddListener(() => ChangeSelect(button.gameObject));
             button.onClick.AddListener(_titleUIManager.OnButtonClick);
-            if(newObject.TryGetComponent(out Image image))
+            if(index == 0)
+            {
+               DOVirtual.DelayedCall(0.1f,() => button.onClick.Invoke());
+            }
+            if(newObject.transform.Find("Image").TryGetComponent(out Image image))
             {
                 image.sprite = stage.Image;
             }
@@ -80,6 +78,7 @@ public class StageListView : MonoBehaviour
     }
     public void ChangeSelect(GameObject obj)
     {
+        Debug.Log("Select");
         if(!obj.TryGetComponent(out SelectAnimation selectAnimation ))
         {
             return;

@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 offllneLives = _lives;
             }
-            _livesText.text = "×" + offllneLives.ToString();
+            _livesText.text = offllneLives.ToString();
             return;
         }
         int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             CustomPropertiesManager.SetNetValue("lives", _lives);
         }
-        _livesText.text =  "×" +lives.ToString();
+        _livesText.text = lives.ToString();
         //}
 
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -205,12 +205,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void CheckEnemeyActive()
     {
-        //マスターのみ実行
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            return;
-        }
-
         bool isEnemyActive = false;
         foreach (EnemyBase tank in Enemys)
         {
@@ -219,16 +213,20 @@ public class GameManager : MonoBehaviourPunCallbacks
                 isEnemyActive = true;
             }
         }
-        if (!isEnemyActive && PhotonNetwork.IsMasterClient)
+        if (!isEnemyActive )//&& PhotonNetwork.IsMasterClient)
         {
             DOVirtual.DelayedCall(1f, () =>
             {
                 _cursorManager.EnableDefaultCursor();
-                _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
+                _isRespawnTimer = false;
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
+                }
             });
         }
     }
-
+    
 
     /// <summary>
     ///[PunRPC] リトライ処理
@@ -272,7 +270,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.OfflineMode)
         {
             offllneLives--;
-            _livesText.text = "×" + offllneLives.ToString();
+            _livesText.text = offllneLives.ToString();
             return offllneLives > 0;
         }
         int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
@@ -304,7 +302,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.OfflineMode)
         {
             offllneLives += value;
-            _livesText.text = "×" + offllneLives.ToString();
+            _livesText.text = offllneLives.ToString();
             return;
         }
         int livs = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
@@ -321,6 +319,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void MoveNextScene()
     {
+        
         Debug.Log("a");
         CRIAudioManager.BGM.Stop();
         if (_nextScene == "Title")
@@ -348,7 +347,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if (prop.Key is string key && key == "lives")
             {
-                _livesText.text = "×" + prop.Value.ToString();
+                _livesText.text = prop.Value.ToString();
             }
         }
 
