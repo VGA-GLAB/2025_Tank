@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         _hp -= attack;
         if (photonView.IsMine && HPGauge != null)
         {
-            HPGauge.UpdateHPGauge();
+            HPGauge.UpdateHPGauge(true);
         }
         if (_hp <= 0)
         {

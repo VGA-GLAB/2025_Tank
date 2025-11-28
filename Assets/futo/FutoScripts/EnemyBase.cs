@@ -66,7 +66,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
         {
             Die();
         }
-        _hpGauge.UpdateHPGauge();
+        _hpGauge.UpdateHPGauge(true);
 
     }
 

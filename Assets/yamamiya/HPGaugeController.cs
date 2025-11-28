@@ -26,9 +26,9 @@ public class HPGaugeController : MonoBehaviour
         {
             SetTarget(_target);
         }
-        if(_rectTransform == null)
+        if (_rectTransform == null)
         {
-            if(this.TryGetComponent(out RectTransform rect))
+            if (this.TryGetComponent(out RectTransform rect))
             {
                 rect = _rectTransform;
             }
@@ -53,7 +53,7 @@ public class HPGaugeController : MonoBehaviour
     /// <summary>
     /// HPゲージを現在のターゲットのHPに合わせて更新。
     /// </summary>
-    public void UpdateHPGauge()
+    public void UpdateHPGauge(bool damageAnimaton = false)
     {
         if (_tank == null || _startHP <= 0f)
         {
@@ -62,12 +62,12 @@ public class HPGaugeController : MonoBehaviour
         var burnDuraction = _duration / _burnDurationDivisor;
         if (_tank.Hp <= 0f)
         {
-            GaugeEffect(0f, burnDuraction);
+            GaugeEffect(0f, burnDuraction, damageAnimaton);
             return;
         }
 
         var value = _tank.Hp / _startHP;
-        GaugeEffect(value, burnDuraction);
+        GaugeEffect(value, burnDuraction, damageAnimaton);
     }
 
     /// <summary>
@@ -75,7 +75,7 @@ public class HPGaugeController : MonoBehaviour
     /// </summary>
     /// <param name="value">HPゲージの表示割合</param>
     /// <param name="burnDuraction">バーンゲージおよび振動の演出時間</param>
-    private void GaugeEffect(float value, float burnDuraction)
+    private void GaugeEffect(float value, float burnDuraction, bool damageAnimaton)
     {
         // HPゲージのFillAmountをアニメーションで更新
         _hpImage.DOFillAmount(value, _duration)
@@ -85,7 +85,10 @@ public class HPGaugeController : MonoBehaviour
                         _burnImage.DOFillAmount(value, burnDuraction)
                         .SetDelay(_burnDelay);
                     });
-        // HPゲージの更新に合わせて、ゲージ全体を振動させる
-        _rectTransform.DOShakeAnchorPos(burnDuraction, _strength, _vibrate);
+        if (damageAnimaton)
+        {
+            // HPゲージの更新に合わせて、ゲージ全体を振動させる
+            _rectTransform.DOShakeAnchorPos(burnDuraction, _strength, _vibrate);
+        }
     }
 }
