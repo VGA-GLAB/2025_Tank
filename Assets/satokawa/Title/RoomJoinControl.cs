@@ -29,6 +29,7 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
         {
             _titleUIManager = FindAnyObjectByType<TitleUIManager>();
         }
+        _roomNameInput.onSubmit.AddListener(_ => _createButton.onClick.Invoke());
     }
     public override void OnEnable()
     {
