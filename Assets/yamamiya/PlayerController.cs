@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             {
                 if (this.transform.GetChild(i).TryGetComponent(out SkinnedMeshRenderer renderer))
                 {
-                    renderer.material = _inGameNetworkManager._playerMaterials[photonView.OwnerActorNr - 1];
+                    renderer.material = _inGameNetworkManager._playerMaterials[NetworkCore.GetPlayerNumber(photonView.Owner) -1];
                 }
             }
         }

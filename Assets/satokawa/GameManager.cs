@@ -61,10 +61,10 @@ public class GameManager : MonoBehaviourPunCallbacks
             _livesText.text = offllneLives.ToString();
             return;
         }
-        int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
+        int lives = (int)NetworkCore.GetNetValue("lives", out bool found);
         if (!found)
         {
-            CustomPropertiesManager.SetNetValue("lives", _lives);
+            NetworkCore.SetNetValue("lives", _lives);
         }
         _livesText.text = lives.ToString();
         //}
@@ -289,7 +289,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             _livesText.text = offllneLives.ToString();
             return offllneLives > 0;
         }
-        int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
+        int lives = (int)NetworkCore.GetNetValue("lives", out bool found);
         Debug.Log($"残り{lives}機 get");
         if (!found)
         {
@@ -298,13 +298,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (lives > 1)
         {
             lives--;
-            CustomPropertiesManager.SetNetValue("lives", lives);
+            NetworkCore.SetNetValue("lives", lives);
             Debug.Log($"残り{lives}機 -");
             return true;
         }
         else
         {
-            CustomPropertiesManager.SetNetValue("lives", _lives);
+            NetworkCore.SetNetValue("lives", _lives);
             return false;
         }
 
@@ -321,13 +321,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             _livesText.text = offllneLives.ToString();
             return;
         }
-        int livs = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
+        int livs = (int)NetworkCore.GetNetValue("lives", out bool found);
         if (!found)
         {
             Debug.LogError("残機数を取得できませんでした");
         }
         livs += value;
-        CustomPropertiesManager.SetNetValue("lives", livs);
+        NetworkCore.SetNetValue("lives", livs);
     }
     /// <summary>
     ///[PunRPC] ゲームクリア処理　

@@ -83,8 +83,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         //接続の状態によって処理を分岐
         if (PhotonNetwork.InRoom)
         {
-            _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-            CustomPropertiesManager.SetNetValue($"isLoaded{_playerNumber}", 1);
+            _playerNumber = NetworkCore.GetPlayerNumber(PhotonNetwork.LocalPlayer);
+            NetworkCore.SetNetValue($"isLoaded{PhotonNetwork.LocalPlayer.ActorNumber}", 1);
             Debug.Log("再読み込み済み");
 
             if (PhotonNetwork.IsMasterClient)
@@ -121,7 +121,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         photonView.RPC(nameof(CreateWall), RpcTarget.All);
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            CustomPropertiesManager.SetNetValue($"isLoaded{player.ActorNumber}", 0);
+            NetworkCore.SetNetValue($"isLoaded{player.ActorNumber}", 0);
         }
         _gameManager.ToggleTimer(true);
         CRIAudioManager.BGM.Play("BGM", "bgm_ingame");
@@ -133,15 +133,18 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             return;
         }
         _isAllLoaded = true;
+        string st = "";
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            int data = (int)CustomPropertiesManager.GetNetValue($"isLoaded{player.ActorNumber}", out bool found);
+            st += player.ActorNumber.ToString() + ",";
+            int data = (int)NetworkCore.GetNetValue($"isLoaded{player.ActorNumber}", out bool found);
             if (!found || data == 0)
             {
                 _isAllLoaded = false;
                 break;
             }
         }
+        Debug.Log(st);
     }
 
     public override void OnConnectedToMaster()
@@ -150,8 +153,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
-        _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-        CustomPropertiesManager.SetNetValue($"isLoaded{_playerNumber}", 1);
+        _playerNumber = NetworkCore.GetPlayerNumber(PhotonNetwork.LocalPlayer);
+        NetworkCore.SetNetValue($"isLoaded{PhotonNetwork.LocalPlayer.ActorNumber}", 1);
         StartCoroutine(WaitAllLoaded());
     }
 

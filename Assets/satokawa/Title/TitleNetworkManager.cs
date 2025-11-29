@@ -104,7 +104,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         _logUI.SetActive(false);
         _roomName.text = "ルーム名:\n" + PhotonNetwork.CurrentRoom.Name;
         _uIManager.ChangeScreen(3);
-        _tankUIControl.JoinNewPlayer();
+        _tankUIControl.UpdateViewPlayer();
         PhotonNetwork.AutomaticallySyncScene = true; // 事前に設定してもOK
     }
     /// <summary>
@@ -117,8 +117,12 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
         {
-            _tankUIControl.JoinNewPlayer();
+            _tankUIControl.UpdateViewPlayer();
         }
+    }
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        _tankUIControl.UpdateViewPlayer();
     }
     public void GameStart()
     {

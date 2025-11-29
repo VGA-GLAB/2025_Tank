@@ -8,7 +8,7 @@ public class TankUIControl : MonoBehaviour
     [SerializeField] private Material[] _tankMaterial;
     [SerializeField] private Material _hiddenMaterial;
     [SerializeField] private Button _startButton;
-    public void JoinNewPlayer()
+    public void UpdateViewPlayer()
     {
         int i = 1;
         int playerNumber = PhotonNetwork.CurrentRoom.PlayerCount;
@@ -23,7 +23,7 @@ public class TankUIControl : MonoBehaviour
             {
                 image.color = Color.black;
             }
-            image.transform.GetChild(0).gameObject.SetActive(i == PhotonNetwork.LocalPlayer.ActorNumber);
+            image.transform.GetChild(0).gameObject.SetActive(i == NetworkCore.GetPlayerNumber(PhotonNetwork.LocalPlayer));
             i++;
         }
 
