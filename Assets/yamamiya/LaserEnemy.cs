@@ -56,7 +56,6 @@ public class LaserEnemy : EnemyBase
     private void StartLaserShotSequence()
     {
         if (_isRaserTween) return;
-        Debug.Log("シーケンス開始");
         _isRaserTween = true;
         Sequence sequence = DOTween.Sequence();
 
@@ -119,7 +118,6 @@ public class LaserEnemy : EnemyBase
     /// </summary>
     public override void Attack()
     {
-        Debug.Log("レーザー攻撃開始");
         Ray ray = new Ray(_muzzlePosition.position, _muzzlePosition.forward);
         RaycastHit[] hits = Physics.RaycastAll(ray.origin, ray.direction, _laserDistance);
         Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));

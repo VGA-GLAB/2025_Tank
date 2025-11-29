@@ -40,6 +40,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         {   
             _cursorManager = FindAnyObjectByType<CursorManager>();
         }
+        if(_resultManager == null)
+        {
+            _resultManager = FindAnyObjectByType<ResultManager>();
+        }
     }
     public override void OnJoinedRoom()
     {
@@ -71,7 +75,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         _livesText.text = lives.ToString();
 
         PhotonNetwork.AutomaticallySyncScene = true;
-        Debug.Log("初期設定");
     }
     public void ToggleTimer(bool b)
     {
@@ -186,14 +189,15 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             else
             {
-                _cursorManager.EnableDefaultCursor();
-                _isRespawnTimer = false;
-                _minePlayer.enabled = false;
-                _mainBulletShooter.enabled = false;
                 if (PhotonNetwork.IsMasterClient)
                 {
                     _resultManager.GetComponent<PhotonView>().RPC("ShowGameOverResult", RpcTarget.All);
                 }
+                _cursorManager.EnableDefaultCursor();
+                _isRespawnTimer = false;
+                _minePlayer.enabled = false;
+                _mainBulletShooter.enabled = false;
+                
             }
         }
         else if (diePlayer.GetComponent<PhotonView>().IsMine)
@@ -235,14 +239,15 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             DOVirtual.DelayedCall(1f, () =>
             {
-                _cursorManager.EnableDefaultCursor();
-                _isRespawnTimer = false;
-                _minePlayer.enabled = false;
-                _mainBulletShooter.enabled = false;
                 if (PhotonNetwork.IsMasterClient)
                 {
                     _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
                 }
+                _cursorManager.EnableDefaultCursor();
+                _isRespawnTimer = false;
+                _minePlayer.enabled = false;
+                _mainBulletShooter.enabled = false;
+             
             });
         }
     }
@@ -261,7 +266,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         //    return;
         //}
         CRIAudioManager.BGM.Stop();
-        Debug.Log("再読み込み中");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         //string activeScene = SceneManager.GetActiveScene().name;
         //Debug.Log(activeScene);
@@ -303,7 +307,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             return offllneLives > 0;
         }
         int lives = (int)NetworkCore.GetNetValue("lives", out bool found);
-        Debug.Log($"残り{lives}機 get");
         if (!found)
         {
             Debug.LogError("残機数を取得できませんでした");
@@ -312,7 +315,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             lives--;
             NetworkCore.SetNetValue("lives", lives);
-            Debug.Log($"残り{lives}機 -");
             return true;
         }
         else
@@ -349,7 +351,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void MoveNextScene()
     {
         
-        Debug.Log("a");
         CRIAudioManager.BGM.Stop();
         if (_nextScene == "Title")
         {

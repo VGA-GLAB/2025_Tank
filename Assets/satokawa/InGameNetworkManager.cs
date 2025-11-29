@@ -85,7 +85,6 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         {
             _playerNumber = NetworkCore.GetPlayerNumber(PhotonNetwork.LocalPlayer);
             NetworkCore.SetNetValue($"isLoaded{PhotonNetwork.LocalPlayer.ActorNumber}", 1);
-            Debug.Log("再読み込み済み");
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -133,10 +132,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             return;
         }
         _isAllLoaded = true;
-        string st = "";
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            st += player.ActorNumber.ToString() + ",";
             int data = (int)NetworkCore.GetNetValue($"isLoaded{player.ActorNumber}", out bool found);
             if (!found || data == 0)
             {
@@ -144,7 +141,6 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
                 break;
             }
         }
-        Debug.Log(st);
     }
 
     public override void OnConnectedToMaster()

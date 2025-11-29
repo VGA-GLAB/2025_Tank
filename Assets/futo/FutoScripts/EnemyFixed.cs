@@ -71,7 +71,6 @@ public class EnemyFixed : EnemyBase
         if (_attackTimer >= _bulletInterval)
         {
             base.Attack();
-            Debug.Log("こうげき！");
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.identity);
             newBullet.transform.forward = _muzzlePosition.forward;
             if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))

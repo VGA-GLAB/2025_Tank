@@ -82,7 +82,6 @@ public class StageListView : MonoBehaviour
     }
     public void ChangeSelect(GameObject obj)
     {
-        Debug.Log("Select");
         if(!obj.TryGetComponent(out SelectAnimation selectAnimation ))
         {
             return;

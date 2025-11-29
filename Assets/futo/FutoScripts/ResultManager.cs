@@ -54,6 +54,7 @@ public class ResultManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ShowResult(float clearTime)
     {
+        Debug.Log("Showリザルト");
         _titleButton.interactable = PhotonNetwork.IsMasterClient;
         _replayButton.interactable = PhotonNetwork.IsMasterClient;
         _nextButton.interactable = PhotonNetwork.IsMasterClient;
