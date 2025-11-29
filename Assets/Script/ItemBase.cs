@@ -7,7 +7,9 @@ public abstract class ItemBase : MonoBehaviourPunCallbacks
 {
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && photonView.IsMine && PhotonNetwork.AutomaticallySyncScene)
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (other.CompareTag("Player"))
         {
             if (other.TryGetComponent(out PhotonView view))
             {
