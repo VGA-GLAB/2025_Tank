@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public List<PlayerController> Players { get; private set; }
     public List<EnemyBase> Enemys { get; private set; }
 
+    private PlayerController _minePlayer;
+    private BulletShooter _mainBulletShooter;
     private bool _isRespawnTimer = false;
     private float _respawnTimer;
     private bool _isGameTimer = false;
@@ -67,7 +69,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             NetworkCore.SetNetValue("lives", _lives);
         }
         _livesText.text = lives.ToString();
-        //}
 
         PhotonNetwork.AutomaticallySyncScene = true;
         Debug.Log("初期設定");
@@ -113,11 +114,19 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void AddPlayer(int newPlayerViewID)
     {
-        PlayerController newPlayer = GetPlayerController(newPlayerViewID);
+        PlayerController newPlayer = GetPlayerController(newPlayerViewID,out PhotonView view);
         if (newPlayer == null)
         {
             Debug.LogError("IDError");
             return;
+        }
+        if (view.IsMine)
+        {
+            _minePlayer = newPlayer;
+            if(newPlayer.TryGetComponent(out BulletShooter shooter))
+            {
+                _mainBulletShooter = shooter;
+            }
         }
         Players.Add(newPlayer);
     }
@@ -147,7 +156,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void CheckPlayerActive(int diePlayerID)
     {
-        PlayerController diePlayer = GetPlayerController(diePlayerID);
+        PlayerController diePlayer = GetPlayerController(diePlayerID,out _);
         if (diePlayer == null)
         {
             Debug.LogError("diPlayerID not find");
@@ -179,6 +188,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 _cursorManager.EnableDefaultCursor();
                 _isRespawnTimer = false;
+                _minePlayer.enabled = false;
+                _mainBulletShooter.enabled = false;
                 if (PhotonNetwork.IsMasterClient)
                 {
                     _resultManager.GetComponent<PhotonView>().RPC("ShowGameOverResult", RpcTarget.All);
@@ -196,9 +207,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// </summary>
     /// <param name="diePlayerID">photonViewのviewIDを入れる</param>
     /// <returns>photonView.viewIDをPlayerController変換した値</returns>
-    private PlayerController GetPlayerController(int diePlayerID)
+    private PlayerController GetPlayerController(int diePlayerID,out PhotonView targetView)
     {
-        PhotonView targetView = PhotonView.Find(diePlayerID);
+        targetView = PhotonView.Find(diePlayerID);
         if (targetView == null)
         {
             return null;
@@ -226,6 +237,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 _cursorManager.EnableDefaultCursor();
                 _isRespawnTimer = false;
+                _minePlayer.enabled = false;
+                _mainBulletShooter.enabled = false;
                 if (PhotonNetwork.IsMasterClient)
                 {
                     _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
