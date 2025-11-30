@@ -18,28 +18,44 @@ public class SoundVolumeChanger : MonoBehaviour
             Debug.LogError("SE用のスライダーがアタッチされていません。");
         }
     }
+    private void OnEnable()
+    {
+        if(_bgmVolSlider!= null)
+        {
+            _bgmVolSlider.onValueChanged.AddListener(OnBGMVolumeChanged);
+            _bgmVolSlider.onValueChanged.Invoke(_bgmVolSlider.value);
+        }
+        if(_seVolSlider != null)
+        {
+            _seVolSlider.onValueChanged.AddListener(OnSEVolumeChanged);
+            _seVolSlider.onValueChanged.Invoke(_seVolSlider.value);
+        }
+    }
 
     private void Start()
     {
         //_bgmVolSlider.value = 1f;
         //_seVolSlider.value = 0.3f;
-        _bgmVolSlider.onValueChanged.AddListener(OnBGMVolumeChanged);
-        _seVolSlider.onValueChanged.AddListener(OnSEVolumeChanged);
     }
-    private void OnEnable()
-    {
 
-        _bgmVolSlider.onValueChanged.Invoke(_bgmVolSlider.value);
-        _seVolSlider.onValueChanged.Invoke(_seVolSlider.value);
-    }
     private void OnBGMVolumeChanged(float value)
     {
         CRIAudioManager.BGM.SetVolume(value);
+        // BGMが再生中の場合、音量を即座に反映させる
+        if (CRIAudioManager.BGM.IsPlaying)
+        {
+            CRIAudioManager.BGM.UpdateAll();
+        }
     }
 
     private void OnSEVolumeChanged(float value)
     {
         Debug.Log("se");
         CRIAudioManager.SE.SetVolume(value);
+        // SEが再生中の場合、音量を即座に反映させる
+        if (CRIAudioManager.SE.IsPlaying)
+        {
+            CRIAudioManager.SE.UpdateAll();
+        }
     }
 }

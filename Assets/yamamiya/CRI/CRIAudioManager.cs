@@ -52,6 +52,8 @@ public class CRIAudioManager
     private Dictionary<string, SoundDic> _soundDic = new Dictionary<string, SoundDic>();
     private List<Tuple<SoundType, string, string>> _defferPlaySoundList = new List<Tuple<SoundType, string, string>>();
 
+    static public bool IsReady => _instance._isReady;
+
 
     static public void Initialize()
     {
@@ -177,6 +179,11 @@ public class CRIAudioManager
             _atomExPlayer.SetVolume(_volume);
         }
 
+        public virtual void UpdateAll()
+        {
+            _atomExPlayer.UpdateAll();
+        }
+
         /// <summary>
         /// 指定したキューシート内のキューを再生します。
         /// </summary>
@@ -226,13 +233,13 @@ public class CRIAudioManager
             //await UniTask.WaitUntil(() => _atomExPlayer != null);
 
             // すでに再生中の場合は停止を要求。
-            if (_atomExPlayer.GetStatus() == CriAtomExPlayer.Status.Playing)
+            if (IsPlaying)
             {
                 _atomExPlayer.Stop();
             }
             // _atomExPlayerのステータスがStopになるまで待機。
             await UniTask.WaitUntil(() => _atomExPlayer.GetStatus() == CriAtomExPlayer.Status.Stop);
-            
+
             // BGM再生。
             base.Play(cueSheet, cueName, delay);
         }
