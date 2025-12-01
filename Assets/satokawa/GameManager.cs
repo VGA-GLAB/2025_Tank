@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public List<EnemyBase> Enemys { get; private set; }
 
     private PlayerController _minePlayer;
-    private BulletShooter _mainBulletShooter;
+    private BulletShooter _mineBulletShooter;
     private bool _isRespawnTimer = false;
     private float _respawnTimer;
     private bool _isGameTimer = false;
@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             _minePlayer = newPlayer;
             if(newPlayer.TryGetComponent(out BulletShooter shooter))
             {
-                _mainBulletShooter = shooter;
+                _mineBulletShooter = shooter;
             }
         }
         Players.Add(newPlayer);
@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 _cursorManager.EnableDefaultCursor();
                 _isRespawnTimer = false;
                 _minePlayer.enabled = false;
-                _mainBulletShooter.enabled = false;
+                _mineBulletShooter.enabled = false;
                 
             }
         }
@@ -246,7 +246,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 _cursorManager.EnableDefaultCursor();
                 _isRespawnTimer = false;
                 _minePlayer.enabled = false;
-                _mainBulletShooter.enabled = false;
+                _mineBulletShooter.enabled = false;
              
             });
         }

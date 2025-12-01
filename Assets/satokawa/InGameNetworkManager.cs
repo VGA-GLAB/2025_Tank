@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
 [RequireComponent(typeof(PhotonView))]
@@ -57,6 +58,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     private CountdownController _countdownController;
     public int _playerNumber { get; private set; }//何番目にルームに入ったか
     private bool _isAllLoaded;
+
+    private List<GameObject> _clonedObjects = new();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -105,15 +108,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     {
         // 条件が満たされるまで待つ
         yield return new WaitUntil(() => _isAllLoaded);
-
         // 条件が揃ったらここが実行される
-        _countdownController.RequestStartCountdown(StartInGame);
-    }
-    /// <summary>
-    /// カウントダウンから呼ばれる
-    /// </summary>
-    public void StartInGame()
-    {
+
         photonView.RPC(nameof(CreatePlayerTank), RpcTarget.All);
         CreateEnemyTank();
         CreateItem();
@@ -121,6 +117,28 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             NetworkCore.SetNetValue($"isLoaded{player.ActorNumber}", 0);
+        }
+        _countdownController.RequestStartCountdown(StartInGame);
+    }
+    /// <summary>
+    /// カウントダウンから呼ばれる
+    /// </summary>
+    public void StartInGame()
+    {
+        foreach(GameObject obj in _clonedObjects)
+        {
+            if(obj.TryGetComponent(out PlayerController playerController))
+            {
+                playerController.enabled = true;
+            }
+            if(obj.TryGetComponent(out BulletShooter shooter))
+            {
+                shooter.enabled = true;
+            }
+            if(obj.TryGetComponent(out EnemyBase enemy))
+            {
+                enemy.enabled = true;
+            }
         }
         _gameManager.ToggleTimer(true);
         CRIAudioManager.BGM.Play("BGM", "bgm_ingame");
@@ -187,10 +205,12 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
                 int playerHP = _allPlayerHP / PhotonNetwork.PlayerList.Length;
                 playerController.SetHP(playerHP);
             }
+            playerController.enabled = false;
         }
         if(newPlayer.TryGetComponent(out BulletShooter bulletShooter))
         {
             bulletShooter.IntervalGauge = _attackIntervalGauge;
+            bulletShooter.enabled = false;
         }
 
         //マテリアル変更
@@ -202,6 +222,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             }
         }
         _playerHPGauge.SetTarget(newPlayer);
+        _clonedObjects.Add(newPlayer);
         DOVirtual.DelayedCall(0.1f, () => photonView.RPC("AddPlayer", RpcTarget.All, view.ViewID));//TODO:今はゴリ押しでやってるけどタイトルできたらちゃんと書く
     }
     /// <summary>
@@ -220,6 +241,11 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             {
                 photonView.RPC(nameof(SetBossHPGauge),RpcTarget.All, boss.GetComponent<PhotonView>().ViewID);
             }
+            if(newEnemy.TryGetComponent(out EnemyBase enemy))
+            {
+                enemy.enabled = false; 
+            }
+            _clonedObjects.Add(newEnemy);
             photonView.RPC("AddEnemy", RpcTarget.All, newEnemy.GetComponent<PhotonView>().ViewID);
         }
     }
