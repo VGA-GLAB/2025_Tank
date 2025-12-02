@@ -2,7 +2,6 @@
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine.UI;
-using UnityEditor; // ← 忘れずに
 
 public class ButtonScalerTween : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
