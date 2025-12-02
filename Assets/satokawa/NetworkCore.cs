@@ -2,7 +2,8 @@
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Photon.Pun;
-public static class CustomPropertiesManager
+using System.Linq;
+public static class NetworkCore
 {
     private static Hashtable _propsToSet = new();
     /// <summary>
@@ -47,5 +48,31 @@ public static class CustomPropertiesManager
         }
         found = false;
         return 0f;
+    }
+    /// <summary>
+    ///アクターナンバーの欠番を無くしたPlayerNumberを返す
+    /// </summary>
+    /// <param name="player">取得したいPlayer</param>
+    /// <returns>PlayerNumber</returns>
+    public static int GetPlayerNumber(Player player)
+    {
+        if(player == null)
+        {
+            Debug.LogError("PlayerNull");
+            return -1;
+        }
+
+        Player[] players = PhotonNetwork.PlayerList;
+
+        players = players.OrderBy(p => p.ActorNumber).ToArray();
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i].ActorNumber == player.ActorNumber)
+            {
+                return i + 1;
+            }
+        }
+        return -1;
     }
 }

@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using DG.Tweening;
 using TMPro;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
+using Photon.Realtime;
 public class ResultManager : MonoBehaviourPunCallbacks
 {
     [Header("タイム設定")]
@@ -54,9 +53,8 @@ public class ResultManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ShowResult(float clearTime)
     {
-        _titleButton.interactable = PhotonNetwork.IsMasterClient;
-        _replayButton.interactable = PhotonNetwork.IsMasterClient;
-        _nextButton.interactable = PhotonNetwork.IsMasterClient;
+        Debug.Log("Showリザルト");
+        OnMasterClientSwitched(null);
         _resultPnanel.SetActive(true);
         float time = clearTime;
 
@@ -126,5 +124,11 @@ public class ResultManager : MonoBehaviourPunCallbacks
     {
         _isdetail = !_isdetail;
         _detailPanel.SetActive(_isdetail);
+    }
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        _titleButton.interactable = PhotonNetwork.IsMasterClient;
+        _replayButton.interactable = PhotonNetwork.IsMasterClient;
+        _nextButton.interactable = PhotonNetwork.IsMasterClient;
     }
 }

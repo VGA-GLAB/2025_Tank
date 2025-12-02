@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class AttackIntervalGauge : MonoBehaviour
 {
     [SerializeField] private Image _gauge;
+    private Tween _fillTween;
 
     /// <summary>
     /// ゲージをセットします。
@@ -22,8 +23,13 @@ public class AttackIntervalGauge : MonoBehaviour
     /// <param name="duration"></param>
     public void AnimateFillAmount(float value, float duration)
     {
+        if(_fillTween != null)
+        {
+            _fillTween.Complete();
+            _fillTween.Kill();
+        }
         // ゲージを一旦リセットしてからアニメーションさせる
         _gauge.fillAmount = 0f;
-        _gauge.DOFillAmount(value, duration);
+        _fillTween = _gauge.DOFillAmount(value, duration);
     }
 }

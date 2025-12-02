@@ -29,6 +29,7 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
         {
             _titleUIManager = FindAnyObjectByType<TitleUIManager>();
         }
+        _roomNameInput.onSubmit.AddListener(_ => _createButton.onClick.Invoke());
     }
     public override void OnEnable()
     {
@@ -99,7 +100,6 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     }
     public void ReloadRoomList(List<RoomInfo> roomList)
     {
-        Debug.Log("ルームリスト再読み込み");
         for (int i = 0; i < _roomListContent.childCount; i++)
         {
             Destroy(_roomListContent.GetChild(i).gameObject);
