@@ -480,6 +480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleUp: 1.1
   duration: 0.2
+  button: {fileID: 4170913255051724624}
 --- !u!1 &1439435780582656192
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +521,6 @@ RectTransform:
   - {fileID: 8953407454500902540}
   - {fileID: 457917679650858410}
   - {fileID: 6346796008076852044}
-  - {fileID: 1630343510089981786}
   - {fileID: 3780198844927939264}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2662,7 +2662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1630343510089981786
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2678,11 +2678,11 @@ RectTransform:
   - {fileID: 7170100127722480734}
   - {fileID: 3163447587058402383}
   - {fileID: 5590519539347660332}
-  m_Father: {fileID: 4341538849656563535}
+  m_Father: {fileID: 6346796008076852044}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1030}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1056, y: 594}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2760774500345270151
@@ -3222,6 +3222,18 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -2720052993269355452, guid: fe5d26bd14e726b4fb0bd7407b3f3b97, type: 2}
+    - target: {fileID: 7982397344448595185, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: fe5d26bd14e726b4fb0bd7407b3f3b97, type: 2}
+    - target: {fileID: 7982397344448595185, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2720052993269355452, guid: fe5d26bd14e726b4fb0bd7407b3f3b97, type: 2}
+    - target: {fileID: 7982397344448595185, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8444948728946663623, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
       propertyPath: m_LocalScale.x
       value: 0
@@ -3251,6 +3263,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5996824631417510052, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3038043679677542102}
+    - targetCorrespondingSourceObject: {fileID: 5996824631417510052, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1630343510089981786}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
 --- !u!114 &1634238539206473986 stripped
@@ -3375,6 +3390,10 @@ PrefabInstance:
     - target: {fileID: 633113750259010302, guid: dcb1692f15c49c14c89772943efee2b0, type: 3}
       propertyPath: m_Name
       value: BuffIconUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 633113750259010302, guid: dcb1692f15c49c14c89772943efee2b0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1426941644935476734, guid: dcb1692f15c49c14c89772943efee2b0, type: 3}
       propertyPath: m_fontAsset
