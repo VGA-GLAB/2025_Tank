@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         {
             _bulletShooter = GetComponent<BulletShooter>();
         }
-        if(_tankAnimator == null)
+        if (_tankAnimator == null)
         {
             _tankAnimator = GetComponent<Animator>();
         }
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             {
                 if (this.transform.GetChild(i).TryGetComponent(out SkinnedMeshRenderer renderer))
                 {
-                    renderer.material = _inGameNetworkManager._playerMaterials[photonView.OwnerActorNr - 1];
+                    renderer.material = _inGameNetworkManager._playerMaterials[NetworkCore.GetPlayerNumber(photonView.Owner) - 1];
                 }
             }
         }
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         _hp -= attack;
         if (photonView.IsMine && HPGauge != null)
         {
-            HPGauge.UpdateHPGauge();
+            HPGauge.UpdateHPGauge(true);
         }
         if (_hp <= 0)
         {
@@ -186,9 +186,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                     _bulletInterval = _minBulletdInterval;
                 }
                 break;
-                default:
+            default:
                 return;
         }
-        BuffUI.AddBuff(buff);
+        if (photonView.IsMine)
+        {
+            BuffUI.AddBuff(buff);
+        }
     }
 }

@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
 [RequireComponent(typeof(PhotonView))]
@@ -57,6 +58,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     private CountdownController _countdownController;
     public int _playerNumber { get; private set; }//何番目にルームに入ったか
     private bool _isAllLoaded;
+
+    private List<GameObject> _clonedObjects = new();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -83,9 +86,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         //接続の状態によって処理を分岐
         if (PhotonNetwork.InRoom)
         {
-            _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-            CustomPropertiesManager.SetNetValue($"isLoaded{_playerNumber}", 1);
-            Debug.Log("再読み込み済み");
+            _playerNumber = NetworkCore.GetPlayerNumber(PhotonNetwork.LocalPlayer);
+            NetworkCore.SetNetValue($"isLoaded{PhotonNetwork.LocalPlayer.ActorNumber}", 1);
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -106,22 +108,38 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     {
         // 条件が満たされるまで待つ
         yield return new WaitUntil(() => _isAllLoaded);
-
         // 条件が揃ったらここが実行される
-        _countdownController.RequestStartCountdown(StartInGame);
-    }
-    /// <summary>
-    /// カウントダウンから呼ばれる
-    /// </summary>
-    public void StartInGame()
-    {
+
         photonView.RPC(nameof(CreatePlayerTank), RpcTarget.All);
         CreateEnemyTank();
         CreateItem();
         photonView.RPC(nameof(CreateWall), RpcTarget.All);
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            CustomPropertiesManager.SetNetValue($"isLoaded{player.ActorNumber}", 0);
+            NetworkCore.SetNetValue($"isLoaded{player.ActorNumber}", 0);
+        }
+        _countdownController.RequestStartCountdown("StartInGame",photonView);
+    }
+    /// <summary>
+    /// カウントダウンから呼ばれる
+    /// </summary>
+    [PunRPC]
+    public void StartInGame()
+    {
+        foreach(GameObject obj in _clonedObjects)
+        {
+            if(obj.TryGetComponent(out PlayerController playerController))
+            {
+                playerController.enabled = true;
+            }
+            if(obj.TryGetComponent(out BulletShooter shooter))
+            {
+                shooter.enabled = true;
+            }
+            if(obj.TryGetComponent(out EnemyBase enemy))
+            {
+                enemy.enabled = true;
+            }
         }
         _gameManager.ToggleTimer(true);
         CRIAudioManager.BGM.Play("BGM", "bgm_ingame");
@@ -135,7 +153,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         _isAllLoaded = true;
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            int data = (int)CustomPropertiesManager.GetNetValue($"isLoaded{player.ActorNumber}", out bool found);
+            int data = (int)NetworkCore.GetNetValue($"isLoaded{player.ActorNumber}", out bool found);
             if (!found || data == 0)
             {
                 _isAllLoaded = false;
@@ -150,8 +168,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
-        _playerNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-        CustomPropertiesManager.SetNetValue($"isLoaded{_playerNumber}", 1);
+        _playerNumber = NetworkCore.GetPlayerNumber(PhotonNetwork.LocalPlayer);
+        NetworkCore.SetNetValue($"isLoaded{PhotonNetwork.LocalPlayer.ActorNumber}", 1);
         StartCoroutine(WaitAllLoaded());
     }
 
@@ -188,10 +206,12 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
                 int playerHP = _allPlayerHP / PhotonNetwork.PlayerList.Length;
                 playerController.SetHP(playerHP);
             }
+            playerController.enabled = false;
         }
         if(newPlayer.TryGetComponent(out BulletShooter bulletShooter))
         {
             bulletShooter.IntervalGauge = _attackIntervalGauge;
+            bulletShooter.enabled = false;
         }
 
         //マテリアル変更
@@ -203,6 +223,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             }
         }
         _playerHPGauge.SetTarget(newPlayer);
+        _clonedObjects.Add(newPlayer);
         DOVirtual.DelayedCall(0.1f, () => photonView.RPC("AddPlayer", RpcTarget.All, view.ViewID));//TODO:今はゴリ押しでやってるけどタイトルできたらちゃんと書く
     }
     /// <summary>
@@ -216,11 +237,16 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         }
         foreach (CloneData enemyClone in _enemyClone)
         {
-            GameObject newEnemy = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
+            GameObject newEnemy = PhotonNetwork.InstantiateRoomObject(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
             if (newEnemy.TryGetComponent(out EnemyBoss boss))
             {
                 photonView.RPC(nameof(SetBossHPGauge),RpcTarget.All, boss.GetComponent<PhotonView>().ViewID);
             }
+            if(newEnemy.TryGetComponent(out EnemyBase enemy))
+            {
+                enemy.enabled = false; 
+            }
+            _clonedObjects.Add(newEnemy);
             photonView.RPC("AddEnemy", RpcTarget.All, newEnemy.GetComponent<PhotonView>().ViewID);
         }
     }
@@ -243,7 +269,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         }
         foreach (CloneData enemyClone in _itemClone)
         {
-            GameObject newItem = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
+            GameObject newItem = PhotonNetwork.InstantiateRoomObject(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
         }
     }
     /// <summary>
@@ -270,7 +296,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         {
             foreach (Transform wall in walls)
             {
-                GameObject newWall = PhotonNetwork.Instantiate(_wallPrefab.name, wall.position, wall.rotation);
+                GameObject newWall = PhotonNetwork.InstantiateRoomObject(_wallPrefab.name, wall.position, wall.rotation);
                 newWall.transform.parent = parent;
                 newWall.transform.localScale = wall.localScale;
             }

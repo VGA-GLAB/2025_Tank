@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Number: 1-2
   Name: "\u30D6\u30ED\u30C3\u30AF\u30AC\u30FC\u30C7\u30F3"
-  Image: {fileID: 21300000, guid: b9b9e3c400fc948469c4cdafdb09b3c6, type: 3}
+  Image: {fileID: 21300000, guid: ffe6c815d6bc42a488c0e93430b8c177, type: 3}
   NormalEnemy: 2
   LaserEnemy: 0
   BuckshotEnemy: 0

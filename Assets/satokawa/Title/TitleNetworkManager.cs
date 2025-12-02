@@ -77,6 +77,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         _serverJoinButton.interactable = true;
         _logUI.SetActive(false);
         _uIManager.ChangeScreen(1);
+        Debug.Log("サーバーに接続済み：" + PhotonNetwork.LocalPlayer.ActorNumber);
     }
     public void RoomCreate(string roomName)
     {
@@ -99,12 +100,10 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     /// </summary>
     public override void OnJoinedRoom()
     {
-
-        Debug.Log(PhotonNetwork.IsMasterClient ? "マスター" : "非マスター" + PhotonNetwork.LocalPlayer.ActorNumber);
         _logUI.SetActive(false);
         _roomName.text = "ルーム名:\n" + PhotonNetwork.CurrentRoom.Name;
         _uIManager.ChangeScreen(3);
-        _tankUIControl.JoinNewPlayer();
+        _tankUIControl.UpdateViewPlayer();
         PhotonNetwork.AutomaticallySyncScene = true; // 事前に設定してもOK
     }
     /// <summary>
@@ -117,8 +116,12 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.InRoom)
         {
-            _tankUIControl.JoinNewPlayer();
+            _tankUIControl.UpdateViewPlayer();
         }
+    }
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        _tankUIControl.UpdateViewPlayer();
     }
     public void GameStart()
     {
@@ -134,7 +137,6 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     {
         foreach (RoomInfo info in roomList)
         {
-            Debug.Log(info.Name);
             if (!info.IsOpen || !info.IsVisible || info.RemovedFromList)
             {
                 if (_cachedRoomList.ContainsKey(info.Name))

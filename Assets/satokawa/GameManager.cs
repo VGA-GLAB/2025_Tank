@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     public List<PlayerController> Players { get; private set; }
     public List<EnemyBase> Enemys { get; private set; }
 
+    private PlayerController _minePlayer;
+    private BulletShooter _mineBulletShooter;
     private bool _isRespawnTimer = false;
     private float _respawnTimer;
     private bool _isGameTimer = false;
@@ -37,6 +39,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (_cursorManager == null)
         {   
             _cursorManager = FindAnyObjectByType<CursorManager>();
+        }
+        if(_resultManager == null)
+        {
+            _resultManager = FindAnyObjectByType<ResultManager>();
         }
     }
     public override void OnJoinedRoom()
@@ -61,16 +67,14 @@ public class GameManager : MonoBehaviourPunCallbacks
             _livesText.text = offllneLives.ToString();
             return;
         }
-        int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
+        int lives = (int)NetworkCore.GetNetValue("lives", out bool found);
         if (!found)
         {
-            CustomPropertiesManager.SetNetValue("lives", _lives);
+            NetworkCore.SetNetValue("lives", _lives);
         }
         _livesText.text = lives.ToString();
-        //}
 
         PhotonNetwork.AutomaticallySyncScene = true;
-        Debug.Log("初期設定");
     }
     public void ToggleTimer(bool b)
     {
@@ -113,11 +117,19 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void AddPlayer(int newPlayerViewID)
     {
-        PlayerController newPlayer = GetPlayerController(newPlayerViewID);
+        PlayerController newPlayer = GetPlayerController(newPlayerViewID,out PhotonView view);
         if (newPlayer == null)
         {
             Debug.LogError("IDError");
             return;
+        }
+        if (view.IsMine)
+        {
+            _minePlayer = newPlayer;
+            if(newPlayer.TryGetComponent(out BulletShooter shooter))
+            {
+                _mineBulletShooter = shooter;
+            }
         }
         Players.Add(newPlayer);
     }
@@ -147,7 +159,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void CheckPlayerActive(int diePlayerID)
     {
-        PlayerController diePlayer = GetPlayerController(diePlayerID);
+        PlayerController diePlayer = GetPlayerController(diePlayerID,out _);
         if (diePlayer == null)
         {
             Debug.LogError("diPlayerID not find");
@@ -177,12 +189,15 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             else
             {
-                _cursorManager.EnableDefaultCursor();
-                _isRespawnTimer = false;
                 if (PhotonNetwork.IsMasterClient)
                 {
                     _resultManager.GetComponent<PhotonView>().RPC("ShowGameOverResult", RpcTarget.All);
                 }
+                _cursorManager.EnableDefaultCursor();
+                _isRespawnTimer = false;
+                _minePlayer.enabled = false;
+                _mineBulletShooter.enabled = false;
+                
             }
         }
         else if (diePlayer.GetComponent<PhotonView>().IsMine)
@@ -196,9 +211,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     /// </summary>
     /// <param name="diePlayerID">photonViewのviewIDを入れる</param>
     /// <returns>photonView.viewIDをPlayerController変換した値</returns>
-    private PlayerController GetPlayerController(int diePlayerID)
+    private PlayerController GetPlayerController(int diePlayerID,out PhotonView targetView)
     {
-        PhotonView targetView = PhotonView.Find(diePlayerID);
+        targetView = PhotonView.Find(diePlayerID);
         if (targetView == null)
         {
             return null;
@@ -224,12 +239,15 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             DOVirtual.DelayedCall(1f, () =>
             {
-                _cursorManager.EnableDefaultCursor();
-                _isRespawnTimer = false;
                 if (PhotonNetwork.IsMasterClient)
                 {
                     _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
                 }
+                _cursorManager.EnableDefaultCursor();
+                _isRespawnTimer = false;
+                _minePlayer.enabled = false;
+                _mineBulletShooter.enabled = false;
+             
             });
         }
     }
@@ -248,7 +266,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         //    return;
         //}
         CRIAudioManager.BGM.Stop();
-        Debug.Log("再読み込み中");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         //string activeScene = SceneManager.GetActiveScene().name;
         //Debug.Log(activeScene);
@@ -289,8 +306,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             _livesText.text = offllneLives.ToString();
             return offllneLives > 0;
         }
-        int lives = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
-        Debug.Log($"残り{lives}機 get");
+        int lives = (int)NetworkCore.GetNetValue("lives", out bool found);
         if (!found)
         {
             Debug.LogError("残機数を取得できませんでした");
@@ -298,13 +314,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (lives > 1)
         {
             lives--;
-            CustomPropertiesManager.SetNetValue("lives", lives);
-            Debug.Log($"残り{lives}機 -");
+            NetworkCore.SetNetValue("lives", lives);
             return true;
         }
         else
         {
-            CustomPropertiesManager.SetNetValue("lives", _lives);
+            NetworkCore.SetNetValue("lives", _lives);
             return false;
         }
 
@@ -321,13 +336,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             _livesText.text = offllneLives.ToString();
             return;
         }
-        int livs = (int)CustomPropertiesManager.GetNetValue("lives", out bool found);
+        int livs = (int)NetworkCore.GetNetValue("lives", out bool found);
         if (!found)
         {
             Debug.LogError("残機数を取得できませんでした");
         }
         livs += value;
-        CustomPropertiesManager.SetNetValue("lives", livs);
+        NetworkCore.SetNetValue("lives", livs);
     }
     /// <summary>
     ///[PunRPC] ゲームクリア処理　
@@ -336,7 +351,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void MoveNextScene()
     {
         
-        Debug.Log("a");
         CRIAudioManager.BGM.Stop();
         if (_nextScene == "Title")
         {
