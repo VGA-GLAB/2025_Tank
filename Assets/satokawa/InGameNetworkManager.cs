@@ -118,11 +118,12 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         {
             NetworkCore.SetNetValue($"isLoaded{player.ActorNumber}", 0);
         }
-        _countdownController.RequestStartCountdown(StartInGame);
+        _countdownController.RequestStartCountdown("StartInGame",photonView);
     }
     /// <summary>
     /// カウントダウンから呼ばれる
     /// </summary>
+    [PunRPC]
     public void StartInGame()
     {
         foreach(GameObject obj in _clonedObjects)
@@ -236,7 +237,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         }
         foreach (CloneData enemyClone in _enemyClone)
         {
-            GameObject newEnemy = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
+            GameObject newEnemy = PhotonNetwork.InstantiateRoomObject(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
             if (newEnemy.TryGetComponent(out EnemyBoss boss))
             {
                 photonView.RPC(nameof(SetBossHPGauge),RpcTarget.All, boss.GetComponent<PhotonView>().ViewID);
@@ -268,7 +269,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         }
         foreach (CloneData enemyClone in _itemClone)
         {
-            GameObject newItem = PhotonNetwork.Instantiate(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
+            GameObject newItem = PhotonNetwork.InstantiateRoomObject(enemyClone.clonePrefab.name, enemyClone.clonePosition.position, enemyClone.clonePosition.rotation);
         }
     }
     /// <summary>
@@ -295,7 +296,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         {
             foreach (Transform wall in walls)
             {
-                GameObject newWall = PhotonNetwork.Instantiate(_wallPrefab.name, wall.position, wall.rotation);
+                GameObject newWall = PhotonNetwork.InstantiateRoomObject(_wallPrefab.name, wall.position, wall.rotation);
                 newWall.transform.parent = parent;
                 newWall.transform.localScale = wall.localScale;
             }

@@ -18,25 +18,27 @@ public class CountdownController : MonoBehaviourPunCallbacks
     [Space]
     [SerializeField] private Color _normalColor = new Color(1f, 0.95f, 0.8f); // 柔らかベージュ
     [SerializeField] private Color _lastColor = new Color(1f, 1f, 0.9f);      // やや明るめ
-
-    public void RequestStartCountdown(UnityAction callback)
+    public void RequestStartCountdown(string callback,PhotonView view)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            photonView.RPC(nameof(StartCountdownRPC), RpcTarget.All);
-            _callback = callback;
+            photonView.RPC(nameof(StartCountdownRPC), RpcTarget.All, callback,view.ViewID);
         }
     }
 
-    private static UnityAction _callback;
     [PunRPC]
-    public void StartCountdownRPC()
+    public void StartCountdownRPC(string callback,int viewID)
     {
+        PhotonView view = PhotonView.Find(viewID);
+        if(view == null)
+        {
+            Debug.LogError("don't find viewID");
+        }
         if (!_countdownText.TryGetComponent(out RectTransform rect))
         {
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient && callback != "")
             {
-                _callback?.Invoke();
+                view.RPC(callback, RpcTarget.All);
             }
             return;
         }
@@ -110,9 +112,9 @@ public class CountdownController : MonoBehaviourPunCallbacks
         //完了コールバック
         sequence.AppendCallback(() =>
         {
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient && callback != "")
             {
-                _callback?.Invoke();
+                view.RPC(callback, RpcTarget.All);
             }
         });
         //スタートの続き
