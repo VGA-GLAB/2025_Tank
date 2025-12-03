@@ -9,11 +9,11 @@ public class TitleSoundPlayer : MonoBehaviour
 
     private void Awake()
     {
-        if(_bgmVolSlider == null)
+        if (_bgmVolSlider == null)
         {
             Debug.LogWarning("BGMボリュームスライダーが設定されていません。");
         }
-        if(_seVolSlider == null)
+        if (_seVolSlider == null)
         {
             Debug.LogWarning("SEボリュームスライダーが設定されていません。");
         }
@@ -26,8 +26,14 @@ public class TitleSoundPlayer : MonoBehaviour
         // CRIAudioManagerの初期化完了を待機
         await UniTask.WaitUntil(() => CRIAudioManager.IsReady);
         // スライダーの初期値に基づいて音量を設定
-        CRIAudioManager.BGM.SetVolume(_bgmVolSlider.value);
-        CRIAudioManager.SE.SetVolume(_seVolSlider.value);
+        if (_bgmVolSlider != null)
+        {
+            CRIAudioManager.BGM.SetVolume(_bgmVolSlider.value);
+        }
+        if (_seVolSlider != null)
+        {
+            CRIAudioManager.SE.SetVolume(_seVolSlider.value);
+        }
 
         // Sound:タイトル画面
     }

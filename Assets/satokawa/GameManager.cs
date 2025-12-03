@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField, Header("残機数")] private int _lives;
     [SerializeField, Header("リザルトマネージャー")] private ResultManager _resultManager;
     [SerializeField, Header("CursorManager")] private CursorManager _cursorManager;
+    [SerializeField, Header("PauseControl")] private PauseControl _pauseControl;
     [SerializeField] private TextMeshProUGUI _livesText;
     public List<PlayerController> Players { get; private set; }
     public List<EnemyBase> Enemys { get; private set; }
@@ -43,6 +44,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         if(_resultManager == null)
         {
             _resultManager = FindAnyObjectByType<ResultManager>();
+        }
+        if(_pauseControl == null)
+        {
+            _pauseControl = FindAnyObjectByType<PauseControl>();
         }
     }
     public override void OnJoinedRoom()
@@ -94,6 +99,27 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
 
+        //ポーズ
+        if (Input.GetKeyDown(KeyCode.Escape) && _isGameTimer)
+        {
+            if (_pauseControl.IsShow())
+            {
+                ClausePause();
+            }
+            else
+            {
+                _pauseControl.ShowPanel(true);
+                _cursorManager.EnableDefaultCursor();
+
+                if (!PhotonNetwork.IsConnected || PhotonNetwork.CurrentRoom.PlayerCount == 1)
+                {
+                    Time.timeScale = 0f;
+                    _minePlayer.enabled = false;
+                    _mineBulletShooter.enabled = false;
+                }
+            }
+        }
+
         if (_isGameTimer)
         {
             _gameTimer += Time.deltaTime;
@@ -110,6 +136,20 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
     }
+
+    public void ClausePause()
+    {
+        _pauseControl.ShowPanel(false);
+        _cursorManager.DisableDefaultCursor();
+
+        if (!PhotonNetwork.IsConnected || PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            Time.timeScale = 1f;
+            _minePlayer.enabled = true;
+            _mineBulletShooter.enabled = true;
+        }
+    }
+
     /// <summary>
     ///[PunRPC] NetWorkMagagerで生成したプレイヤーを保存する
     /// </summary>
@@ -194,6 +234,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                     _resultManager.GetComponent<PhotonView>().RPC("ShowGameOverResult", RpcTarget.All);
                 }
                 _cursorManager.EnableDefaultCursor();
+                _isGameTimer = false;
+                ClausePause();
                 _isRespawnTimer = false;
                 _minePlayer.enabled = false;
                 _mineBulletShooter.enabled = false;
@@ -243,6 +285,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                 {
                     _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
                 }
+                ClausePause();
+                _isGameTimer = false;
                 _cursorManager.EnableDefaultCursor();
                 _isRespawnTimer = false;
                 _minePlayer.enabled = false;
@@ -286,6 +330,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void GameOver()
     {
+        Time.timeScale = 1f;
         if (!PhotonNetwork.IsMasterClient)
         {
             return;

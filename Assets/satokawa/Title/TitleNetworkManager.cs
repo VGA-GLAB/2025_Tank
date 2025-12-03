@@ -6,6 +6,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Threading.Tasks;
+using System.Collections;
 /// <summary>
 /// タイトルのネットワークを管理
 /// </summary>
@@ -39,8 +41,22 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public void StartSinglePlay()
     {
-        if (PhotonNetwork.IsConnected)//接続済みだったら切断
-            PhotonNetwork.Disconnect();
+        StartCoroutine(StartSinglePlayCoroutine());
+    }
+    public IEnumerator StartSinglePlayCoroutine()
+    {
+        _logText.text = "ゲームを開始します...";
+        _logUI.SetActive(true);
+
+        yield return null;
+
+        if (PhotonNetwork.IsConnected)
+        {
+            //接続済みだったら切断
+            Debug.Log("切断");
+           PhotonNetwork.Disconnect();
+           yield return new WaitUntil(() => !PhotonNetwork.IsConnected); 
+        }
 
         PhotonNetwork.OfflineMode = true;
         SceneManager.LoadScene("Stage01");
@@ -52,6 +68,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             _messageUI.ShowMessage("インターネットに接続されていません。");
+            _serverJoinButton.interactable = true;
             return;
         }
 
@@ -62,11 +79,12 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public override void OnConnectedToMaster()
     {
-        _logText.text = "ロビーに接続中...";
+
         if (PhotonNetwork.OfflineMode)
         {
             return;
         }
+        _logText.text = "ロビーに接続中...";
         PhotonNetwork.JoinLobby();
     }
     public override void OnJoinedLobby()
@@ -126,7 +144,9 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public void GameStart()
     {
         //参加不可にしてInGameSceneに移動
-
+        _logText.text = "ゲームを開始します...";
+        _logUI.SetActive(true);
+        
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
