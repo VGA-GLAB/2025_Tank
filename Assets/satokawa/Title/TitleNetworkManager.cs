@@ -68,6 +68,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             _messageUI.ShowMessage("インターネットに接続されていません。");
+            _serverJoinButton.interactable = true;
             return;
         }
 
