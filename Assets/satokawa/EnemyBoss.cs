@@ -9,6 +9,7 @@ using System.ComponentModel;
 /// </summary>
 public class EnemyBoss : EnemyBase
 {
+    [SerializeField] private Transform _laserPosition;
     [SerializeField,Header("タレット回転速度")] private float _turretRotateSpeed;
 
     [System.Serializable]
@@ -72,19 +73,21 @@ public class EnemyBoss : EnemyBase
         {
             case AttackType.SingleShot:
                 //Sound: 弾発射
-                Shot(this.transform.forward);
+                Shot((Player.transform.position -  _muzzlePosition.position).normalized);
                 _patternTimer = 0f;
                 break;
 
             case AttackType.Buckshot:
-                //Sound: 弾発射
-                Shot(this.transform.forward);
+
+                Vector3 direction = (Player.transform.position - _muzzlePosition.position).normalized;
+
+                Shot(direction);
 
                 Quaternion rightAngle = Quaternion.Euler(0, _buckshotAngle, 0);
-                Shot(rightAngle * this.transform.forward);
+                Shot(rightAngle * direction);
 
                 Quaternion leftAngle = Quaternion.Euler(0, -_buckshotAngle, 0);
-                Shot(leftAngle * this.transform.forward);
+                Shot(leftAngle * direction);
 
                 _patternTimer = 0f;
                 break;
@@ -206,8 +209,9 @@ public class EnemyBoss : EnemyBase
     /// </summary>
     private void AttackRaser()
     {
-        Ray ray = new Ray(_muzzlePosition.position, _muzzlePosition.forward);
+        Ray ray = new Ray(_laserPosition.position, _laserPosition.forward);
         RaycastHit[] hits = Physics.RaycastAll(ray.origin,ray.direction, _laserDistance);
+
         Array.Sort(hits,(a,b) => a.distance.CompareTo(b.distance));
         _laserTimer += Time.deltaTime;
         float stopDistance = _laserDistance;
@@ -230,8 +234,12 @@ public class EnemyBoss : EnemyBase
                 _laserTimer = 0;
             }
         }
-        _laserLine.SetPosition(0,ray.origin);
-        _laserLine.SetPosition(1, ray.origin + ray.direction * stopDistance);
+
+#if UNITY_EDITOR
+        Debug.DrawRay(ray.origin, ray.direction *stopDistance, Color.red);
+#endif
+        _laserLine.SetPosition(0,_muzzlePosition.transform.position);
+        _laserLine.SetPosition(1, _muzzlePosition.transform.position + _muzzlePosition.transform.forward * stopDistance);
 
     }
     public override void Attack() { }
@@ -241,10 +249,11 @@ public class EnemyBoss : EnemyBase
     /// <param name="direction">撃つ方向</param>
     private void Shot(Vector3 direction)
     {
+        _animator.SetTrigger("Shot");
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
-            
             GameObject bullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.LookRotation(_muzzlePosition.transform.forward ));
+            bullet.transform.forward = direction;
             if(bullet.TryGetComponent(out BulletControl bulletControl))
             {
                 bulletControl.SetBulletData(_attack, BulletControl.Target.Enemy);
