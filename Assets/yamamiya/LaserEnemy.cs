@@ -137,7 +137,7 @@ public class LaserEnemy : EnemyBase
             }
             if (tank != null && _laserTimer > _laserDamageInterval)
             {
-                hit.collider.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack);
+                hit.collider.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack,photonView.ViewID);
                 _laserTimer = 0;
             }
         }

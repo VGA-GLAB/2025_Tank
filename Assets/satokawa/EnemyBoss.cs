@@ -230,7 +230,7 @@ public class EnemyBoss : EnemyBase
             if (tank != null && _laserTimer > _laserDamageInterval)
             {
                 //Sound：レーザーダメージ
-                hit.collider.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack);
+                hit.collider.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack,photonView.ViewID);
                 _laserTimer = 0;
             }
         }
@@ -256,7 +256,7 @@ public class EnemyBoss : EnemyBase
             bullet.transform.forward = direction;
             if(bullet.TryGetComponent(out BulletControl bulletControl))
             {
-                bulletControl.SetBulletData(_attack, BulletControl.Target.Enemy);
+                bulletControl.SetBulletData(_attack, BulletControl.Target.Enemy, photonView);
             }
         }
     }

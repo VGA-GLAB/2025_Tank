@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BulletShooter : MonoBehaviour
+public class BulletShooter : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject _bulletPrefab;//必ずResourcesフォルダにいえる
     [SerializeField] private Transform _shotPosition;
@@ -76,9 +76,9 @@ public class BulletShooter : MonoBehaviour
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _shotPosition.position, _turret.rotation);
             newBullet.transform.forward = _turret.forward;
 
-            if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
+            if (newBullet.TryGetComponent(out BulletControl component))
             {
-                component.SetBulletData(_attack, BulletControl.Target.Player);
+                component.SetBulletData(_attack, BulletControl.Target.Player,photonView);
             }
         }
     }

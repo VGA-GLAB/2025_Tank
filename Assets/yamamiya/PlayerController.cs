@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         }
     }
     [PunRPC]
-    public void Hit(int attack)
+    public void Hit(int attack, int viewID)
     {
         _hp -= attack;
         if (photonView.IsMine && HPGauge != null)

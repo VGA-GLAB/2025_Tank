@@ -21,6 +21,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
     private Vector3 _startPosition;
     private Vector3 _forwardDirection;
     private int _frameCounter = 3;
+    private PhotonView _attackerView;
     public enum Target
     {
         None,Player,Enemy,
@@ -85,7 +86,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
             {
                 //Sound:弾のダメージ 
                 CRIAudioManager.SE.Play("SE", "hit");
-                collision.collider.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack);
+                collision.collider.gameObject.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack,_attackerView.ViewID);
             }
 
         }
@@ -105,10 +106,11 @@ public class BulletControl : MonoBehaviourPunCallbacks
         Delete();
 
     }
-    public void SetBulletData(int attack, Target target)
+    public void SetBulletData(int attack, Target target,PhotonView view)
     {
         _attack = attack;
         _ignoreTarget = target;
+        _attackerView = view;
     }
     /// <summary>
     /// 生成したのが自分だったら銃弾を消す

@@ -21,7 +21,7 @@ public class DestructibleWall : MonoBehaviourPunCallbacks, ITank
     }
 
     [PunRPC]
-    public void Hit(int attack)
+    public void Hit(int attack,int viewID)
     {
         Hp -= attack;
         if(Hp <= 0)

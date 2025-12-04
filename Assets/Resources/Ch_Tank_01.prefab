@@ -597,7 +597,7 @@ MonoBehaviour:
   _attackPower: 1
   _moveSpeed: 500
   _bulletInterval: 1
-  _turnSpeed: 100
+  _turnSpeed: 150
   _rigidbody: {fileID: 0}
   _bulletShooter: {fileID: 9058052671625376573}
   _tankAnimator: {fileID: 2995241383798657200}
