@@ -20,6 +20,9 @@ public class HPGaugeController : MonoBehaviour
     private ITank _tank;
     private float _startHP;
 
+    private Tween _hpTween;
+    private Tween _burnTween;
+
     private void Start()
     {
         if (_target != null)
@@ -77,18 +80,30 @@ public class HPGaugeController : MonoBehaviour
     /// <param name="burnDuraction">バーンゲージおよび振動の演出時間</param>
     private void GaugeEffect(float value, float burnDuraction, bool damageAnimaton)
     {
-        // HPゲージのFillAmountをアニメーションで更新
-        _hpImage.DOFillAmount(value, _duration)
-                    .OnComplete(() =>
-                    {
-                        // HPゲージ更新後_burnDelay分遅らせてバーンゲージも同じ割合にアニメーション。
-                        _burnImage.DOFillAmount(value, burnDuraction)
-                        .SetDelay(_burnDelay);
-                    });
-        if (damageAnimaton)
+        if (_hpTween != null) _hpTween.Kill();
+        if (_burnTween != null) _burnTween.Kill();
+
+        if (!damageAnimaton)
         {
-            // HPゲージの更新に合わせて、ゲージ全体を振動させる
-            _rectTransform.DOShakeAnchorPos(burnDuraction, _strength, _vibrate);
+            _hpImage.fillAmount = value;
+            _burnImage.fillAmount = value;
+            return;
         }
+
+        if (_hpImage.fillAmount < value)
+        {
+            _burnImage.fillAmount = _hpImage.fillAmount;
+            _hpTween = _hpImage.DOFillAmount(value, _duration);
+            _burnTween = _burnImage.DOFillAmount(value, _duration);
+            return;
+        }
+
+        // HPゲージのFillAmountをアニメーションで更新
+        _hpTween = _hpImage.DOFillAmount(value, _duration);
+        // HPゲージ更新後_burnDelay分遅らせてバーンゲージも同じ割合にアニメーション。
+        _burnTween = _burnImage.DOFillAmount(value, burnDuraction).SetDelay(_duration + _burnDelay);
+        // HPゲージの更新に合わせて、ゲージ全体を振動させる
+        _rectTransform.DOShakeAnchorPos(burnDuraction, _strength, _vibrate);
+
     }
 }

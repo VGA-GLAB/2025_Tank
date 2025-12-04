@@ -147,6 +147,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     {
         _hp = value;
         _maxHp = value;
+        HPGauge.SetTarget(this.gameObject);
     }
 
     public void BuffStatus(Buff buff, float amount)
@@ -162,7 +163,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                 }
                 if (photonView.IsMine && HPGauge != null)
                 {
-                    HPGauge.UpdateHPGauge();
+                    HPGauge.UpdateHPGauge(true);
                 }
                 break;
             case Buff.Attack:
