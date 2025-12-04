@@ -25,7 +25,6 @@ public class ResultManager : MonoBehaviourPunCallbacks
     [SerializeField] private Button _reStart;
     [SerializeField] private TextMeshProUGUI _timeText;
     [SerializeField] private GameManager _gameManager;
-    private bool _isdetail = false;
     private int _starCount;
     [Header("アニメーション")]
     [SerializeField] private float _moveduraion;
@@ -48,6 +47,9 @@ public class ResultManager : MonoBehaviourPunCallbacks
         _detailText[0].text = $"{_oneStarTime}秒以下";
         _detailText[1].text = $"{_twoStarTime}秒以下";
         _detailText[2].text = $"{_threeStarTime}秒以下";
+
+        _gameOverPanel.SetActive(false);
+        _detailPanel.SetActive(false);
     }
 
     [PunRPC]
@@ -122,8 +124,7 @@ public class ResultManager : MonoBehaviourPunCallbacks
 
     public void ShowDetail()
     {
-        _isdetail = !_isdetail;
-        _detailPanel.SetActive(_isdetail);
+        _detailPanel.SetActive(!_detailPanel.activeSelf);
     }
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
