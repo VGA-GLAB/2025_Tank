@@ -8,6 +8,7 @@ public class PauseControl : MonoBehaviourPunCallbacks
 {
     [SerializeField] private RectTransform _panel;
     [SerializeField] private GameManager _gameManager;
+    [SerializeField] private InGameNetworkManager _inGameNetworkManager;
     [SerializeField] private float _clausePositionY;
     [SerializeField] private float _moveDuration;
     [Header("ボタン")]
@@ -24,6 +25,10 @@ public class PauseControl : MonoBehaviourPunCallbacks
         {
             _gameManager = FindAnyObjectByType<GameManager>();
         }
+        if(_inGameNetworkManager == null)
+        {
+            _inGameNetworkManager = FindAnyObjectByType<InGameNetworkManager>();
+        }
        _panel.gameObject.SetActive(false);
         _buttonResume.onClick.RemoveAllListeners();
         _buttonRestart.onClick.RemoveAllListeners();
@@ -31,13 +36,9 @@ public class PauseControl : MonoBehaviourPunCallbacks
         _buttonDisconnect.onClick.RemoveAllListeners();
 
         _buttonResume.onClick.AddListener(() => _gameManager.ClausePause());
-        _buttonRestart.onClick.AddListener(() =>
-        {
-            PhotonView view = _gameManager.GetComponent<PhotonView>();
-            view.RPC("Retry", RpcTarget.All);
-        });
+        _buttonRestart.onClick.AddListener(() => _gameManager.KillAllPlayer());
         _buttonTitle.onClick.AddListener(() => _gameManager.GameOver()); 
-        _buttonDisconnect.onClick.AddListener(() => _gameManager.GameOver()); 
+        _buttonDisconnect.onClick.AddListener(() => _inGameNetworkManager.ReturnToTitle()); 
     }
     public void ShowPanel(bool b)
     {

@@ -304,15 +304,19 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Retry()
     {
-        //if (!PhotonNetwork.IsMasterClient)
-        //{
-        //    return;
-        //}
         CRIAudioManager.BGM.Stop();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        //string activeScene = SceneManager.GetActiveScene().name;
-        //Debug.Log(activeScene);
-        //PhotonNetwork.LoadLevel(activeScene);
+    }
+    public void KillAllPlayer()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        Time.timeScale = 1f;
+
+        foreach(PlayerController player in Players)
+        {
+            player.Hit(player.Hp, photonView.ViewID);
+        }
     }
     public void ReStart()
     {
