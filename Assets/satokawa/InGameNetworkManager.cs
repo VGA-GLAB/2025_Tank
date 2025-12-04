@@ -206,13 +206,19 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
                 int playerHP = _allPlayerHP / PhotonNetwork.PlayerList.Length;
                 playerController.SetHP(playerHP);
             }
-            playerController.enabled = false;
+
+            if (newPlayer.TryGetComponent(out BulletShooter bulletShooter))
+            {
+                bulletShooter.IntervalGauge = _attackIntervalGauge;
+
+                if (!_gameManager.IsGameTimer)
+                {
+                    bulletShooter.enabled = false;
+                    playerController.enabled = false;
+                }
+            }
         }
-        if(newPlayer.TryGetComponent(out BulletShooter bulletShooter))
-        {
-            bulletShooter.IntervalGauge = _attackIntervalGauge;
-            bulletShooter.enabled = false;
-        }
+       
 
         //マテリアル変更
         for(int i = 0; i < newPlayer.transform.childCount; i++)

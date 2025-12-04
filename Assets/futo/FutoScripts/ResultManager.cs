@@ -53,7 +53,6 @@ public class ResultManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ShowResult(float clearTime)
     {
-        Debug.Log("Showリザルト");
         OnMasterClientSwitched(null);
         _resultPnanel.SetActive(true);
         float time = clearTime;
@@ -99,12 +98,13 @@ public class ResultManager : MonoBehaviourPunCallbacks
     {
         _titleGameOverButton.interactable = PhotonNetwork.IsMasterClient;
         _replayButton.interactable= PhotonNetwork.IsMasterClient;
+        _gameOverPanel.gameObject.SetActive(true);
 
         _gameOverPanel.TryGetComponent(out RectTransform pnanelRect);
 
-        pnanelRect.anchoredPosition = Vector2.up * 1030;
+        pnanelRect.anchoredPosition = Vector2.zero;
 
-        pnanelRect.DOAnchorPosY(0, 1f).SetEase(_moveEase);
+        pnanelRect.DOAnchorPosY(-1030f, 1f).SetEase(_moveEase);
     }
 
     private IEnumerator ShowStar(int starCount)
