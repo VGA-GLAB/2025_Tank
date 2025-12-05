@@ -16,8 +16,8 @@ MonoBehaviour:
   Name: "\u30CF\u30E0\u30BF\u30F3\u30AF\uFF01"
   Image: {fileID: 21300000, guid: 5cf110491e0e1204ba0496ffe15c6b9f, type: 3}
   NormalEnemy: 0
-  LaserEnemy: 0
+  LaserEnemy: 2
   BuckshotEnemy: 0
   FlankingEnemy: 0
-  FixedEnemy: 0
+  FixedEnemy: 1
   BossEnemy: 1
