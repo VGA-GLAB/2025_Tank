@@ -1033,7 +1033,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 10.8}
+  m_Size: {x: 1, y: 10, z: 10.8}
   m_Center: {x: -10.3, y: 6.4, z: -11.52}
 --- !u!1 &295959420
 GameObject:
@@ -1560,6 +1560,7 @@ MonoBehaviour:
   _lives: 2
   _resultManager: {fileID: 2122035346}
   _cursorManager: {fileID: 1082705273}
+  _pauseControl: {fileID: 0}
   _livesText: {fileID: 2122035347}
 --- !u!114 &368338762
 MonoBehaviour:
@@ -1592,9 +1593,9 @@ MonoBehaviour:
   - clonePrefab: {fileID: 5593234167539396372, guid: 8baa394e5c619bc4380da79536e8210d, type: 3}
     clonePosition: {fileID: 781954537}
   _itemClone:
-  - clonePrefab: {fileID: 7764222559184344581, guid: bc7c59162eb61f54693ed40513acaf6a, type: 3}
+  - clonePrefab: {fileID: 7605273254907922247, guid: e7c7f1ebad817474ba9a2deedaea5d81, type: 3}
     clonePosition: {fileID: 1186334524}
-  - clonePrefab: {fileID: 2414042231499467189, guid: 23fe3126deafe1d4198175121845760b, type: 3}
+  - clonePrefab: {fileID: 16925898779990778, guid: 977b3c26775ee6f4b8d9b76521ed0b6e, type: 3}
     clonePosition: {fileID: 2086230323}
   _wallPrefab: {fileID: 1998332431090166485, guid: cd8f96a646eea7c418dd70479d1f8de5, type: 3}
   _playerHPGauge: {fileID: 2122035348}
@@ -1631,6 +1632,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7c96a2065bc1164992ee8987269a209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bgmVolSlider: {fileID: 0}
+  _seVolSlider: {fileID: 0}
 --- !u!1 &378971664
 GameObject:
   m_ObjectHideFlags: 0
@@ -3726,7 +3729,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: -10.7}
+  m_Size: {x: 1, y: 10, z: -10.7}
   m_Center: {x: -10.28, y: 6.4, z: -11.53}
 --- !u!1 &1178846054
 GameObject:
@@ -4716,8 +4719,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 21, y: 1, z: 1}
-  m_Center: {x: -0.23, y: 0.5, z: 4.39}
+  m_Size: {x: 21, y: 10, z: 1}
+  m_Center: {x: -0.23, y: 0, z: 4.39}
 --- !u!1 &1491922486
 GameObject:
   m_ObjectHideFlags: 0
@@ -5806,7 +5809,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 21, y: 1, z: 1}
+  m_Size: {x: 21, y: 10, z: 1}
   m_Center: {x: -0.23, y: 0.5, z: 4.39}
 --- !u!1 &2061951078
 GameObject:
