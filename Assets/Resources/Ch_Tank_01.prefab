@@ -631,7 +631,7 @@ MonoBehaviour:
   _attackPower: 1
   _moveSpeed: 500
   _bulletInterval: 1
-  _turnSpeed: 150
+  _turnSpeed: 160
   _markerPosNormalized: 0.05
   _rigidbody: {fileID: 5157712213914436444}
   _bulletShooter: {fileID: 9058052671625376573}

@@ -186,6 +186,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                 {
                     _attackPower = _maxAttackPower;
                 }
+
+                _bulletShooter.InitializeAttackSettings(_attackPower,_bulletInterval);
                 break;
             case Buff.MoveSpeed:
                 _moveSpeed += amount;
@@ -200,6 +202,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                 {
                     _bulletInterval = _minBulletdInterval;
                 }
+                _bulletShooter.InitializeAttackSettings(_attackPower,_bulletInterval);
                 break;
             default:
                 return;

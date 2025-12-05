@@ -2242,6 +2242,7 @@ GameObject:
   - component: {fileID: 368338762}
   - component: {fileID: 368338761}
   - component: {fileID: 368338760}
+  - component: {fileID: 368338764}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2362,6 +2363,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &368338764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368338759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c96a2065bc1164992ee8987269a209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bgmVolSlider: {fileID: 0}
+  _seVolSlider: {fileID: 0}
 --- !u!1 &374073049
 GameObject:
   m_ObjectHideFlags: 0
@@ -11488,6 +11503,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 413566502473991043, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: _oneStarTime
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 413566502473991043, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: _twoStarTime
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 413566502473991043, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
+      propertyPath: _threeStarTime
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 1439435780582656192, guid: af36fc0e4d8babd4e9a8f8b3c10a1083, type: 3}
       propertyPath: m_Name
       value: InGameUI

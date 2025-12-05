@@ -4939,7 +4939,6 @@ GameObject:
   - component: {fileID: 5613373136655650280}
   - component: {fileID: 6045934125060544927}
   - component: {fileID: 3139775843014220329}
-  - component: {fileID: 2157271034043101459}
   - component: {fileID: 6487415096597041811}
   m_Layer: 0
   m_Name: Item_hpup
@@ -5016,28 +5015,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2157271034043101459
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4454782437285087382}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!95 &6487415096597041811
 Animator:
   serializedVersion: 7

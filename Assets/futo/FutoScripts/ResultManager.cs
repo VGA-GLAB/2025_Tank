@@ -53,14 +53,13 @@ public class ResultManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void ShowResult(float clearTime)
+    public void ShowResult(int clearTime)
     {
         OnMasterClientSwitched(null);
         _resultPnanel.SetActive(true);
-        float time = clearTime;
 
-        int minute = Mathf.FloorToInt(time / 60);
-        int second = Mathf.FloorToInt(time % 60);
+        int minute = Mathf.FloorToInt(clearTime / 60);
+        int second = Mathf.FloorToInt(clearTime % 60);
 
         _timeText.text = $"{minute:00}:{second:00}";
 

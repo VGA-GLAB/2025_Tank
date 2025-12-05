@@ -4939,7 +4939,6 @@ GameObject:
   - component: {fileID: 2214345245084726860}
   - component: {fileID: 3726665996063726322}
   - component: {fileID: 4786978982394847698}
-  - component: {fileID: 3308565876494507047}
   - component: {fileID: 3212664965246955762}
   m_Layer: 0
   m_Name: Item_atkup
@@ -5016,28 +5015,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3308565876494507047
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6793758422593213068}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!95 &3212664965246955762
 Animator:
   serializedVersion: 7
