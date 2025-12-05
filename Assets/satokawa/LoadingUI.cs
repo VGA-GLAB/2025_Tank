@@ -9,6 +9,7 @@ public class LoadingUI : MonoBehaviour
     public void Awake()
     {
         Instance = this;
+        HideLoading();
     }
 
     public void ShowLoading(string message)

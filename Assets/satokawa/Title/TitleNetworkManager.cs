@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Threading.Tasks;
 using System.Collections;
 /// <summary>
 /// タイトルのネットワークを管理
@@ -15,8 +14,6 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TitleUIManager _uIManager;
     [SerializeField] private ErrorMessageUI _messageUI;
-    [SerializeField] private GameObject _logUI;
-    [SerializeField] private TextMeshProUGUI _logText;
     [SerializeField] private TextMeshProUGUI _roomName;
     [SerializeField] private RoomJoinControl _roomJoinControl;
     [SerializeField] private TankUIControl _tankUIControl;
@@ -45,8 +42,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public IEnumerator StartSinglePlayCoroutine()
     {
-        _logText.text = "ゲームを開始します...";
-        _logUI.SetActive(true);
+        LoadingUI.Instance.ShowLoading("ゲームを開始します...");
 
         yield return null;
 
@@ -73,8 +69,9 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         }
 
         PhotonNetwork.OfflineMode = false;
-        _logText.text = "サーバーに接続中...";
-        _logUI.SetActive(true);
+
+        LoadingUI.Instance.ShowLoading("サーバーに接続中...");
+
         PhotonNetwork.ConnectUsingSettings();
     }
     public override void OnConnectedToMaster()
@@ -84,7 +81,8 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         {
             return;
         }
-        _logText.text = "ロビーに接続中...";
+
+        LoadingUI.Instance.ShowLoading("ロビーに接続中...");
         PhotonNetwork.JoinLobby();
     }
     public override void OnJoinedLobby()
@@ -93,7 +91,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         _roomList.Clear();         
 
         _serverJoinButton.interactable = true;
-        _logUI.SetActive(false);
+        LoadingUI.Instance.HideLoading();
         _uIManager.ChangeScreen(1);
         Debug.Log("サーバーに接続済み：" + PhotonNetwork.LocalPlayer.ActorNumber);
     }
@@ -103,14 +101,13 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         roomOptions.MaxPlayers = 4;
         roomOptions.IsVisible = true;
         roomOptions.IsOpen = true;
-        _logText.text = "ルームを作成中...";
-        _logUI.SetActive(true);
+
+        LoadingUI.Instance.ShowLoading("ルームを作成中...");
         PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
     }
     public void JoinRoom(string roomName)
     {
-        _logText.text = "ルームに接続中...";
-        _logUI.SetActive(true);
+        LoadingUI.Instance.ShowLoading("ルームに接続中...");
         PhotonNetwork.JoinRoom(roomName);
     }
     /// <summary>
@@ -118,7 +115,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     /// </summary>
     public override void OnJoinedRoom()
     {
-        _logUI.SetActive(false);
+        LoadingUI.Instance.HideLoading();
         _roomName.text = "ルーム名:\n" + PhotonNetwork.CurrentRoom.Name;
         _uIManager.ChangeScreen(3);
         _tankUIControl.UpdateViewPlayer();
@@ -144,8 +141,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public void GameStart()
     {
         //参加不可にしてInGameSceneに移動
-        _logText.text = "ゲームを開始します...";
-        _logUI.SetActive(true);
+        LoadingUI.Instance.ShowLoading("ゲームを開始します...");
         
         if (PhotonNetwork.IsMasterClient)
         {
@@ -192,8 +188,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
             OnDisconnected(DisconnectCause.None);
             return;
         }
-        _logText.text = "切断中...";
-        _logUI.SetActive(true);
+        LoadingUI.Instance.ShowLoading("切断中...");
         PhotonNetwork.Disconnect();
     }
     //-------------------------------
@@ -209,7 +204,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         _serverJoinButton.interactable = true;
         _messageUI.ShowMessage(cause);
         _uIManager.ChangeScreen(0);
-        _logUI.SetActive(false);
+        LoadingUI.Instance.HideLoading();
     }
     /// <summary>
     /// ルームの作成に失敗したとき
