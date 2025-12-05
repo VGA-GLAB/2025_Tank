@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: StringTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: StringTable
+  m_TableCollectionNameGuidString: 9296a1fba9462484d9b21bd3805e870e
+  m_Entries:
+  - m_Id: 546540269568
+    m_Key: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 235238510211072
+    m_Key: NoRoom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236090763423744
+    m_Key: RoomName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236143775232000
+    m_Key: Single
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236276105523200
+    m_Key: Multi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236348063002624
+    m_Key: Setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236416992194560
+    m_Key: Tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236466313015296
+    m_Key: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236512634908672
+    m_Key: Credit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236564732358656
+    m_Key: RoomCreate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236715622445056
+    m_Key: RoomIn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 237027112431616
+    m_Key: Create
+    m_Metadata:
+      m_Items: []
+  - m_Id: 237056468365312
+    m_Key: Join
+    m_Metadata:
+      m_Items: []
+  - m_Id: 237190291828736
+    m_Key: Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 238654871482368
+    m_Key: Stage1-1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 238996833087488
+    m_Key: Stage1-2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 239130216148992
+    m_Key: Stage1-3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 239274747670528
+    m_Key: Stage1-4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 239339352535040
+    m_Key: Stage1-5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 239424056504320
+    m_Key: Stage1-Final
+    m_Metadata:
+      m_Items: []
+  - m_Id: 262477876473856
+    m_Key: Replay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 262584755728384
+    m_Key: Next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 935061873930240
+    m_Key: SpeedBuff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 935143016935424
+    m_Key: BulletIntervalBuff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 935858036715520
+    m_Key: AttackBuff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 937401037271040
+    m_Key: Restart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 937509908819968
+    m_Key: Pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 937804437041152
+    m_Key: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 937901837168640
+    m_Key: NewGame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 938049992568832
+    m_Key: LeaveRoom
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 1049022110926635281
+  references:
+    version: 2
+    RefIds:
+    - rid: 1049022110926635281
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1764684021231

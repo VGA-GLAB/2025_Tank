@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: StringTable_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 9296a1fba9462484d9b21bd3805e870e, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 546540269568
+    m_Localized: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 235238510211072
+    m_Localized: No Rooms found!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236090763423744
+    m_Localized: 'RoomName:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236143775232000
+    m_Localized: Single
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236276105523200
+    m_Localized: Multi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236348063002624
+    m_Localized: Setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236416992194560
+    m_Localized: Tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236466313015296
+    m_Localized: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236512634908672
+    m_Localized: Credit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236564732358656
+    m_Localized: RoomCreate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236715622445056
+    m_Localized: RoomIn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 237027112431616
+    m_Localized: Create
+    m_Metadata:
+      m_Items: []
+  - m_Id: 237056468365312
+    m_Localized: Join
+    m_Metadata:
+      m_Items: []
+  - m_Id: 237190291828736
+    m_Localized: Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 238654871482368
+    m_Localized: Start with Hamtank!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 238996833087488
+    m_Localized: Block Garden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 239130216148992
+    m_Localized: Toy Block Forest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 239274747670528
+    m_Localized: Chip Block Base
+    m_Metadata:
+      m_Items: []
+  - m_Id: 239339352535040
+    m_Localized: Hamsters of War
+    m_Metadata:
+      m_Items: []
+  - m_Id: 239424056504320
+    m_Localized: Hamtank!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 262477876473856
+    m_Localized: Replay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 262584755728384
+    m_Localized: Next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 935061873930240
+    m_Localized: SpeedUp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 935143016935424
+    m_Localized: FireRateUp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 935858036715520
+    m_Localized: DamageUp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 937401037271040
+    m_Localized: Restart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 937509908819968
+    m_Localized: Pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 937804437041152
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 937901837168640
+    m_Localized: NewGame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 938049992568832
+    m_Localized: LeaveRoom
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
