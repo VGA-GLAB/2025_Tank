@@ -282,7 +282,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, _gameTimer);
+                    _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, ((int)_gameTimer));
                 }
                 ClausePause();
                 IsGameTimer = false;
