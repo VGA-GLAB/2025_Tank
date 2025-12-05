@@ -1310,6 +1310,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LogText
       objectReference: {fileID: 0}
+    - target: {fileID: 2899434425726158900, guid: 69331b79c94f5074bbd38e4595a5a469, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1328,38 +1332,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4341538849656563535}
     m_Modifications:
-    - target: {fileID: 150524064804876540, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: fe5d26bd14e726b4fb0bd7407b3f3b97, type: 2}
-    - target: {fileID: 150524064804876540, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -2720052993269355452, guid: fe5d26bd14e726b4fb0bd7407b3f3b97, type: 2}
-    - target: {fileID: 150524064804876540, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1544712815409793851, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 1859595102742451121, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: fe5d26bd14e726b4fb0bd7407b3f3b97, type: 2}
-    - target: {fileID: 1859595102742451121, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -2720052993269355452, guid: fe5d26bd14e726b4fb0bd7407b3f3b97, type: 2}
-    - target: {fileID: 1859595102742451121, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2904844671515890744, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3173270263850351516, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
       propertyPath: m_Name
       value: Panel
@@ -1448,14 +1420,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 413566502473991043}
-    - target: {fileID: 8026324874622076696, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8587063568279792768, guid: 7fe718348f7248246bbb26b4dd3c0032, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 18
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
