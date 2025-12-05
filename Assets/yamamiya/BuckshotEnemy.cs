@@ -109,9 +109,9 @@ public class BuckshotEnemy : EnemyBase
     {
         GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.identity);
         newBullet.transform.forward = direction;
-        if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
+        if (newBullet.TryGetComponent(out BulletControl component))
         {
-            component.SetBulletData(_attack, BulletControl.Target.Enemy);
+            component.SetBulletData(_attack, BulletControl.Target.Enemy, photonView);
         }
     }
 }

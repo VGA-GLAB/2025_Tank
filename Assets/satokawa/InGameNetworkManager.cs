@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 [RequireComponent(typeof(PhotonView))]
 /// <summary>
 /// インゲームのネットワーク関係を管理
@@ -88,7 +90,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         {
             _playerNumber = NetworkCore.GetPlayerNumber(PhotonNetwork.LocalPlayer);
             NetworkCore.SetNetValue($"isLoaded{PhotonNetwork.LocalPlayer.ActorNumber}", 1);
-
+            OnRoomPropertiesUpdate(null);
             if (PhotonNetwork.IsMasterClient)
             {
                 StartCoroutine(WaitAllLoaded());
@@ -144,23 +146,28 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         _gameManager.ToggleTimer(true);
         CRIAudioManager.BGM.Play("BGM", "bgm_ingame");
     }
-    public void Update()
-    {
-        if (_isAllLoaded)
-        {
-            return;
-        }
-        _isAllLoaded = true;
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            int data = (int)NetworkCore.GetNetValue($"isLoaded{player.ActorNumber}", out bool found);
-            if (!found || data == 0)
-            {
-                _isAllLoaded = false;
-                break;
-            }
-        }
-    }
+    //public void Update()
+    //{
+    //    if (_isAllLoaded)
+    //    {
+    //        return;
+    //    }
+    //    _isAllLoaded = true;
+    //    foreach (Player player in PhotonNetwork.PlayerList)
+    //    {
+    //        int data = (int)NetworkCore.GetNetValue($"isLoaded{player.ActorNumber}", out bool found);
+
+    //        if (!found || data == 0)
+    //        {
+    //            if (player.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+    //            {
+    //                NetworkCore.SetNetValue($"isLoaded{PhotonNetwork.LocalPlayer.ActorNumber}", 1);
+    //            }
+    //            _isAllLoaded = false;
+    //            break;
+    //        }
+    //    }
+    //}
 
     public override void OnConnectedToMaster()
     {
@@ -205,14 +212,21 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             {
                 int playerHP = _allPlayerHP / PhotonNetwork.PlayerList.Length;
                 playerController.SetHP(playerHP);
+                playerController.Awake();
             }
-            playerController.enabled = false;
+
+            if (newPlayer.TryGetComponent(out BulletShooter bulletShooter))
+            {
+                bulletShooter.IntervalGauge = _attackIntervalGauge;
+
+                if (!_gameManager.IsGameTimer)
+                {
+                    bulletShooter.enabled = false;
+                    playerController.enabled = false;
+                }
+            }
         }
-        if(newPlayer.TryGetComponent(out BulletShooter bulletShooter))
-        {
-            bulletShooter.IntervalGauge = _attackIntervalGauge;
-            bulletShooter.enabled = false;
-        }
+       
 
         //マテリアル変更
         for(int i = 0; i < newPlayer.transform.childCount; i++)
@@ -313,10 +327,34 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
 
     private IEnumerator DisconnectAndReturn()
     {
-        yield return new WaitForSeconds(0.5f);
+        LoadingUI.Instance.ShowLoading("切断中...");
+        yield return new WaitForSecondsRealtime(0.5f);
+        Time.timeScale = 1f;
         PhotonNetwork.Disconnect();
         yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
         SceneManager.LoadScene("Title");
+        LoadingUI.Instance.HideLoading();
        
     }
+    private bool CheckAllLoaded()
+    {
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            var key = $"isLoaded{player.ActorNumber}";
+            float value = NetworkCore.GetNetValue(key, out bool found);
+
+            if (!found || value == 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        _isAllLoaded = CheckAllLoaded();
+    }
+
 }

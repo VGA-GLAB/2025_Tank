@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 266.66675, y: 150}
-  m_SizeDelta: {x: 543.3333, y: 310}
+  m_SizeDelta: {x: 553.3333, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &991364082898957550
 CanvasRenderer:
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0.13627005, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -287,6 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleUp: 1.1
   duration: 0.2
+  button: {fileID: 55307075847546278}
   _enableLoopAnimation: 1
   _maxScale: 1.1
   _duration: 0.5

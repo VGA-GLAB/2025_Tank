@@ -85,7 +85,7 @@ public class EnemyStandard : EnemyBase
             newBullet.transform.forward = _muzzlePosition.forward;
             if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
             {
-                component.SetBulletData(_attack, BulletControl.Target.Enemy);
+                component.SetBulletData(_attack, BulletControl.Target.Enemy, photonView);
             }
             _attackTimer = 0;
         }

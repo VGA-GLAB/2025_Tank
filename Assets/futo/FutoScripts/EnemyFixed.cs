@@ -73,9 +73,9 @@ public class EnemyFixed : EnemyBase
             base.Attack();
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.identity);
             newBullet.transform.forward = _muzzlePosition.forward;
-            if (newBullet.TryGetComponent<BulletControl>(out BulletControl component))
+            if (newBullet.TryGetComponent(out BulletControl component))
             {
-                component.SetBulletData(_attack, BulletControl.Target.Enemy);
+                component.SetBulletData(_attack, BulletControl.Target.Enemy,photonView);
             }
             _attackTimer = 0;
         }

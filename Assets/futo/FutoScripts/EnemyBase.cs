@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
+using Photon.Pun.Demo.Cockpit;
 using UnityEngine;
 using UnityEngine.AI;
 /// <summary>
@@ -57,9 +58,21 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
         }
     }
     [PunRPC]
-    public void Hit(int attack)
+    public void Hit(int attack,int viewID)
     {
         _hp -= attack;
+
+        PhotonView attackerView = PhotonView.Find(viewID);
+        if(attackerView == null)
+        {
+            Debug.LogError("don't find photonview");
+        }
+
+        if(attackerView.TryGetComponent(out PlayerController controller))
+        {
+            Debug.Log("ChangeTarget");
+            _player = controller.gameObject;
+        }
 
 
         if (_hp <= 0)
@@ -69,7 +82,6 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
         _hpGauge.UpdateHPGauge(true);
 
     }
-
     /// <summary>
     ///  一番近いプレイヤーをターゲットにする
     /// </summary>
