@@ -632,8 +632,8 @@ MonoBehaviour:
   _moveSpeed: 500
   _bulletInterval: 1
   _turnSpeed: 150
-  _markerPos: 90
-  _rigidbody: {fileID: 0}
+  _markerPosNormalized: 0.05
+  _rigidbody: {fileID: 5157712213914436444}
   _bulletShooter: {fileID: 9058052671625376573}
   _tankAnimator: {fileID: 2995241383798657200}
   _hamsterAnimator: {fileID: 4555500875052842839}

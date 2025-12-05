@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [SerializeField] private float _moveSpeed; //移動速度
     [SerializeField] private float _bulletInterval; //砲弾の連射インターバル
     [SerializeField] private float _turnSpeed; //回転速度
-    [SerializeField] private float _markerPos = 90f;
+    [SerializeField] private float _markerPosNormalized = 0.05f;
 
     [Header("コンポーネント")]
     [SerializeField] private Rigidbody _rigidbody;
@@ -49,8 +49,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     public BuffUIManager BuffUI;
     public void Awake()
     {
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(_playerHeadPosition.position);
-        screenPos.y += _markerPos;
+        Vector3 vp = Camera.main.WorldToViewportPoint(_playerHeadPosition.position);
+        vp.y += _markerPosNormalized;
+        Vector3 screenPos = Camera.main.ViewportToScreenPoint(vp);
         _playerMarker.position = screenPos;
         _playerMarker.gameObject.SetActive(photonView.IsMine);
     }
@@ -100,11 +101,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         }
 
 
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(_playerHeadPosition.position);
-
-        screenPos.y += _markerPos;
-
+        Vector3 vp = Camera.main.WorldToViewportPoint(_playerHeadPosition.position);
+        vp.y += _markerPosNormalized;
+        Vector3 screenPos = Camera.main.ViewportToScreenPoint(vp);
         _playerMarker.position = screenPos;
+
 
     }
 
