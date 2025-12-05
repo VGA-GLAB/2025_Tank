@@ -99,7 +99,7 @@ public class ResultManager : MonoBehaviourPunCallbacks
     public void ShowGameOverResult()
     {
         _titleGameOverButton.interactable = PhotonNetwork.IsMasterClient;
-        _replayButton.interactable= PhotonNetwork.IsMasterClient;
+        _reStart.interactable= PhotonNetwork.IsMasterClient;
         _gameOverPanel.gameObject.SetActive(true);
 
         _gameOverPanel.TryGetComponent(out RectTransform pnanelRect);
@@ -131,5 +131,8 @@ public class ResultManager : MonoBehaviourPunCallbacks
         _titleButton.interactable = PhotonNetwork.IsMasterClient;
         _replayButton.interactable = PhotonNetwork.IsMasterClient;
         _nextButton.interactable = PhotonNetwork.IsMasterClient;
+
+        _titleGameOverButton.interactable = PhotonNetwork.IsMasterClient;
+        _reStart.interactable = PhotonNetwork.IsMasterClient;
     }
 }
