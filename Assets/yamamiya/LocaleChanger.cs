@@ -14,15 +14,37 @@ public class LocaleChanger : MonoBehaviour
         var _ = ChangeSelectedLocale(locale);
     }
 
+
     /// <summary>
-    /// 指定したロケール（言語コード）に切り替える
+    /// 指定されたロケール（言語コード）に切り替える
     /// </summary>
     /// <param name="locale"></param>
     /// <returns></returns>
     private async UniTask ChangeSelectedLocale(string locale)
     {
-        // 指定されたコードからLocaleを生成し、選択中のロケールとして設定する
-        LocalizationSettings.SelectedLocale = Locale.CreateLocale(locale);
-        await UniTask.WaitUntil(() => LocalizationSettings.SelectedLocale.Identifier.Code == locale);
+        var locales = LocalizationSettings.AvailableLocales.Locales;
+
+        Locale target = null;
+
+        foreach(var loc in locales)
+        {
+            // 指定された言語コードと一致するロケールを探す
+            if (loc.Identifier.Code == locale)
+            {
+                target = loc;
+                break;
+            }
+        }
+
+        if(target == null)
+        {
+            Debug.LogWarning($"指定されたロケールが見つかりません: {locale}");
+            return;
+        }
+
+        // ロケールを切り替え
+        LocalizationSettings.SelectedLocale = target;
+
+        await LocalizationSettings.InitializationOperation.Task;
     }
 }
