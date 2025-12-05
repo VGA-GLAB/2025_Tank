@@ -212,6 +212,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             {
                 int playerHP = _allPlayerHP / PhotonNetwork.PlayerList.Length;
                 playerController.SetHP(playerHP);
+                playerController.Awake();
             }
 
             if (newPlayer.TryGetComponent(out BulletShooter bulletShooter))

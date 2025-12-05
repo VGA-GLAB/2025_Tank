@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [SerializeField] private float _moveSpeed; //移動速度
     [SerializeField] private float _bulletInterval; //砲弾の連射インターバル
     [SerializeField] private float _turnSpeed; //回転速度
+    [SerializeField] private float _markerPos = 90f;
 
     [Header("コンポーネント")]
     [SerializeField] private Rigidbody _rigidbody;
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [SerializeField] private Animator _hamsterAnimator;
     [SerializeField] private ParticleSystem _killEffect;
     [SerializeField] private RectTransform _playerMarker;
+    [SerializeField] private Transform _playerHeadPosition;
     [Header("バフの上限設定")]
     [SerializeField] private int _maxHp;
     [SerializeField] private int _maxAttackPower;
@@ -45,6 +47,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     private InGameNetworkManager _inGameNetworkManager;
     public HPGaugeController HPGauge;
     public BuffUIManager BuffUI;
+    public void Awake()
+    {
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(_playerHeadPosition.position);
+        screenPos.y += _markerPos;
+        _playerMarker.position = screenPos;
+        _playerMarker.gameObject.SetActive(photonView.IsMine);
+    }
     private void Start()
     {
         if (_rigidbody == null)
@@ -74,7 +83,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                 }
             }
         }
-        _playerMarker.gameObject.SetActive(photonView.IsMine);
+       
     }
 
     private void Update()
@@ -90,9 +99,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             //Sound:キャタピラ
         }
 
-        Vector3 cameraPosition = Camera.main.transform.position;
-        cameraPosition.x = this.transform.position.x;
-        _playerMarker.transform.LookAt(cameraPosition);
+
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(_playerHeadPosition.position);
+
+        screenPos.y += _markerPos;
+
+        _playerMarker.position = screenPos;
+
     }
 
     public void OnMove(InputAction.CallbackContext context)
