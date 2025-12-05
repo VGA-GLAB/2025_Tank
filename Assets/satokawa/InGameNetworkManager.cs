@@ -327,10 +327,13 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
 
     private IEnumerator DisconnectAndReturn()
     {
-        yield return new WaitForSeconds(0.5f);
+        LoadingUI.Instance.ShowLoading("切断中...");
+        yield return new WaitForSecondsRealtime(0.5f);
+        Time.timeScale = 1f;
         PhotonNetwork.Disconnect();
         yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
         SceneManager.LoadScene("Title");
+        LoadingUI.Instance.HideLoading();
        
     }
     private bool CheckAllLoaded()
