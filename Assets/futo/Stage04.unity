@@ -1306,7 +1306,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 18.96}
+  m_Size: {x: 1, y: 10, z: 18.96}
   m_Center: {x: -10.3, y: 6.4, z: -7.4}
 --- !u!1 &277150718
 GameObject:
@@ -1973,6 +1973,7 @@ MonoBehaviour:
   _lives: 2
   _resultManager: {fileID: 2122035346}
   _cursorManager: {fileID: 0}
+  _pauseControl: {fileID: 0}
   _livesText: {fileID: 2122035347}
 --- !u!114 &368338762
 MonoBehaviour:
@@ -2015,13 +2016,13 @@ MonoBehaviour:
   - clonePrefab: {fileID: 4880019494049638407, guid: 3ed3ff8a66c143c4d83a75e6a9990314, type: 3}
     clonePosition: {fileID: 1891409010}
   _itemClone:
-  - clonePrefab: {fileID: 2414042231499467189, guid: 23fe3126deafe1d4198175121845760b, type: 3}
+  - clonePrefab: {fileID: 16925898779990778, guid: 977b3c26775ee6f4b8d9b76521ed0b6e, type: 3}
     clonePosition: {fileID: 1186334524}
-  - clonePrefab: {fileID: 7764222559184344581, guid: bc7c59162eb61f54693ed40513acaf6a, type: 3}
+  - clonePrefab: {fileID: 7605273254907922247, guid: e7c7f1ebad817474ba9a2deedaea5d81, type: 3}
     clonePosition: {fileID: 2086230323}
-  - clonePrefab: {fileID: 7830121995438573076, guid: 6d721445aba3da14eb04e020a07d60cc, type: 3}
+  - clonePrefab: {fileID: 2300956316433498231, guid: 3113d983bb5cb6e42b751417d877230c, type: 3}
     clonePosition: {fileID: 41272600}
-  - clonePrefab: {fileID: 954648628029189325, guid: bdbefe9684072fb489b2833f5c223673, type: 3}
+  - clonePrefab: {fileID: 2635771670699366827, guid: 48e4820f93194e3429d59e421cb0c649, type: 3}
     clonePosition: {fileID: 2090116768}
   _wallPrefab: {fileID: 1998332431090166485, guid: cd8f96a646eea7c418dd70479d1f8de5, type: 3}
   _playerHPGauge: {fileID: 2122035348}
@@ -3691,7 +3692,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 18.96}
+  m_Size: {x: 1, y: 10, z: 18.96}
   m_Center: {x: -10.3, y: 6.4, z: -7.4}
 --- !u!1 &510776827
 GameObject:
@@ -6814,7 +6815,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 30.15, y: 1, z: 1}
+  m_Size: {x: 30.15, y: 10, z: 1}
   m_Center: {x: 0.2, y: 0.5, z: 4.39}
 --- !u!1 &1146019863
 GameObject:
@@ -8430,7 +8431,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 30.15, y: 1, z: 1}
+  m_Size: {x: 30.15, y: 10, z: 1}
   m_Center: {x: 0.2, y: 0.5, z: 4.39}
 --- !u!1 &1488874454
 GameObject:
