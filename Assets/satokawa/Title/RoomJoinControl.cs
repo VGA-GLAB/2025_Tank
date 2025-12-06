@@ -5,15 +5,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public class RoomJoinControl : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TitleNetworkManager _networkManager;
+    [SerializeField] protected LocalizationDatas _localizationDatas;
 
     [Header("RoomCreate")]
     [SerializeField] private Button _createButton;
     [SerializeField] private TMP_InputField _roomNameInput;
-    [SerializeField] private TextMeshProUGUI _errorText;
+    [SerializeField] private LocalizeStringEvent _errorText;
 
     [Header("RoomJoin")]
     [SerializeField] private Button _joinButton;
@@ -34,7 +37,7 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     public override void OnEnable()
     {
         base.OnEnable();
-        _errorText.text = "";
+        _errorText.StringReference = null;
         _roomNameInput.text = "";
         _createButton.interactable = true;
         _joinButton.interactable = false;
@@ -45,15 +48,15 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     }
     public void RoomCreate()
     {
-        if (CheckNameInput(_roomNameInput.text, out string errorMessage))
+        if (CheckNameInput(_roomNameInput.text, out LocalizedString errorMessage))
         {//適切なルーム名
-            _errorText.text = errorMessage;
+            _errorText.StringReference = errorMessage;
             _createButton.interactable = false;
             _networkManager.RoomCreate(_roomNameInput.text);
         }
         else
         {
-            _errorText.text = errorMessage;
+            _errorText.StringReference = errorMessage;
         }
     }
     /// <summary>
@@ -62,40 +65,40 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
     /// <param name="roomName">InpuFeildに入ったルーム名</param>
     /// <param name="errorMessage">エラーメッセージ</param>
     /// <returns>true 適切　flase 問題を起こす可能性がある</returns>
-    public bool CheckNameInput(string roomName, out string errorMessage)
+    public bool CheckNameInput(string roomName, out LocalizedString errorMessage)
     {
         if (roomName.Length < 1)
         {
-            errorMessage = "1文字以上にしてください。";
+            errorMessage = _localizationDatas.TooShortText;
             return false;
         }
         if (roomName.Length > 10)
         {
-            errorMessage = "10文字以下にしてください。";
+            errorMessage = _localizationDatas.TooLongText;
             return false;
         }
         if (roomName.Contains(" ") || roomName.Contains("　"))
         {
-            errorMessage = "スペースを含めることはできません。";
+            errorMessage = _localizationDatas.ContainsSpaces;
             return false;
         }
         if (roomName.Contains("/") || roomName.Contains("\\"))
         {
-            errorMessage = "/ \\ は使えません";
+            errorMessage = _localizationDatas.NotAvailableSymbol;
             return false;
         }
         if (_networkManager.FindRoomName(roomName))
         {
-            errorMessage = "このルーム名はすでに使用されています。";
+            errorMessage = _localizationDatas.UsedNaming;
             return false;
         }
-        errorMessage = "";
+        errorMessage = null;
         return true;
     }
 
-    public void CreateRoomFailure(string message)
+    public void CreateRoomFailure(LocalizedString message)
     {
-        _errorText.text = message;
+        _errorText.StringReference = message;
         _createButton.interactable = true;
     }
     public void ReloadRoomList(List<RoomInfo> roomList)

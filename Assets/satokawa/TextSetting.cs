@@ -1,4 +1,5 @@
 ﻿//=====  全部 Chat-GPT =====
+#if UNITY_EDITOR
 using TMPro;
 using UnityEngine;
 using UnityEditor;
@@ -85,3 +86,4 @@ public class TextSettingEditor : Editor
         DestroyImmediate(target as TextSetting, true); // コンポーネント削除
     }
 }
+#endif

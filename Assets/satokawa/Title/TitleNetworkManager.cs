@@ -64,7 +64,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         //インターネット接続確認
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            _messageUI.ShowMessage("インターネットに接続されていません。");
+            _messageUI.ShowMessage(_localizationDatas.NoInternetConnection);
             _serverJoinButton.interactable = true;
             return;
         }
@@ -214,7 +214,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     /// <param name="message"></param>
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        _messageUI.ShowMessage($"Error Code:{returnCode.ToString()} \n {message}");
+        _messageUI.ShowMessage(_localizationDatas.OperationNotAllowedInCurrentState);
     }
     /// <summary>
     /// ルームの参加に失敗したとき
@@ -223,7 +223,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     /// <param name="message"></param>
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        _messageUI.ShowMessage($"Error Code:{returnCode.ToString()} \n {message}");
+        _messageUI.ShowMessage(_localizationDatas.OperationNotAllowedInCurrentState);
     }
     
 }

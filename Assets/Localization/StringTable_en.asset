@@ -170,6 +170,81 @@ MonoBehaviour:
     m_Localized: The Boss
     m_Metadata:
       m_Items: []
+  - m_Id: 1314499210989568
+    m_Localized: Please enter at least 1 character
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1314776186048512
+    m_Localized: Please use 10 characters or fewer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1314880351588352
+    m_Localized: Spaces are not allowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1314964657098752
+    m_Localized: / and \\ are not allowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1315034139938816
+    m_Localized: This room name is already in use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1319783807537152
+    m_Localized: Unable to connect to the server.\nPlease check your network or server
+      address.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1319853068079104
+    m_Localized: An error occurred during the connection.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1319903433281536
+    m_Localized: The server is not responding.\nPlease try again later.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1319965806776320
+    m_Localized: The server response is too slow.\nPlease try reconnecting.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320023352627200
+    m_Localized: Disconnected by the server.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320088737632256
+    m_Localized: The App ID is invalid.\nPlease contact the developer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320177895952384
+    m_Localized: Authentication failed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320217846697984
+    m_Localized: Your authentication has expired.\nPlease log in again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320263094849536
+    m_Localized: The maximum number of concurrent users has been reached.\nPlease
+      try again later.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320298549301248
+    m_Localized: Unable to connect to a server in your region.\nPlease try another
+      region.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320343373828096
+    m_Localized: An error occurred.\nPlease try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320383727226880
+    m_Localized: An unknown error has occurred.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1322620138508288
+    m_Localized: No internet connection.\nPlease check your network settings.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1,86 +1,89 @@
 ﻿using UnityEngine;
 using TMPro;
 using Photon.Realtime;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization;
 public class ErrorMessageUI : MonoBehaviour
 {
     [SerializeField] private GameObject _messagePanel;
-    [SerializeField] private TextMeshProUGUI _messageText;
-    public void ShowMessage(string message)
+    [SerializeField] private LocalizeStringEvent _localization;
+    [SerializeField] private LocalizationDatas _localizationDatas;
+    public void ShowMessage(LocalizedString message)
     {
-        _messageText.text = message;
+        _localization.StringReference = message;
         _messagePanel.SetActive(true);
     }
     public void ShowMessage(DisconnectCause cause)
     {
-        string userMessage = "";
+        LocalizedString userMessage = null;
         switch (cause)
         {
             case DisconnectCause.None:
-                userMessage = "";
+                userMessage = null;
                 break;
 
             case DisconnectCause.ExceptionOnConnect:
-                userMessage = "サーバーに接続できません。\nネットワークやアドレスを確認してください。";
+                userMessage = _localizationDatas.ExceptionOnConnect;
                 break;
 
             case DisconnectCause.Exception:
-                userMessage = "接続中にエラーが発生しました。";
+                userMessage = _localizationDatas.Exception;
                 break;
 
             case DisconnectCause.ServerTimeout:
-                userMessage = "サーバーが応答しません。\n時間をおいて再接続してください。";
+                userMessage = _localizationDatas.ServerTimeout;
                 break;
 
             case DisconnectCause.ClientTimeout:
-                userMessage = "サーバーの応答が遅すぎます。\n再接続を試みてください。";
+                userMessage = _localizationDatas.ClientTimeout;
                 break;
 
             case DisconnectCause.DisconnectByServerLogic:
-                userMessage = "";
+                userMessage = null;
                 break;
 
             case DisconnectCause.DisconnectByServerReasonUnknown:
-                userMessage = "サーバーにより切断されました。";
+                userMessage = _localizationDatas.DisconnectByServerReasonUnknown;
                 break;
 
             case DisconnectCause.InvalidAuthentication:
-                userMessage = "アプリIDが無効です。\n開発者にお問い合わせください。";
+                userMessage = _localizationDatas.InvalidAuthentication;
                 break;
 
             case DisconnectCause.CustomAuthenticationFailed:
-                userMessage = "認証に失敗しました。\n";
+                userMessage = _localizationDatas.CustomAuthenticationFailed;
                 break;
 
             case DisconnectCause.AuthenticationTicketExpired:
-                userMessage = "認証が期限切れです。\n再度ログインしてください。";
+                userMessage = _localizationDatas.AuthenticationTicketExpired;
                 break;
 
             case DisconnectCause.MaxCcuReached:
-                userMessage = "同時接続数が上限に達しています。\n後で再試行してください。";
+                userMessage = _localizationDatas.MaxCcuReached;
                 break;
 
             case DisconnectCause.InvalidRegion:
-                userMessage = "この地域のサーバーに接続できません。\n別の地域でお試しください。";
+                userMessage = _localizationDatas.InvalidRegion;
                 break;
 
             case DisconnectCause.OperationNotAllowedInCurrentState:
-                userMessage = "エラーが発生しました。\n再試行してください。";
+                userMessage = _localizationDatas.OperationNotAllowedInCurrentState;
                 break;
 
             case DisconnectCause.DisconnectByClientLogic:
-                userMessage = "";
+                userMessage = null;
                 break;
 
             default:
-                userMessage = "不明なエラーが発生しました。";
+                userMessage = _localizationDatas.DefaultError;
                 break;
         }
-        if(userMessage == "")
+        if (userMessage == null)
         {
             return;
         }
         _messagePanel.SetActive(true);
-        _messageText.text = userMessage;
+        _localization.StringReference = userMessage;
     }
 
     public void Clause()

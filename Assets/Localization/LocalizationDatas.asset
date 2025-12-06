@@ -66,6 +66,168 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
+  TooShortText:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1314499210989568
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  TooLongText:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1314776186048512
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  ContainsSpaces:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1314880351588352
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  NotAvailableSymbol:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1314964657098752
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  UsedNaming:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1315034139938816
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  ExceptionOnConnect:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1319783807537152
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  Exception:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1319853068079104
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  ServerTimeout:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1319903433281536
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  ClientTimeout:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1319965806776320
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  DisconnectByServerReasonUnknown:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1320023352627200
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  InvalidAuthentication:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1320088737632256
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  CustomAuthenticationFailed:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1320177895952384
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  AuthenticationTicketExpired:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1320217846697984
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  MaxCcuReached:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1320263094849536
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  InvalidRegion:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1320298549301248
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  OperationNotAllowedInCurrentState:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1320343373828096
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  DefaultError:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1320383727226880
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  NoInternetConnection:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 1322620138508288
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   references:
     version: 2
     RefIds: []
