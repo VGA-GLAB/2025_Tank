@@ -5,6 +5,8 @@ using Photon.Pun;
 using DG.Tweening;
 using TMPro;
 using Photon.Realtime;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
+using UnityEditor.Localization.Plugins.XLIFF.Common;
 public class ResultManager : MonoBehaviourPunCallbacks
 {
     [Header("タイム設定")]
@@ -42,26 +44,22 @@ public class ResultManager : MonoBehaviourPunCallbacks
 
         _titleGameOverButton.onClick.AddListener(_gameManager.GameOver);
         _reStart.onClick.AddListener(_gameManager.ReStart);
-        //_replayButtonにステージ１から始める処理
 
-        _detailText[0].text = $"{_oneStarTime}秒以下";
-        _detailText[1].text = $"{_twoStarTime}秒以下";
-        _detailText[2].text = $"{_threeStarTime}秒以下";
+        _detailText[0].text = $"{GetTimeString((int)_oneStarTime)}以下";
+        _detailText[1].text = $"{GetTimeString((int)_twoStarTime)}以下";
+        _detailText[2].text = $"{GetTimeString((int)_threeStarTime)}以下";
 
         _gameOverPanel.SetActive(false);
         _detailPanel.SetActive(false);
     }
-
+   
     [PunRPC]
     public void ShowResult(int clearTime)
     {
         OnMasterClientSwitched(null);
         _resultPnanel.SetActive(true);
 
-        int minute = Mathf.FloorToInt(clearTime / 60);
-        int second = Mathf.FloorToInt(clearTime % 60);
-
-        _timeText.text = $"{minute:00}:{second:00}";
+        _timeText.text = GetTimeString(clearTime);
 
         if(!_resultPnanel.TryGetComponent(out RectTransform pnanelRect))
         {
@@ -120,7 +118,12 @@ public class ResultManager : MonoBehaviourPunCallbacks
 
         }
     }
-
+    private string GetTimeString(int secondTime)
+    {
+        int minute = Mathf.FloorToInt(secondTime / 60);
+        int second = Mathf.FloorToInt(secondTime % 60);
+        return $"{minute:00}:{second:00}";
+    }
     public void ShowDetail()
     {
         _detailPanel.SetActive(!_detailPanel.activeSelf);
