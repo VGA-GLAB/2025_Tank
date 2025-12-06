@@ -14531,6 +14531,7 @@ MonoBehaviour:
   _tankUIControl: {fileID: 168881046}
   _serverJoinButton: {fileID: 2065024521}
   _localizationDatas: {fileID: 11400000, guid: 21e215418c30c7440ac45fbfd1eb4e44, type: 2}
+  _fastStage: Stage01
 --- !u!114 &2068855394
 MonoBehaviour:
   m_ObjectHideFlags: 0

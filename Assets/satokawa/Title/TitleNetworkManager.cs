@@ -19,6 +19,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private TankUIControl _tankUIControl;
     [SerializeField] private Button _serverJoinButton;
     [SerializeField] private LocalizationDatas _localizationDatas;
+    [SerializeField] private string _fastStage;
     private List<RoomInfo> _roomList = new();
     private Dictionary<string, RoomInfo> _cachedRoomList = new();
     private float _refreshTimer = 0;
@@ -56,7 +57,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         }
 
         PhotonNetwork.OfflineMode = true;
-        SceneManager.LoadScene("Stage01");
+        SceneManager.LoadScene(_fastStage);
     }
     public void JoinMaster()
     {
@@ -147,7 +148,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            PhotonNetwork.LoadLevel("Stage01");           // マスターだけ呼ぶ
+            PhotonNetwork.LoadLevel(_fastStage);           // マスターだけ呼ぶ
         }
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
