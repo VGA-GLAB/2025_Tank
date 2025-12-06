@@ -89,26 +89,28 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         _isDie = false;
     }
 
+    private void FixedUpdate()
+    {
+        if (_moveInput != Vector2.zero)
+        {
+            var z = _moveInput.y * _moveSpeed * Time.deltaTime;
+
+            _rigidbody.AddForce(this.transform.forward * z, ForceMode.Impulse);
+        }
+    }
+
     private void Update()
     {
         if (_moveInput != Vector2.zero)
         {
             var x = _moveInput.x * _turnSpeed * Time.deltaTime;
-            var z = _moveInput.y * _moveSpeed * Time.deltaTime;
-
-            _rigidbody.AddForce(this.transform.forward * z, ForceMode.Impulse);
-
             this.transform.Rotate(0, x, 0);
-            //Sound:キャタピラ
         }
-
 
         Vector3 vp = Camera.main.WorldToViewportPoint(_playerHeadPosition.position);
         vp.y += _markerPosNormalized;
         Vector3 screenPos = Camera.main.ViewportToScreenPoint(vp);
         _playerMarker.position = screenPos;
-
-
     }
 
     public void OnMove(InputAction.CallbackContext context)
