@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     private InGameNetworkManager _inGameNetworkManager;
     public HPGaugeController HPGauge;
     public BuffUIManager BuffUI;
+    private bool _isDie = false;
     public void Awake()
     {
         Vector3 vp = Camera.main.WorldToViewportPoint(_playerHeadPosition.position);
@@ -85,6 +86,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             }
         }
        
+        _isDie = false;
     }
 
     private void Update()
@@ -118,6 +120,9 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     /// </summary>
     public void Die()
     {
+        if (_isDie) return;
+
+        _isDie = true;
 
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
