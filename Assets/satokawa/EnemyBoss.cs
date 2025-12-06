@@ -47,15 +47,19 @@ public class EnemyBoss : EnemyBase
         base.Start();
         _patternIndex = 0;
         _patternTimer = 0;
+        photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All, 0);
     }
     public  void Update()
     {
         if (!PlayerFind()) return;
 
-        if (_isLaser)
+        if (_laserLine.enabled)
         {
             AttackRaser();
         }
+
+        if (!photonView.IsMine) return;
+
         if (_attackPatterns[_patternIndex]._attackType != AttackType.LaserShot)
         {
             RotationTurret();
@@ -142,6 +146,11 @@ public class EnemyBoss : EnemyBase
         Quaternion targetRotation = Quaternion.LookRotation(playerPosition - _turret.transform.position);
         _turret.transform.rotation = Quaternion.Lerp(_turret.transform.rotation,targetRotation,Time.deltaTime * _turretRotateSpeed);
     }
+    [PunRPC]
+    private void SetLaserLineEnabled(int b)
+    {
+        _laserLine.enabled = b == 1;
+    }
     /// <summary>
     /// レーザー攻撃のシーケンスを開始
     /// </summary>
@@ -171,7 +180,7 @@ public class EnemyBoss : EnemyBase
         // 2. レーザー発射開始
         sequence.AppendCallback(() =>
         {
-            _laserLine.enabled = true;
+            photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All, 1);
             _isLaser = true;
             _laserTimer = _laserDamageInterval;
         });
@@ -185,7 +194,7 @@ public class EnemyBoss : EnemyBase
         // 4. レーザー発射終了
         sequence.AppendCallback(() =>
         {
-            _laserLine.enabled = false;
+            photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All, 0);
             _isLaser = false;
         });
 

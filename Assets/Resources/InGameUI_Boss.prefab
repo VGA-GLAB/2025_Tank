@@ -749,6 +749,7 @@ GameObject:
   - component: {fileID: 7993939799459515565}
   - component: {fileID: 5939131691424337291}
   - component: {fileID: 1940015499439613701}
+  - component: {fileID: 1311615380226722206}
   m_Layer: 5
   m_Name: CountdownText
   m_TagString: Untagged
@@ -874,6 +875,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1311615380226722206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5591564895303211024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 546540269568
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1940015499439613701}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: SetText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &5650358831578716414
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,12 +1371,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c808cc80d8ab584d9a1b45c8363c290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _threeStarTime: 30
-  _twoStarTime: 60
-  _oneStarTime: 90
+  _threeStarTime: 50
+  _twoStarTime: 80
+  _oneStarTime: 120
   _resultPnanel: {fileID: 3606012405555212240}
   _detailPanel: {fileID: 5767527286642606624}
-  _gameOverPanel: {fileID: 0}
+  _gameOverPanel: {fileID: 8002304622071017041}
   _detailText:
   - {fileID: 2221510850772271256}
   - {fileID: 8459998733649232122}
@@ -1347,8 +1388,8 @@ MonoBehaviour:
   _titleButton: {fileID: 4847242651635878986}
   _replayButton: {fileID: 4819980754433539897}
   _nextButton: {fileID: 5995318396676726210}
-  _titleGameOverButton: {fileID: 0}
-  _reStart: {fileID: 0}
+  _titleGameOverButton: {fileID: 8697917979250448931}
+  _reStart: {fileID: 284761850047350531}
   _timeText: {fileID: 8569011351245201427}
   _gameManager: {fileID: 0}
   _moveduraion: 1
@@ -1388,6 +1429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _countdownText: {fileID: 1940015499439613701}
+  _countdownTextLocalize: {fileID: 1311615380226722206}
   _upPositionY: 25
   _maxScale: 12
   _minScale: 4
@@ -1427,6 +1469,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 3719434235771025171, guid: ba8ce82bfbb8a1644862254989c0dc55, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1100936670273512554}
     - target: {fileID: 3908090732086585661, guid: ba8ce82bfbb8a1644862254989c0dc55, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -1531,6 +1577,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &284761850047350531 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2157563110410343247, guid: ba8ce82bfbb8a1644862254989c0dc55, type: 3}
+  m_PrefabInstance: {fileID: 2162459354695537740}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2221510850772271256 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 60513865098335444, guid: ba8ce82bfbb8a1644862254989c0dc55, type: 3}
@@ -1623,6 +1680,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8002304622071017041 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8146867641351109149, guid: ba8ce82bfbb8a1644862254989c0dc55, type: 3}
+  m_PrefabInstance: {fileID: 2162459354695537740}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8459998733649232122 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7738711746993706166, guid: ba8ce82bfbb8a1644862254989c0dc55, type: 3}
@@ -1643,6 +1705,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8697917979250448931 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7401576939547119215, guid: ba8ce82bfbb8a1644862254989c0dc55, type: 3}
+  m_PrefabInstance: {fileID: 2162459354695537740}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5802695019855481617
