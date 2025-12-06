@@ -172,8 +172,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.97, z: 1}
-  m_Center: {x: -1, y: 0.5, z: 0.44}
+  m_Size: {x: 2, y: 2.766895, z: 1}
+  m_Center: {x: -1, y: 1.3984476, z: 0.44}
 --- !u!23 &4983366
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1636,7 +1636,7 @@ MonoBehaviour:
   _respawnTime: 10
   _lives: 2
   _resultManager: {fileID: 2122035346}
-  _cursorManager: {fileID: 0}
+  _cursorManager: {fileID: 2122035349}
   _pauseControl: {fileID: 1478006952}
   _livesText: {fileID: 2122035347}
 --- !u!114 &368338762
@@ -1688,6 +1688,7 @@ MonoBehaviour:
   _gameManager: {fileID: 368338761}
   _allPlayerHP: 20
   _countdownController: {fileID: 2122035355}
+  _localizationDatas: {fileID: 11400000, guid: 21e215418c30c7440ac45fbfd1eb4e44, type: 2}
 --- !u!4 &368338763
 Transform:
   m_ObjectHideFlags: 0
@@ -2303,8 +2304,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.97, z: 1}
-  m_Center: {x: -1, y: 0.5, z: 0.44}
+  m_Size: {x: 2, y: 2.766895, z: 1}
+  m_Center: {x: -1, y: 1.3984476, z: 0.44}
 --- !u!23 &422190576
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2766,8 +2767,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.97, z: 1}
-  m_Center: {x: -1, y: 0.5, z: 0.44}
+  m_Size: {x: 2, y: 2.766895, z: 1}
+  m_Center: {x: -1, y: 1.3984476, z: 0.44}
 --- !u!23 &445012424
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3022,8 +3023,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.97, z: 1}
-  m_Center: {x: -1, y: 0.5, z: 0.44}
+  m_Size: {x: 2, y: 2.766895, z: 1}
+  m_Center: {x: -1, y: 1.3984476, z: 0.44}
 --- !u!23 &479724160
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3818,8 +3819,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.97, z: 1}
-  m_Center: {x: -1, y: 0.5, z: 0.44}
+  m_Size: {x: 2, y: 2.766895, z: 1}
+  m_Center: {x: -1, y: 1.3984476, z: 0.44}
 --- !u!23 &668952952
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4614,8 +4615,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.97, z: 1}
-  m_Center: {x: -1, y: 0.5, z: 0.44}
+  m_Size: {x: 2, y: 2.766895, z: 1}
+  m_Center: {x: -1, y: 1.3984476, z: 0.44}
 --- !u!23 &888678493
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4880,8 +4881,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.97, z: 1}
-  m_Center: {x: -1, y: 0.5, z: 0.44}
+  m_Size: {x: 2, y: 2.766895, z: 1}
+  m_Center: {x: -1, y: 1.3984476, z: 0.44}
 --- !u!23 &992869677
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7735,8 +7736,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.97, z: 1}
-  m_Center: {x: -1, y: 0.5, z: 0.44}
+  m_Size: {x: 2, y: 2.766895, z: 1}
+  m_Center: {x: -1, y: 1.3984476, z: 0.44}
 --- !u!23 &1741613429
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8139,8 +8140,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 0.97, z: 1}
-  m_Center: {x: -1, y: 0.5, z: 0.44}
+  m_Size: {x: 2, y: 2.766895, z: 1}
+  m_Center: {x: -1, y: 1.3984476, z: 0.44}
 --- !u!23 &1799114921
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8816,6 +8817,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2122035351}
     - target: {fileID: 1100936670273512554, guid: 2a3307c3ef034414998282ab8d01a140, type: 3}
+      propertyPath: _gameManager
+      value: 
+      objectReference: {fileID: 368338761}
+    - target: {fileID: 1100936670273512554, guid: 2a3307c3ef034414998282ab8d01a140, type: 3}
       propertyPath: _oneStarTime
       value: 120
       objectReference: {fileID: 0}
@@ -8971,6 +8976,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e710adc63a03fa4fac2c9aafad5a2a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2122035349 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4194736386598010786, guid: 2a3307c3ef034414998282ab8d01a140, type: 3}
+  m_PrefabInstance: {fileID: 2122035345}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40d1b6451e2cf8f41b90a745b81b8933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2122035350 stripped
