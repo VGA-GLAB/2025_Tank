@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 236090763423744
-    m_Localized: 'RoomName:'
+    m_Localized: RoomName
     m_Metadata:
       m_Items: []
   - m_Id: 236143775232000
@@ -99,7 +99,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 262477876473856
-    m_Localized: Replay
+    m_Localized: ReStart
     m_Metadata:
       m_Items: []
   - m_Id: 262584755728384
@@ -243,6 +243,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1322620138508288
     m_Localized: No internet connection.\nPlease check your network settings.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1335938291027968
+    m_Localized: Return to title
     m_Metadata:
       m_Items: []
   references:

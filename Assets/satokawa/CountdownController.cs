@@ -3,10 +3,12 @@ using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Localization.Components;
 
 public class CountdownController : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TextMeshProUGUI _countdownText;
+    [SerializeField] private LocalizeStringEvent _countdownTextLocalize;
     [SerializeField] private float _upPositionY = 25f;
     [SerializeField] private float _maxScale = 25f;
     [SerializeField] private float _minScale = 7f;
@@ -46,7 +48,7 @@ public class CountdownController : MonoBehaviourPunCallbacks
         Sequence sequence = DOTween.Sequence();
         _countdownText.text = "";
         _countdownText.gameObject.SetActive(true);
-
+        _countdownTextLocalize.enabled = false;
         
 
         //===============================
@@ -107,7 +109,8 @@ public class CountdownController : MonoBehaviourPunCallbacks
             _countdownText.color = c;
 
             rect.localScale = Vector3.one * _maxScale;
-            _countdownText.text = "スタート";
+            _countdownTextLocalize.enabled = true;
+            //_countdownText.text = "スタート";
         });
         //完了コールバック
         sequence.AppendCallback(() =>

@@ -117,7 +117,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         LoadingUI.Instance.HideLoading();
-        _roomName.text = "ルーム名:\n" + PhotonNetwork.CurrentRoom.Name;
+        _roomName.text = PhotonNetwork.CurrentRoom.Name;
         _uIManager.ChangeScreen(3);
         _tankUIControl.UpdateViewPlayer();
         PhotonNetwork.AutomaticallySyncScene = true; // 事前に設定してもOK

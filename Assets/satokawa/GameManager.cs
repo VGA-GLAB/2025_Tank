@@ -237,6 +237,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 _isRespawnTimer = false;
                 _minePlayer.enabled = false;
                 _mineBulletShooter.enabled = false;
+                CRIAudioManager.BGM.Stop();
                 _cursorManager.EnableDefaultCursor();
                 
             }
