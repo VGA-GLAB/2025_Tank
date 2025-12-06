@@ -16,13 +16,11 @@ public class FlankingEnemy : EnemyBase
     private float _updateTimer;
     private int _flanDirection;
     private Vector3 _direction;
-    private Vector3 _rayOrigin;
     private Vector3 _nowPosition;
     private Vector3 _playerPosition;
     private Vector3 _behindPosition;
     private Vector3 _lateraDir;
     private Vector3 _targetPosition;
-    private bool _hasObject;
 
     protected override void Start()
     {
@@ -37,6 +35,8 @@ public class FlankingEnemy : EnemyBase
 
     public override void Move()
     {
+        if (!photonView.IsMine) return;
+
         if (Player == null)
         {
             if (!PlayerFind())
@@ -57,7 +57,6 @@ public class FlankingEnemy : EnemyBase
 
         _distance = Vector3.Distance(_nowPosition, _playerPosition);
         _direction = (_playerPosition - _nowPosition).normalized;
-        _rayOrigin = _nowPosition + Vector3.up * 1.0f;
         float dot = Vector3.Dot(this.transform.forward, _direction);
 
         if (_turret != null)

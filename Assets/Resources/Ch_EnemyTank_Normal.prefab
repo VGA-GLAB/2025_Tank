@@ -280,7 +280,7 @@ MonoBehaviour:
   _muzzlePosition: {fileID: 758895704467501289}
   _hpGauge: {fileID: 4493163236522102340}
   _animator: {fileID: 0}
-  killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
+  _killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
   _player: {fileID: 0}
   _reboundAngle: 10
   _reboundRayDistance: 1.5

@@ -404,7 +404,7 @@ MonoBehaviour:
   _muzzlePosition: {fileID: 1679777051541236737}
   _hpGauge: {fileID: 9201452718893939267}
   _animator: {fileID: 0}
-  killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
+  _killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
   _player: {fileID: 0}
   _attackInterval: 1
   _laserAngle: 120

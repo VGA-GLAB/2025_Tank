@@ -20,7 +20,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     [SerializeField] protected Transform _muzzlePosition;
     [SerializeField] protected HPGaugeController _hpGauge;
     [SerializeField] protected Animator _animator;
-    [SerializeField] private ParticleSystem killEffect;
+    [SerializeField] private ParticleSystem _killEffect;
     [Header("ターゲット設定")]
     [SerializeField] private GameObject _player;
 
@@ -44,15 +44,15 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
         }
         _agent.speed = MoveSpeed;
     }
+    [PunRPC]
     public virtual void Die()
     {
+        if (_killEffect != null)
+        {
+            Instantiate(_killEffect.gameObject, this.transform.position, Quaternion.identity);
+        }
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
-            if(killEffect != null)
-            {
-                 Instantiate(killEffect.gameObject, this.transform.position, Quaternion.identity);
-            }
-
             gameManager.GetComponent<PhotonView>().RPC("CheckEnemeyActive", RpcTarget.All);
             PhotonNetwork.Destroy(this.gameObject);
         }
@@ -75,9 +75,10 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
         }
 
 
-        if (_hp <= 0)
+        if (_hp <= 0 && (PhotonNetwork.IsMasterClient || PhotonNetwork.OfflineMode))
         {
-            Die();
+            Debug.Log("KIll");
+            photonView.RPC(nameof(Die), RpcTarget.All);
         }
         _hpGauge.UpdateHPGauge(true);
 

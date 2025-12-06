@@ -449,7 +449,7 @@ MonoBehaviour:
   _muzzlePosition: {fileID: 5994057340164361566}
   _hpGauge: {fileID: 506480898460649824}
   _animator: {fileID: 0}
-  killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
+  _killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
   _player: {fileID: 0}
   _patrolPoint: []
   _patrolPointName: PatrolPoint

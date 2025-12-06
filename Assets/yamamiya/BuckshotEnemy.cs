@@ -22,6 +22,8 @@ public class BuckshotEnemy : EnemyBase
 
     public override void Move()
     {
+        if (!photonView.IsMine) return;
+
         if (Player == null)
         {
             if (!PlayerFind())
