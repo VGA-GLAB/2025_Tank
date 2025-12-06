@@ -52,7 +52,7 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
         {//適切なルーム名
             _errorText.StringReference = errorMessage;
             _createButton.interactable = false;
-            _networkManager.RoomCreate(_roomNameInput.text);
+            _networkManager.RoomCreate(_roomNameInput.text, JoinError);
         }
         else
         {
@@ -149,8 +149,13 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
         {
             return;
         }
-        _networkManager.JoinRoom(_selectedRoom._roomInfo.Name);
+        _networkManager.JoinRoom(_selectedRoom._roomInfo.Name,JoinError);
         _selectedRoom.OutLineActive(false);
         _selectedRoom = null;
+    }
+    public void JoinError()
+    {
+        _joinButton.interactable = true;
+        LoadingUI.Instance.HideLoading();
     }
 }

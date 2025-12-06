@@ -70,7 +70,7 @@ public class BulletShooter : MonoBehaviourPunCallbacks
         {
             //Sound: 弾発射
             CRIAudioManager.SE.Play("SE", "shot");
-            _tankAnimator.SetTrigger("Shot");
+            photonView.RPC(nameof(PlayShotAnimation), RpcTarget.All);
             _intervalTimer = _bulletInterval;
             IntervalGauge.AnimateFillAmount(1f, _bulletInterval);
             GameObject newBullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _shotPosition.position, _turret.rotation);
@@ -81,5 +81,10 @@ public class BulletShooter : MonoBehaviourPunCallbacks
                 component.SetBulletData(_attack, BulletControl.Target.Player,photonView);
             }
         }
+    }
+    [PunRPC]
+    public void PlayShotAnimation()
+    {
+        _tankAnimator.SetTrigger("Shot");
     }
 }

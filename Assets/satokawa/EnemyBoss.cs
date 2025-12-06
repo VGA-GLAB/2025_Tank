@@ -267,7 +267,7 @@ public class EnemyBoss : EnemyBase
     /// <param name="direction">撃つ方向</param>
     private void Shot(Vector3 direction)
     {
-        _animator.SetTrigger("Shot");
+        base.Attack();
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
             GameObject bullet = PhotonNetwork.Instantiate(_bulletPrefab.name, _muzzlePosition.position, Quaternion.LookRotation(_muzzlePosition.transform.forward ));
