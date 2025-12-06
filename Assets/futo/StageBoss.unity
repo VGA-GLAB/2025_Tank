@@ -8835,6 +8835,14 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4649308180657061268, guid: 2a3307c3ef034414998282ab8d01a140, type: 3}
+      propertyPath: _gameManager
+      value: 
+      objectReference: {fileID: 368338761}
+    - target: {fileID: 4649308180657061268, guid: 2a3307c3ef034414998282ab8d01a140, type: 3}
+      propertyPath: _inGameNetworkManager
+      value: 
+      objectReference: {fileID: 368338762}
     - target: {fileID: 6355332592134426223, guid: 2a3307c3ef034414998282ab8d01a140, type: 3}
       propertyPath: m_Pivot.x
       value: 0

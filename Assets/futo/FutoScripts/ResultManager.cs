@@ -46,9 +46,6 @@ public class ResultManager : MonoBehaviourPunCallbacks
         _titleGameOverButton.onClick.AddListener(_gameManager.GameOver);
         _reStart.onClick.AddListener(_gameManager.ReStart);
 
-        _detailText[0].text = GetDetailText((int)_oneStarTime);
-        _detailText[1].text = GetDetailText((int)_twoStarTime);
-        _detailText[2].text = GetDetailText((int)_threeStarTime);
 
         _gameOverPanel.SetActive(false);
         _detailPanel.SetActive(false);
@@ -106,6 +103,10 @@ public class ResultManager : MonoBehaviourPunCallbacks
             StartCoroutine(ShowStar(_starCount));
         });
         CRIAudioManager.BGM.Stop();
+
+        _detailText[0].text = GetDetailText((int)_oneStarTime);
+        _detailText[1].text = GetDetailText((int)_twoStarTime);
+        _detailText[2].text = GetDetailText((int)_threeStarTime);
     }
 
     [PunRPC]
