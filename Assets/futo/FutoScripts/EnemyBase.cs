@@ -162,6 +162,45 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     {
         _animator.SetTrigger("Shot");
     }
+    protected bool IsPlayerRayHit(float angle, float distance, bool isBackRay = false)
+    {
+        Vector3 nowPosition = transform.position;
+        Vector3 playerPosition = Player.transform.position;
+        Vector3 direction = (playerPosition - nowPosition).normalized;
+        direction.y = 0f;
+
+        direction = Quaternion.AngleAxis(angle, Vector3.up) * direction;
+        Vector3 rayOrigin = _muzzlePosition.position;
+
+        if (isBackRay)
+        {
+            rayOrigin -= direction;
+        }
+
+
+        bool result = true;
+        RaycastHit[] hitAll = Physics.RaycastAll(rayOrigin, direction, distance);
+        hitAll = hitAll.OrderBy(h => h.distance).ToArray();
+        foreach (RaycastHit hit in hitAll)
+        {
+            if (hit.collider.gameObject == Player)
+            {
+                result = true;
+                break;
+            }
+            if (hit.collider.CompareTag("Wall"))
+            {
+                result = false;
+                break;
+            }
+        }
+
+#if UNITY_EDITOR
+        Debug.DrawRay(rayOrigin, direction * distance, result ? Color.green : Color.red);
+#endif
+
+        return result;
+    }
 
 #if UNITY_EDITOR
     private void OnValidate()

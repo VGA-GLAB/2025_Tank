@@ -5,8 +5,6 @@ using Photon.Pun;
 using DG.Tweening;
 using TMPro;
 using Photon.Realtime;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
-using UnityEditor.Localization.Plugins.XLIFF.Common;
 public class ResultManager : MonoBehaviourPunCallbacks
 {
     [Header("タイム設定")]

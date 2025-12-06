@@ -5,6 +5,8 @@ public class BuckshotEnemy : EnemyBase
 {
     [Header("散弾の左右の弾の撃つ角度")]
     [SerializeField] float _buckShotAngle;
+    [SerializeField] private float _reboundAngle = 10f;
+    [SerializeField] private float _reboundRayDistance = 1.5f;
     private float _distance;
     private float _attackTimer;
     private Vector3 _direction;
@@ -52,29 +54,22 @@ public class BuckshotEnemy : EnemyBase
             }
         }
 
-        _hasObject = false;
-        if (Physics.Raycast(_rayOrigin, _direction, out RaycastHit hit, _attackRange))
+        if (_distance < _attackRange)
         {
-            if (hit.collider.gameObject != Player)
+            bool isPlayerHit = IsPlayerRayHit(0, _attackRange, true)
+                && IsPlayerRayHit(_reboundAngle, _reboundRayDistance)
+                && IsPlayerRayHit(-_reboundAngle, _reboundRayDistance);
+
+            if (isPlayerHit)
             {
-                _hasObject = true;
+                _agent.isStopped = true;
+                Attack();
+                return;
             }
         }
 
-#if UNITY_EDITOR
-        Debug.DrawRay(_rayOrigin, _direction * _attackRange, _hasObject ? Color.red : Color.green);
-#endif
-
-        if (_distance > _attackRange || _hasObject)
-        {
-            _agent.isStopped = false;
-            _agent.SetDestination(Player.transform.position);
-        }
-        else
-        {
-            _agent.isStopped = true;
-            Attack();
-        }
+        _agent.isStopped = false;
+        _agent.SetDestination(Player.transform.position);
     }
 
     public override void Attack()

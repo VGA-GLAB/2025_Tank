@@ -517,6 +517,8 @@ MonoBehaviour:
   _behindDistance: 5
   _viewAngleThreshold: -0.5
   _updateInterval: 0.5
+  _reboundAngle: 10
+  _reboundRayDistance: 1.5
 --- !u!95 &7111096412085555505
 Animator:
   serializedVersion: 7
