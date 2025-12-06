@@ -124,6 +124,14 @@ public class EnemyBoss : EnemyBase
             }
         }
     }
+    public override void Die()
+    {
+        DOVirtual.DelayedCall(3f, () =>
+        {
+            _hpGauge.gameObject.SetActive(false);
+        });
+        base.Die();
+    }
     private void RotationTurret()
     {
         if(Player == null) return;

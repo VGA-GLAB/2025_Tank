@@ -44,7 +44,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
         }
         _agent.speed = MoveSpeed;
     }
-    public void Die()
+    public virtual void Die()
     {
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
