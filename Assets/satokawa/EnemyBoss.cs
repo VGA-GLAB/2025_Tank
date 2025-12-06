@@ -128,6 +128,7 @@ public class EnemyBoss : EnemyBase
             }
         }
     }
+    [PunRPC]
     public override void Die()
     {
         DOVirtual.DelayedCall(3f, () =>

@@ -536,7 +536,7 @@ MonoBehaviour:
   _muzzlePosition: {fileID: 5687700394859668522}
   _hpGauge: {fileID: 0}
   _animator: {fileID: 5328017863870596242}
-  killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
+  _killEffect: {fileID: 0}
   _player: {fileID: 0}
   _laserPosition: {fileID: 5109495949663776646}
   _turretRotateSpeed: 5

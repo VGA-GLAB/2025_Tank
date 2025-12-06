@@ -118,6 +118,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     /// <summary>
     /// プレイヤーを消してリスポーン処理を実行
     /// </summary>
+    [PunRPC]
     public void Die()
     {
         if (_isDie) return;
