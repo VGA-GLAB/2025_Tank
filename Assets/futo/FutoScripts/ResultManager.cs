@@ -5,6 +5,8 @@ using Photon.Pun;
 using DG.Tweening;
 using TMPro;
 using Photon.Realtime;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 public class ResultManager : MonoBehaviourPunCallbacks
 {
     [Header("タイム設定")]
@@ -17,6 +19,7 @@ public class ResultManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject _detailPanel;
     [SerializeField] private GameObject _gameOverPanel;
     [SerializeField] private TextMeshProUGUI[] _detailText;
+    [SerializeField] private LocalizedString _detailLocalize;
     [SerializeField] private Image[] _starImage;
     [SerializeField] private Button _titleButton;
     [SerializeField] private Button _replayButton;
@@ -43,14 +46,29 @@ public class ResultManager : MonoBehaviourPunCallbacks
         _titleGameOverButton.onClick.AddListener(_gameManager.GameOver);
         _reStart.onClick.AddListener(_gameManager.ReStart);
 
-        _detailText[0].text = $"{GetTimeString((int)_oneStarTime)}以下";
-        _detailText[1].text = $"{GetTimeString((int)_twoStarTime)}以下";
-        _detailText[2].text = $"{GetTimeString((int)_threeStarTime)}以下";
+        _detailText[0].text = GetDetailText((int)_oneStarTime);
+        _detailText[1].text = GetDetailText((int)_twoStarTime);
+        _detailText[2].text = GetDetailText((int)_threeStarTime);
 
         _gameOverPanel.SetActive(false);
         _detailPanel.SetActive(false);
     }
-   
+    private string GetDetailText(int time)
+    {
+        string timeString = GetTimeString(time);
+        string code = LocalizationSettings.SelectedLocale.Identifier.Code;
+
+        if (code.StartsWith("en"))
+        {
+            return _detailLocalize.GetLocalizedString() + " " + timeString;
+        }
+        else if (code.StartsWith("ja"))
+        {
+            return timeString + " " + _detailLocalize.GetLocalizedString();
+        }
+        return timeString;
+
+    }
     [PunRPC]
     public void ShowResult(int clearTime)
     {
