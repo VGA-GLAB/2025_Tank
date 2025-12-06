@@ -142,6 +142,34 @@ MonoBehaviour:
     m_Localized: Language
     m_Metadata:
       m_Items: []
+  - m_Id: 1259832561061888
+    m_Localized: Disconnecting...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260018611998720
+    m_Localized: Starting the game...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260136572604416
+    m_Localized: Connecting to the server...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260263211225088
+    m_Localized: Connecting to the lobby...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260365866815488
+    m_Localized: Creating a room...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260477292695552
+    m_Localized: Joining the room...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1264957816000512
+    m_Localized: The Boss
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

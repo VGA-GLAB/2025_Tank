@@ -139,6 +139,34 @@ MonoBehaviour:
     m_Key: Language
     m_Metadata:
       m_Items: []
+  - m_Id: 1259832561061888
+    m_Key: Disconnecting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260018611998720
+    m_Key: StartingTheGame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260136572604416
+    m_Key: ConnectingToTheServer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260263211225088
+    m_Key: ConnectingToTheLobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260365866815488
+    m_Key: CreatingRoom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260477292695552
+    m_Key: JoiningTheRoom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1264957816000512
+    m_Key: TheBoss
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

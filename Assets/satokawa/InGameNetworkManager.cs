@@ -58,6 +58,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     private int _allPlayerHP;
     [SerializeField]
     private CountdownController _countdownController;
+    [SerializeField] 
+    private LocalizationDatas _localizationDatas;
     public int _playerNumber { get; private set; }//何番目にルームに入ったか
     private bool _isAllLoaded;
 
@@ -327,7 +329,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
 
     private IEnumerator DisconnectAndReturn()
     {
-        LoadingUI.Instance.ShowLoading("切断中...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.Disconnect);
         yield return new WaitForSecondsRealtime(0.5f);
         Time.timeScale = 1f;
         PhotonNetwork.Disconnect();

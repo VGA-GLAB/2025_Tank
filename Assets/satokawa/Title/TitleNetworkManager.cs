@@ -18,6 +18,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private RoomJoinControl _roomJoinControl;
     [SerializeField] private TankUIControl _tankUIControl;
     [SerializeField] private Button _serverJoinButton;
+    [SerializeField] private LocalizationDatas _localizationDatas;
     private List<RoomInfo> _roomList = new();
     private Dictionary<string, RoomInfo> _cachedRoomList = new();
     private float _refreshTimer = 0;
@@ -42,7 +43,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public IEnumerator StartSinglePlayCoroutine()
     {
-        LoadingUI.Instance.ShowLoading("ゲームを開始します...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.StartGame);
 
         yield return null;
 
@@ -70,7 +71,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.OfflineMode = false;
 
-        LoadingUI.Instance.ShowLoading("サーバーに接続中...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.ConnectingToServer);
 
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -82,7 +83,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        LoadingUI.Instance.ShowLoading("ロビーに接続中...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.ConnectingToLobby);
         PhotonNetwork.JoinLobby();
     }
     public override void OnJoinedLobby()
@@ -102,12 +103,12 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         roomOptions.IsVisible = true;
         roomOptions.IsOpen = true;
 
-        LoadingUI.Instance.ShowLoading("ルームを作成中...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.CreatingRoom);
         PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
     }
     public void JoinRoom(string roomName)
     {
-        LoadingUI.Instance.ShowLoading("ルームに接続中...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.RoomConnecting);
         PhotonNetwork.JoinRoom(roomName);
     }
     /// <summary>
@@ -141,7 +142,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public void GameStart()
     {
         //参加不可にしてInGameSceneに移動
-        LoadingUI.Instance.ShowLoading("ゲームを開始します...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.StartGame);
         
         if (PhotonNetwork.IsMasterClient)
         {
@@ -188,7 +189,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
             OnDisconnected(DisconnectCause.None);
             return;
         }
-        LoadingUI.Instance.ShowLoading("切断中...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.Disconnect);
         PhotonNetwork.Disconnect();
     }
     //-------------------------------
