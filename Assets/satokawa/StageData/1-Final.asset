@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: 1-Final
   m_EditorClassIdentifier: 
   Number: 1-F
-  Name: "\u30CF\u30E0\u30BF\u30F3\u30AF\uFF01"
+  Name:
+    m_TableReference:
+      m_TableCollectionName: GUID:9296a1fba9462484d9b21bd3805e870e
+    m_TableEntryReference:
+      m_KeyId: 239424056504320
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   Image: {fileID: 21300000, guid: 5cf110491e0e1204ba0496ffe15c6b9f, type: 3}
   NormalEnemy: 0
   LaserEnemy: 2
@@ -21,3 +29,6 @@ MonoBehaviour:
   FlankingEnemy: 0
   FixedEnemy: 1
   BossEnemy: 1
+  references:
+    version: 2
+    RefIds: []

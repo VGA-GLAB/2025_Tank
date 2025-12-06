@@ -18,6 +18,8 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private RoomJoinControl _roomJoinControl;
     [SerializeField] private TankUIControl _tankUIControl;
     [SerializeField] private Button _serverJoinButton;
+    [SerializeField] private LocalizationDatas _localizationDatas;
+    [SerializeField] private string _fastStage;
     private List<RoomInfo> _roomList = new();
     private Dictionary<string, RoomInfo> _cachedRoomList = new();
     private float _refreshTimer = 0;
@@ -42,7 +44,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     }
     public IEnumerator StartSinglePlayCoroutine()
     {
-        LoadingUI.Instance.ShowLoading("ゲームを開始します...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.StartGame);
 
         yield return null;
 
@@ -55,7 +57,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         }
 
         PhotonNetwork.OfflineMode = true;
-        SceneManager.LoadScene("Stage01");
+        SceneManager.LoadScene(_fastStage);
     }
     public void JoinMaster()
     {
@@ -63,14 +65,14 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         //インターネット接続確認
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            _messageUI.ShowMessage("インターネットに接続されていません。");
+            _messageUI.ShowMessage(_localizationDatas.NoInternetConnection);
             _serverJoinButton.interactable = true;
             return;
         }
 
         PhotonNetwork.OfflineMode = false;
 
-        LoadingUI.Instance.ShowLoading("サーバーに接続中...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.ConnectingToServer);
 
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -82,7 +84,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        LoadingUI.Instance.ShowLoading("ロビーに接続中...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.ConnectingToLobby);
         PhotonNetwork.JoinLobby();
     }
     public override void OnJoinedLobby()
@@ -102,12 +104,12 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         roomOptions.IsVisible = true;
         roomOptions.IsOpen = true;
 
-        LoadingUI.Instance.ShowLoading("ルームを作成中...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.CreatingRoom);
         PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
     }
     public void JoinRoom(string roomName)
     {
-        LoadingUI.Instance.ShowLoading("ルームに接続中...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.RoomConnecting);
         PhotonNetwork.JoinRoom(roomName);
     }
     /// <summary>
@@ -116,7 +118,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         LoadingUI.Instance.HideLoading();
-        _roomName.text = "ルーム名:\n" + PhotonNetwork.CurrentRoom.Name;
+        _roomName.text = PhotonNetwork.CurrentRoom.Name;
         _uIManager.ChangeScreen(3);
         _tankUIControl.UpdateViewPlayer();
         PhotonNetwork.AutomaticallySyncScene = true; // 事前に設定してもOK
@@ -141,12 +143,12 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public void GameStart()
     {
         //参加不可にしてInGameSceneに移動
-        LoadingUI.Instance.ShowLoading("ゲームを開始します...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.StartGame);
         
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            PhotonNetwork.LoadLevel("Stage01");           // マスターだけ呼ぶ
+            PhotonNetwork.LoadLevel(_fastStage);           // マスターだけ呼ぶ
         }
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -188,7 +190,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
             OnDisconnected(DisconnectCause.None);
             return;
         }
-        LoadingUI.Instance.ShowLoading("切断中...");
+        LoadingUI.Instance.ShowLoading(_localizationDatas.Disconnect);
         PhotonNetwork.Disconnect();
     }
     //-------------------------------
@@ -213,7 +215,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     /// <param name="message"></param>
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        _messageUI.ShowMessage($"Error Code:{returnCode.ToString()} \n {message}");
+        _messageUI.ShowMessage(_localizationDatas.OperationNotAllowedInCurrentState);
     }
     /// <summary>
     /// ルームの参加に失敗したとき
@@ -222,7 +224,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     /// <param name="message"></param>
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        _messageUI.ShowMessage($"Error Code:{returnCode.ToString()} \n {message}");
+        _messageUI.ShowMessage(_localizationDatas.OperationNotAllowedInCurrentState);
     }
     
 }

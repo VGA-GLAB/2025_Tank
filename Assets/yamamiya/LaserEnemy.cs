@@ -24,18 +24,24 @@ public class LaserEnemy : EnemyBase
     protected override void Start()
     {
         base.Start();
+        if (photonView.IsMine)
+        {
+            photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All,0);
+        }
     }
 
     public void Update()
     {
-        if (!PlayerFind())
+        Attack();
+
+        if (!photonView.IsMine)
         {
             return;
         }
 
-        if (_isLaser)
+        if (!PlayerFind())
         {
-            Attack();
+            return;
         }
 
         if (_isRaserTween)
@@ -53,7 +59,7 @@ public class LaserEnemy : EnemyBase
     /// <summary>
     /// レーザー攻撃のシーケンスを開始
     /// </summary>
-    private void StartLaserShotSequence()
+    private void StartLaserShotSequence()   
     {
         if (_isRaserTween) return;
         _isRaserTween = true;
@@ -78,7 +84,7 @@ public class LaserEnemy : EnemyBase
         // 2. レーザー発射開始
         sequence.AppendCallback(() =>
         {
-            _laserLine.enabled = true;
+            photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All,1);
             _isLaser = true;
             _laserTimer = _laserDamageInterval;
         });
@@ -92,6 +98,7 @@ public class LaserEnemy : EnemyBase
         // 4. レーザー発射終了
         sequence.AppendCallback(() =>
         {
+            photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All,0);
             _laserLine.enabled = false;
             _isLaser = false;
         });
@@ -112,12 +119,19 @@ public class LaserEnemy : EnemyBase
         // シーケンスを再生
         sequence.Play();
     }
+    [PunRPC]
+    private void SetLaserLineEnabled(int b)
+    {
+        _laserLine.enabled = b == 1 ;
+    }
 
     /// <summary>
     /// レーザー攻撃
     /// </summary>
     public override void Attack()
     {
+        if(!_laserLine.enabled) return;
+
         Ray ray = new Ray(_muzzlePosition.position, _muzzlePosition.forward);
         RaycastHit[] hits = Physics.RaycastAll(ray.origin, ray.direction, _laserDistance);
         Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));

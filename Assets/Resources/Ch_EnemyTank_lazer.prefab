@@ -200,6 +200,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -3989823231854401839, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4735652226528919207}
+    - targetCorrespondingSourceObject: {fileID: -3989823231854401839, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4819556027013018160}
   m_SourcePrefab: {fileID: 100100000, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
 --- !u!1 &565600768304214919 stripped
 GameObject:
@@ -226,6 +229,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4735652226528919207}
+  - {fileID: 4819556027013018160}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -236,13 +240,29 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 565600768304214919}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6528b4525578fbf48b5f59c3dad4d8be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rotateTarget: {fileID: 1787048848770265131}
   _smooth: 10
+--- !u!114 &4819556027013018160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565600768304214919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!4 &1787048848770265131 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6319950485947852157, guid: c80a385b9db5e2f4c969496e6166dc0f, type: 3}
@@ -384,7 +404,7 @@ MonoBehaviour:
   _muzzlePosition: {fileID: 1679777051541236737}
   _hpGauge: {fileID: 9201452718893939267}
   _animator: {fileID: 0}
-  killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
+  _killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
   _player: {fileID: 0}
   _attackInterval: 1
   _laserAngle: 120
@@ -400,7 +420,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4880019494049638407}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

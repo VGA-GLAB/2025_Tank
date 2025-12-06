@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public bool IsGameTimer { get; private set; } = false;
     private float _gameTimer;
     private InGameNetworkManager _networkManager;
-    private static int offllneLives = -1;
+    private static int offllneLives = 0;
     private void Awake()
     {
         _networkManager = GetComponent<InGameNetworkManager>();
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.OfflineMode)
         {
-            if(offllneLives  == -1)
+            if (offllneLives <= 0)
             {
                 offllneLives = _lives;
             }
@@ -232,12 +232,13 @@ public class GameManager : MonoBehaviourPunCallbacks
                 {
                     _resultManager.GetComponent<PhotonView>().RPC("ShowGameOverResult", RpcTarget.All);
                 }
-                _cursorManager.EnableDefaultCursor();
+                ClausePause();//標準カーソル無効化が含まれている
                 IsGameTimer = false;
-                ClausePause();
                 _isRespawnTimer = false;
                 _minePlayer.enabled = false;
                 _mineBulletShooter.enabled = false;
+                CRIAudioManager.BGM.Stop();
+                _cursorManager.EnableDefaultCursor();
                 
             }
         }

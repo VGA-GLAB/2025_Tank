@@ -19,7 +19,10 @@ public class BuffItem : ItemBase
         }
         if (hitObject.TryGetComponent(out PlayerController target))
         {
+            if(target.GetComponent<PhotonView>().IsMine)
+            {
             CRIAudioManager.SE.Play("SE", "itemget");
+            }
             target.BuffStatus(_toBuff, _buffAmount);
             GameObject newParticle =  Instantiate(_buffParticle.gameObject,target.transform);
             newParticle.transform.localPosition = Vector3.zero;

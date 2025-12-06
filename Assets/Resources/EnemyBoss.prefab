@@ -159,6 +159,8 @@ GameObject:
   - component: {fileID: 4214779107093663304}
   - component: {fileID: 3004122427202204694}
   - component: {fileID: 196327081186565217}
+  - component: {fileID: 3648878870477082536}
+  - component: {fileID: 5838596074014942660}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -237,6 +239,45 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3648878870477082536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3618869081656874243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5838596074014942660}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &5838596074014942660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3618869081656874243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 0
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &6313178622531951028
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,7 +536,7 @@ MonoBehaviour:
   _muzzlePosition: {fileID: 5687700394859668522}
   _hpGauge: {fileID: 0}
   _animator: {fileID: 5328017863870596242}
-  killEffect: {fileID: 6132230162689092716, guid: d902179f6adb3e94486542f70d8a653b, type: 3}
+  _killEffect: {fileID: 0}
   _player: {fileID: 0}
   _laserPosition: {fileID: 5109495949663776646}
   _turretRotateSpeed: 5

@@ -27,6 +27,8 @@ public class EnemyFixed : EnemyBase
 
     public override void Move()
     {
+        if (!photonView.IsMine) return;
+
         if (Player == null)
         {
             if (!PlayerFind())

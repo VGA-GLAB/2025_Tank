@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     private InGameNetworkManager _inGameNetworkManager;
     public HPGaugeController HPGauge;
     public BuffUIManager BuffUI;
+    private bool _isDie = false;
     public void Awake()
     {
         Vector3 vp = Camera.main.WorldToViewportPoint(_playerHeadPosition.position);
@@ -84,7 +85,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                 }
             }
         }
-       
+
+        _isDie = false;
     }
 
     private void Update()
@@ -116,22 +118,24 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     /// <summary>
     /// プレイヤーを消してリスポーン処理を実行
     /// </summary>
+    [PunRPC]
     public void Die()
     {
+        if (_isDie) return;
 
-        if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
+        _isDie = true;
+
+        _tankAnimator.SetTrigger("Dead");
+        _hamsterAnimator.SetTrigger("Dead");
+        DOVirtual.DelayedCall(1f, () =>
         {
-            //Sound:Player DieSE （当たった瞬間はここ）
-            _tankAnimator.SetTrigger("Dead");
-            _hamsterAnimator.SetTrigger("Dead");
-            DOVirtual.DelayedCall(1f, () =>
+            Instantiate(_killEffect, this.transform.position, Quaternion.identity);
+            if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
             {
-                //Sound:Player DieSE （消える時はここ）
                 CRIAudioManager.SE.Play("SE", "kill");
-                Instantiate(_killEffect, this.transform.position, Quaternion.identity);
                 _gameManager.GetComponent<PhotonView>().RPC("CheckPlayerActive", RpcTarget.All, photonView.ViewID);
-            });
-        }
+            }
+        });
     }
     [PunRPC]
     public void Hit(int attack, int viewID)
@@ -140,17 +144,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         if (photonView.IsMine && HPGauge != null)
         {
             HPGauge.UpdateHPGauge(true);
-        }
-        if (_hp <= 0)
-        {
-            Die();
-        }
-        else
-        {
             _hamsterAnimator.SetTrigger("Hit");
             CRIAudioManager.SE.Play("SE", "hit");
         }
-
+        if (_hp <= 0 && (PhotonNetwork.IsMasterClient || PhotonNetwork.OfflineMode))
+        {
+            photonView.RPC(nameof(Die), RpcTarget.All);
+            return;
+        
+        }
     }
     public void OnPhotonDeastroy(PhotonMessageInfo info)
     {
@@ -187,7 +189,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                     _attackPower = _maxAttackPower;
                 }
 
-                _bulletShooter.InitializeAttackSettings(_attackPower,_bulletInterval);
+                _bulletShooter.InitializeAttackSettings(_attackPower, _bulletInterval);
                 break;
             case Buff.MoveSpeed:
                 _moveSpeed += amount;
@@ -202,7 +204,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
                 {
                     _bulletInterval = _minBulletdInterval;
                 }
-                _bulletShooter.InitializeAttackSettings(_attackPower,_bulletInterval);
+                _bulletShooter.InitializeAttackSettings(_attackPower, _bulletInterval);
                 break;
             default:
                 return;

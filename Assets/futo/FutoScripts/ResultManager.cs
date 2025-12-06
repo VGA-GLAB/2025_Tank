@@ -5,6 +5,8 @@ using Photon.Pun;
 using DG.Tweening;
 using TMPro;
 using Photon.Realtime;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 public class ResultManager : MonoBehaviourPunCallbacks
 {
     [Header("タイム設定")]
@@ -17,6 +19,7 @@ public class ResultManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject _detailPanel;
     [SerializeField] private GameObject _gameOverPanel;
     [SerializeField] private TextMeshProUGUI[] _detailText;
+    [SerializeField] private LocalizedString _detailLocalize;
     [SerializeField] private Image[] _starImage;
     [SerializeField] private Button _titleButton;
     [SerializeField] private Button _replayButton;
@@ -42,26 +45,37 @@ public class ResultManager : MonoBehaviourPunCallbacks
 
         _titleGameOverButton.onClick.AddListener(_gameManager.GameOver);
         _reStart.onClick.AddListener(_gameManager.ReStart);
-        //_replayButtonにステージ１から始める処理
 
-        _detailText[0].text = $"{_oneStarTime}秒以下";
-        _detailText[1].text = $"{_twoStarTime}秒以下";
-        _detailText[2].text = $"{_threeStarTime}秒以下";
+        _detailText[0].text = GetDetailText((int)_oneStarTime);
+        _detailText[1].text = GetDetailText((int)_twoStarTime);
+        _detailText[2].text = GetDetailText((int)_threeStarTime);
 
         _gameOverPanel.SetActive(false);
         _detailPanel.SetActive(false);
     }
+    private string GetDetailText(int time)
+    {
+        string timeString = GetTimeString(time);
+        string code = LocalizationSettings.SelectedLocale.Identifier.Code;
 
+        if (code.StartsWith("en"))
+        {
+            return _detailLocalize.GetLocalizedString() + " " + timeString;
+        }
+        else if (code.StartsWith("ja"))
+        {
+            return timeString + " " + _detailLocalize.GetLocalizedString();
+        }
+        return timeString;
+
+    }
     [PunRPC]
     public void ShowResult(int clearTime)
     {
         OnMasterClientSwitched(null);
         _resultPnanel.SetActive(true);
 
-        int minute = Mathf.FloorToInt(clearTime / 60);
-        int second = Mathf.FloorToInt(clearTime % 60);
-
-        _timeText.text = $"{minute:00}:{second:00}";
+        _timeText.text = GetTimeString(clearTime);
 
         if(!_resultPnanel.TryGetComponent(out RectTransform pnanelRect))
         {
@@ -120,7 +134,12 @@ public class ResultManager : MonoBehaviourPunCallbacks
 
         }
     }
-
+    private string GetTimeString(int secondTime)
+    {
+        int minute = Mathf.FloorToInt(secondTime / 60);
+        int second = Mathf.FloorToInt(secondTime % 60);
+        return $"{minute:00}:{second:00}";
+    }
     public void ShowDetail()
     {
         _detailPanel.SetActive(!_detailPanel.activeSelf);

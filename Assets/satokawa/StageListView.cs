@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 public class StageListView : MonoBehaviour
@@ -12,7 +13,7 @@ public class StageListView : MonoBehaviour
     [SerializeField] private TitleUIManager _titleUIManager;
     [Header("Info")]
     [SerializeField] private TextMeshProUGUI _stageNumber;
-    [SerializeField] private TextMeshProUGUI _stageName;
+    [SerializeField] private LocalizeStringEvent _stageName;
     [SerializeField] private Image _stageImage;
     [SerializeField] private TextMeshProUGUI _normalEnemy;
     [SerializeField] private TextMeshProUGUI _laserEnemy;
@@ -42,7 +43,7 @@ public class StageListView : MonoBehaviour
         if (index >= _stageList.Length) return;
 
         _stageNumber.text = _stageList[index].Number;
-        _stageName.text = _stageList[index].Name;
+        _stageName.StringReference = _stageList[index].Name;
         _stageImage.sprite = _stageList[index].Image;
         
         _normalEnemy.text = "×" + _stageList[index].NormalEnemy;

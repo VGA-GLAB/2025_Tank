@@ -37,14 +37,6 @@ public class BulletControl : MonoBehaviourPunCallbacks
         {
             _trailRenderer = GetComponent<TrailRenderer>();
         }
-        if(_ignoreTarget == Target.Player)
-        {
-            _trailRenderer.colorGradient = _playerTrajectory;
-        }
-        else if(_ignoreTarget == Target.Enemy)
-        {
-            _trailRenderer.colorGradient = _enemyTrajectory;
-        }
     }
     // Update is called once per frame
     void Update()
@@ -106,11 +98,29 @@ public class BulletControl : MonoBehaviourPunCallbacks
         Delete();
 
     }
+    
     public void SetBulletData(int attack, Target target,PhotonView view)
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(SetBulletDataRPC),RpcTarget.All,attack, target == Target.Player ? 0:1,view.ViewID);
+        }
+    }
+    [PunRPC]
+    private void SetBulletDataRPC(int attack, int target,int viewID)
+    {
         _attack = attack;
-        _ignoreTarget = target;
-        _attackerView = view;
+        _ignoreTarget = target == 0 ? Target.Player:Target.Enemy;
+        _attackerView = PhotonView.Find(viewID);
+
+        if (_ignoreTarget == Target.Player)
+        {
+            _trailRenderer.colorGradient = _playerTrajectory;
+        }
+        else if (_ignoreTarget == Target.Enemy)
+        {
+            _trailRenderer.colorGradient = _enemyTrajectory;
+        }
     }
     /// <summary>
     /// 生成したのが自分だったら銃弾を消す

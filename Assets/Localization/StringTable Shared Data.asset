@@ -96,7 +96,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 262477876473856
-    m_Key: Replay
+    m_Key: ReStart
     m_Metadata:
       m_Items: []
   - m_Id: 262584755728384
@@ -133,6 +133,122 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 938049992568832
     m_Key: LeaveRoom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1110717470560256
+    m_Key: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1259832561061888
+    m_Key: Disconnecting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260018611998720
+    m_Key: StartingTheGame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260136572604416
+    m_Key: ConnectingToTheServer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260263211225088
+    m_Key: ConnectingToTheLobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260365866815488
+    m_Key: CreatingRoom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1260477292695552
+    m_Key: JoiningTheRoom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1264957816000512
+    m_Key: TheBoss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1314499210989568
+    m_Key: TooShortText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1314776186048512
+    m_Key: TooLongText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1314880351588352
+    m_Key: ContainsSpaces
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1314964657098752
+    m_Key: NotAvailableSymbol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1315034139938816
+    m_Key: UsedNaming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1319783807537152
+    m_Key: ExceptionOnConnect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1319853068079104
+    m_Key: Exception
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1319903433281536
+    m_Key: ServerTimeout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1319965806776320
+    m_Key: ClientTimeout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320023352627200
+    m_Key: DisconnectByServerReasonUnknown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320088737632256
+    m_Key: InvalidAuthentication
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320152759488512
+    m_Key: New Entry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320177895952384
+    m_Key: CustomAuthenticationFailed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320217846697984
+    m_Key: AuthenticationTicketExpired
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320263094849536
+    m_Key: MaxCcuReached
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320298549301248
+    m_Key: InvalidRegion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320343373828096
+    m_Key: OperationNotAllowedInCurrentState
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1320383727226880
+    m_Key: Default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1322620138508288
+    m_Key: NoInternetConnection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1335938291027968
+    m_Key: ReturnTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1451828659572736
+    m_Key: "under\t"
     m_Metadata:
       m_Items: []
   m_Metadata:
