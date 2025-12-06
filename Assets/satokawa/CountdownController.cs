@@ -145,6 +145,7 @@ public class CountdownController : MonoBehaviourPunCallbacks
        
 
         sequence.Play();
+        CRIAudioManager.SE.Play("SE", "count");
     }
 
 }

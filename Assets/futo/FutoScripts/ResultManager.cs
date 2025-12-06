@@ -103,6 +103,7 @@ public class ResultManager : MonoBehaviourPunCallbacks
             StartCoroutine(ShowStar(_starCount));
         });
         CRIAudioManager.BGM.Stop();
+        CRIAudioManager.BGM.Play("BGM", "Cue_0");
 
         _detailText[0].text = GetDetailText((int)_oneStarTime);
         _detailText[1].text = GetDetailText((int)_twoStarTime);

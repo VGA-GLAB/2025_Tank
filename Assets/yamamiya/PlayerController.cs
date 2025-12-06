@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using CriWare;
+using DG.Tweening;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     private Vector2 _moveInput;
     private GameManager _gameManager;
     private InGameNetworkManager _inGameNetworkManager;
+    private CriAtomExPlayback _tankSePlayback;
     public HPGaugeController HPGauge;
     public BuffUIManager BuffUI;
     private bool _isDie = false;
@@ -56,6 +58,15 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         _playerMarker.position = screenPos;
         _playerMarker.gameObject.SetActive(photonView.IsMine);
     }
+
+    public override void OnDisable()
+    {
+        if(_tankSePlayback.GetStatus() == CriAtomExPlayback.Status.Playing)
+        {
+            _tankSePlayback.Stop();
+        }
+    }
+
     private void Start()
     {
         if (_rigidbody == null)
@@ -105,6 +116,20 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         {
             var x = _moveInput.x * _turnSpeed * Time.deltaTime;
             this.transform.Rotate(0, x, 0);
+
+            // キャタピラの音が再生されていなかったら再生する
+            if (_tankSePlayback.GetStatus() == CriAtomExPlayback.Status.Removed)
+            {
+                _tankSePlayback = CRIAudioManager.SE.Play("SE", "tank");
+            }
+        }
+        else
+        {
+            // キャタピラの音が再生中なら停止する
+            if (_tankSePlayback.GetStatus() == CriAtomExPlayback.Status.Playing)
+            {
+                _tankSePlayback.Stop();
+            }
         }
 
         Vector3 vp = Camera.main.WorldToViewportPoint(_playerHeadPosition.position);
