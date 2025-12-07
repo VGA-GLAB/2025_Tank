@@ -101,7 +101,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
     
     public void SetBulletData(int attack, Target target,PhotonView view)
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (photonView.IsMine)
         {
             photonView.RPC(nameof(SetBulletDataRPC),RpcTarget.All,attack, target == Target.Player ? 0:1,view.ViewID);
         }

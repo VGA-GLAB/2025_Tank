@@ -170,11 +170,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     public void Hit(int attack, int viewID)
     {
         _hp -= attack;
+        PhotonView view = PhotonView.Find(viewID);
+
         if (photonView.IsMine && HPGauge != null)
         {
             HPGauge.UpdateHPGauge(true);
             photonView.RPC(nameof(PlayAnimation), RpcTarget.All, 0);
-            CRIAudioManager.SE.Play("SE", "hit");
         }
         if (_hp <= 0 && (PhotonNetwork.IsMasterClient || PhotonNetwork.OfflineMode))
         {

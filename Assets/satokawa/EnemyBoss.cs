@@ -3,7 +3,6 @@ using Photon.Pun;
 using System.Collections.Generic;
 using DG.Tweening;
 using System;
-using System.ComponentModel;
 using CriWare;
 /// <summary>
 /// ボス敵のクラス
@@ -39,7 +38,8 @@ public class EnemyBoss : EnemyBase
 
     private float _laserTimer;
     private bool _isRaserTween = false;
-    private bool _isLaser = false;
+
+    private float _lastTimeScale;
     public enum AttackType
     {
         SingleShot, Buckshot, LaserShot, Wait
@@ -59,6 +59,14 @@ public class EnemyBoss : EnemyBase
         {
             AttackRaser();
         }
+
+        if (Mathf.Abs(Time.timeScale - _lastTimeScale) > 0.0001f)
+        {
+            Debug.Log($"TimeScale Changed: {_lastTimeScale} -> {Time.timeScale}");
+            OnTimeScaleChanged(_lastTimeScale, Time.timeScale);
+            _lastTimeScale = Time.timeScale;
+        }
+
 
         if (!photonView.IsMine) return;
 
@@ -153,6 +161,17 @@ public class EnemyBoss : EnemyBase
     private void SetLaserLineEnabled(int b)
     {
         _laserLine.enabled = b == 1;
+
+        if (b == 1)
+        {
+            _laserSePlayback = CRIAudioManager.SE.Play("SE", "beam");
+            Debug.Log("SE");
+        }
+        else
+        {
+            _laserSePlayback.Stop();
+            Debug.Log("Stop");
+        }
     }
     /// <summary>
     /// レーザー攻撃のシーケンスを開始
@@ -184,9 +203,8 @@ public class EnemyBoss : EnemyBase
         sequence.AppendCallback(() =>
         {
             photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All, 1);
-            _isLaser = true;
             _laserTimer = _laserDamageInterval;
-            _laserSePlayback = CRIAudioManager.SE.Play("SE", "beam");
+            
         });
 
         // 3. レーザーを出しながら反対側へ回転 (レーダー発射)
@@ -199,8 +217,6 @@ public class EnemyBoss : EnemyBase
         sequence.AppendCallback(() =>
         {
             photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All, 0);
-            _isLaser = false;
-            _laserSePlayback.Stop();
         });
 
         // 5. 元の角度（0度）に戻す
@@ -291,5 +307,19 @@ public class EnemyBoss : EnemyBase
         {
             _laserSePlayback.Stop();
         }
+    }
+    void OnTimeScaleChanged(float oldValue, float newValue)
+    {
+        if (newValue == 0)
+        {
+            _laserSePlayback.Pause();
+            Debug.Log("Pause");
+        }
+        else
+        {
+            _laserSePlayback.Resume(CriAtomEx.ResumeMode.AllPlayback);
+            Debug.Log("ReStart");
+        }
+
     }
 }
