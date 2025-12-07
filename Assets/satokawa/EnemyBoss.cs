@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using System;
 using System.ComponentModel;
+using CriWare;
 /// <summary>
 /// ボス敵のクラス
 /// </summary>
@@ -29,7 +30,8 @@ public class EnemyBoss : EnemyBase
     [SerializeField] private float _laserRotationSpeed;
     [SerializeField] private float _laserDamageInterval;
     [SerializeField] private LineRenderer _laserLine;
-    
+
+    private CriAtomExPlayback _laserSePlayback;
 
     private float _patternTimer;
     private int _patternIndex;
@@ -77,12 +79,13 @@ public class EnemyBoss : EnemyBase
         {
             case AttackType.SingleShot:
                 //Sound: 弾発射
+                CRIAudioManager.SE.Play("SE", "shot");
                 Shot((Player.transform.position -  _muzzlePosition.position).normalized);
                 _patternTimer = 0f;
                 break;
 
             case AttackType.Buckshot:
-
+                CRIAudioManager.SE.Play("SE", "shot");
                 Vector3 direction = (Player.transform.position - _muzzlePosition.position).normalized;
 
                 Shot(direction);
@@ -100,7 +103,6 @@ public class EnemyBoss : EnemyBase
 
                 if (_isRaserTween)
                 {
-                    //Sound: ボスレーザー
                     return;
                 }
                 isCompletedImmediately = false;
@@ -184,6 +186,7 @@ public class EnemyBoss : EnemyBase
             photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All, 1);
             _isLaser = true;
             _laserTimer = _laserDamageInterval;
+            _laserSePlayback = CRIAudioManager.SE.Play("SE", "beam");
         });
 
         // 3. レーザーを出しながら反対側へ回転 (レーダー発射)
@@ -197,6 +200,7 @@ public class EnemyBoss : EnemyBase
         {
             photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All, 0);
             _isLaser = false;
+            _laserSePlayback.Stop();
         });
 
         // 5. 元の角度（0度）に戻す
@@ -247,7 +251,7 @@ public class EnemyBoss : EnemyBase
             }
             if (tank != null && _laserTimer > _laserDamageInterval)
             {
-                //Sound：レーザーダメージ
+                CRIAudioManager.SE.Play("SE", "laserdamage");
                 hit.collider.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack,photonView.ViewID);
                 _laserTimer = 0;
             }
@@ -280,4 +284,12 @@ public class EnemyBoss : EnemyBase
     }
     public override void Move() { }
     public void SetHPGage(HPGaugeController gauge)  => _hpGauge = gauge;
+
+    private void OnDestroy()
+    {
+        if(_laserSePlayback.GetStatus() == CriAtomExPlayback.Status.Playing)
+        {
+            _laserSePlayback.Stop();
+        }
+    }
 }

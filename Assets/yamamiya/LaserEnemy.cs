@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using CriWare;
+using DG.Tweening;
 using Photon.Pun;
 using System;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class LaserEnemy : EnemyBase
     [SerializeField] private float _laserDamageInterval;
     [SerializeField] private LineRenderer _laserLine;
 
+    private CriAtomExPlayback _laserSePlayback;
     private int _attackCounter = 1;
     private float _attackTimer;
     private float _laserTimer;
@@ -87,6 +89,7 @@ public class LaserEnemy : EnemyBase
             photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All,1);
             _isLaser = true;
             _laserTimer = _laserDamageInterval;
+            _laserSePlayback = CRIAudioManager.SE.Play("SE", "beam");
         });
 
         // 3. レーザーを出しながら反対側へ回転 (レーダー発射)
@@ -114,6 +117,7 @@ public class LaserEnemy : EnemyBase
         {
             _isRaserTween = false;
             _attackTimer = 0;
+            _laserSePlayback.Stop();
         });
 
         // シーケンスを再生
@@ -151,6 +155,7 @@ public class LaserEnemy : EnemyBase
             }
             if (tank != null && _laserTimer > _laserDamageInterval)
             {
+                CRIAudioManager.SE.Play("SE", "laserdamage");
                 hit.collider.GetComponent<PhotonView>().RPC("Hit", RpcTarget.All, _attack,photonView.ViewID);
                 _laserTimer = 0;
             }
@@ -160,4 +165,12 @@ public class LaserEnemy : EnemyBase
     }
 
     public override void Move() { }
+
+    private void OnDestroy()
+    {
+        if (_laserSePlayback.GetStatus() == CriAtomExPlayback.Status.Playing)
+        {
+            _laserSePlayback.Stop();
+        }
+    }
 }
