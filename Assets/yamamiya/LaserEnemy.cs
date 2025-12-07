@@ -89,7 +89,6 @@ public class LaserEnemy : EnemyBase
             photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All,1);
             _isLaser = true;
             _laserTimer = _laserDamageInterval;
-            _laserSePlayback = CRIAudioManager.SE.Play("SE", "beam");
         });
 
         // 3. レーザーを出しながら反対側へ回転 (レーダー発射)
@@ -117,7 +116,6 @@ public class LaserEnemy : EnemyBase
         {
             _isRaserTween = false;
             _attackTimer = 0;
-            _laserSePlayback.Stop();
         });
 
         // シーケンスを再生
@@ -127,6 +125,15 @@ public class LaserEnemy : EnemyBase
     private void SetLaserLineEnabled(int b)
     {
         _laserLine.enabled = b == 1 ;
+
+        if(b == 1)
+        {
+            _laserSePlayback = CRIAudioManager.SE.Play("SE", "beam");
+        }
+        else
+        {
+            _laserSePlayback.Stop();
+        }
     }
 
     /// <summary>
