@@ -125,8 +125,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
 
         _isDie = true;
 
-        _tankAnimator.SetTrigger("Dead");
-        _hamsterAnimator.SetTrigger("Dead");
+        if (photonView.IsMine)
+        {
+            photonView.RPC(nameof(PlayAnimation), RpcTarget.All, 1);
+        }
         DOVirtual.DelayedCall(1f, () =>
         {
             Instantiate(_killEffect, this.transform.position, Quaternion.identity);
@@ -144,7 +146,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         if (photonView.IsMine && HPGauge != null)
         {
             HPGauge.UpdateHPGauge(true);
-            _hamsterAnimator.SetTrigger("Hit");
+            photonView.RPC(nameof(PlayAnimation), RpcTarget.All, 0);
             CRIAudioManager.SE.Play("SE", "hit");
         }
         if (_hp <= 0 && (PhotonNetwork.IsMasterClient || PhotonNetwork.OfflineMode))
@@ -152,6 +154,20 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             photonView.RPC(nameof(Die), RpcTarget.All);
             return;
         
+        }
+    }
+    [PunRPC]
+    public void PlayAnimation(int animation)
+    {
+        switch (animation)
+        {
+            case 0:
+                _hamsterAnimator.SetTrigger("Hit");
+                break;
+            case 1:
+                _tankAnimator.SetTrigger("Dead");
+                _hamsterAnimator.SetTrigger("Dead");
+                break;
         }
     }
     public void OnPhotonDeastroy(PhotonMessageInfo info)

@@ -161,6 +161,11 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     /// </summary>
     public virtual void Attack()
     {
+        photonView.RPC(nameof(PlayShotAnimation),RpcTarget.All);
+    }
+    [PunRPC]
+    public void PlayShotAnimation()
+    {
         _animator.SetTrigger("Shot");
     }
     protected bool IsPlayerRayHit(float angle, float distance, bool isBackRay = false)

@@ -1,11 +1,13 @@
 ﻿using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class TutorialSlideShow : MonoBehaviour
 {
-    [SerializeField] private Sprite[] _images;
+    [SerializeField] private Sprite[] _imagesEN;
+    [SerializeField] private Sprite[] _imagesJA;
     [SerializeField] private Image _mainImage;
     [SerializeField] private Image _slideImage;
     [SerializeField] private float _moveDuration = 1f;
@@ -15,7 +17,7 @@ public class TutorialSlideShow : MonoBehaviour
     private void OnEnable()
     {
         _viewIndex = 0;
-        _mainImage.sprite = _images[_viewIndex];
+        _mainImage.sprite = GetImage(_viewIndex);
         _slideImage.gameObject.SetActive(false);
     }
     /// <summary>
@@ -29,12 +31,12 @@ public class TutorialSlideShow : MonoBehaviour
         //Sound:ページをめくる音
         CRIAudioManager.SE.Play("UI", "UI_slide");
         _isMove = true;
-        _slideImage.sprite = _images[_viewIndex];
+        _slideImage.sprite = GetImage(_viewIndex);
         _slideImage.gameObject.SetActive(true);
 
         //indexを更新
-        _viewIndex = (_viewIndex + (next ? 1 : -1) + _images.Length) % _images.Length;
-        _mainImage.sprite = _images[_viewIndex];
+        _viewIndex = (_viewIndex + (next ? 1 : -1) + _imagesJA.Length) % _imagesJA.Length;
+        _mainImage.sprite = GetImage(_viewIndex);
         _mainImage.rectTransform.localPosition = new Vector3(_movePositionX * (next ? 1 : -1), _mainImage.rectTransform.localPosition.y, 0);
         _slideImage.rectTransform.localPosition = Vector3.zero;
 
@@ -45,5 +47,20 @@ public class TutorialSlideShow : MonoBehaviour
                 _slideImage.gameObject.SetActive(false);
                 _isMove = false;
             });
+    }
+    private Sprite GetImage(int index)
+    {
+        string code = LocalizationSettings.SelectedLocale.Identifier.Code;
+
+        if (code.StartsWith("en"))
+        {
+            return _imagesEN[index];
+        }
+        else if (code.StartsWith("ja"))
+        {
+            return _imagesJA[index];
+        }
+
+        return null;
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Events;
 /// <summary>
 /// タイトルのネットワークを管理
 /// </summary>
@@ -23,6 +24,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     private List<RoomInfo> _roomList = new();
     private Dictionary<string, RoomInfo> _cachedRoomList = new();
     private float _refreshTimer = 0;
+    private UnityAction _roomJoinErrorEvent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -97,18 +99,22 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
         _uIManager.ChangeScreen(1);
         Debug.Log("サーバーに接続済み：" + PhotonNetwork.LocalPlayer.ActorNumber);
     }
-    public void RoomCreate(string roomName)
+    public void RoomCreate(string roomName, UnityAction errorEvent)
     {
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 4;
         roomOptions.IsVisible = true;
         roomOptions.IsOpen = true;
 
+        _roomJoinErrorEvent = errorEvent;
+
         LoadingUI.Instance.ShowLoading(_localizationDatas.CreatingRoom);
         PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
     }
-    public void JoinRoom(string roomName)
+    public void JoinRoom(string roomName,UnityAction errorEvent)
     {
+        _roomJoinErrorEvent = errorEvent;
+
         LoadingUI.Instance.ShowLoading(_localizationDatas.RoomConnecting);
         PhotonNetwork.JoinRoom(roomName);
     }
@@ -216,6 +222,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         _messageUI.ShowMessage(_localizationDatas.OperationNotAllowedInCurrentState);
+        _roomJoinErrorEvent.Invoke();
     }
     /// <summary>
     /// ルームの参加に失敗したとき
@@ -225,6 +232,7 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         _messageUI.ShowMessage(_localizationDatas.OperationNotAllowedInCurrentState);
+        _roomJoinErrorEvent.Invoke();
     }
     
 }
