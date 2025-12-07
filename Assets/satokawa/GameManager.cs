@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CriWare;
 using DG.Tweening;
 using ExitGames.Client.Photon;
 using Photon.Pun;
@@ -103,10 +104,12 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if (_pauseControl.IsShow())
             {
+                CriAtomExCategory.Pause("SE", false);
                 ClausePause();
             }
             else
             {
+                CriAtomExCategory.Pause("SE", true);
                 _pauseControl.ShowPanel(true);
                 _cursorManager.EnableDefaultCursor();
 

@@ -21,11 +21,12 @@ public class LaserEnemy : EnemyBase
     private float _attackTimer;
     private float _laserTimer;
     private bool _isRaserTween = false;
-    private bool _isLaser = false;
 
+    private float _lastTimeScale;
     protected override void Start()
     {
         base.Start();
+        _lastTimeScale = Time.timeScale;
         if (photonView.IsMine)
         {
             photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All,0);
@@ -35,6 +36,13 @@ public class LaserEnemy : EnemyBase
     public void Update()
     {
         Attack();
+
+        if (Mathf.Abs(Time.timeScale - _lastTimeScale) > 0.0001f)
+        {
+            Debug.Log($"TimeScale Changed: {_lastTimeScale} -> {Time.timeScale}");
+            OnTimeScaleChanged(_lastTimeScale, Time.timeScale);
+            _lastTimeScale = Time.timeScale;
+        }
 
         if (!photonView.IsMine)
         {
@@ -87,7 +95,6 @@ public class LaserEnemy : EnemyBase
         sequence.AppendCallback(() =>
         {
             photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All,1);
-            _isLaser = true;
             _laserTimer = _laserDamageInterval;
         });
 
@@ -102,7 +109,6 @@ public class LaserEnemy : EnemyBase
         {
             photonView.RPC(nameof(SetLaserLineEnabled), RpcTarget.All,0);
             _laserLine.enabled = false;
-            _isLaser = false;
         });
 
         // 5. 元の角度（0度）に戻す
@@ -129,10 +135,12 @@ public class LaserEnemy : EnemyBase
         if(b == 1)
         {
             _laserSePlayback = CRIAudioManager.SE.Play("SE", "beam");
+            Debug.Log("SE");
         }
         else
         {
             _laserSePlayback.Stop();
+            Debug.Log("Stop");
         }
     }
 
@@ -179,5 +187,19 @@ public class LaserEnemy : EnemyBase
         {
             _laserSePlayback.Stop();
         }
+    }
+    void OnTimeScaleChanged(float oldValue, float newValue)
+    {
+        if(newValue == 0)
+        {
+            _laserSePlayback.Pause();
+            Debug.Log("Pause");
+        }
+        else
+        {
+            _laserSePlayback.Resume(CriAtomEx.ResumeMode.AllPlayback);
+            Debug.Log("ReStart");
+        }
+
     }
 }
