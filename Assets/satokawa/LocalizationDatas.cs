@@ -68,4 +68,6 @@ public class LocalizationDatas : ScriptableObject
     [Header("===ゲーム内エラー===")]
     [Header("通信環境が悪いため、ルームから退出します")]
     public LocalizedString LowNetworkSpeed;
+    [Header("インターネットから切断されました。ルームから退出します")]
+    public LocalizedString InternetDisconnect;
 }

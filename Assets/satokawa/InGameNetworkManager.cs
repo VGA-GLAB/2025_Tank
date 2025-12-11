@@ -360,5 +360,17 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             ErrorMessageUI.Instance.ShowMessage(_localizationDatas.LowNetworkSpeed, () => ReturnToTitle());
         }
     }
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        if(cause == DisconnectCause.DisconnectByClientLogic)
+        {
+            return;
+        }
+
+        Debug.Log("ネットワーク切断");
+        _gameManager.ToggleTimer(false);
+        ErrorMessageUI.Instance.ShowMessage(_localizationDatas.InternetDisconnect, () => ReturnToTitle());
+    }
+
 
 }

@@ -285,6 +285,10 @@ MonoBehaviour:
     m_Localized: We will disconnect you due to low network speed.
     m_Metadata:
       m_Items: []
+  - m_Id: 3144527460651008
+    m_Localized: We will exit the room due to loss of internet connection.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
