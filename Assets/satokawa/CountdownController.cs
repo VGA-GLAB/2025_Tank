@@ -73,8 +73,13 @@ public class CountdownController : MonoBehaviourPunCallbacks
                 _countdownText.color = c;
                 _countdownText.text = text;
 
-                _aud.PlayOneShot(_countDownSe);
+                //_aud.PlayOneShot(_countDownSe);
             });
+
+            //sequence.AppendCallback(() =>
+            //{
+            //    _aud.PlayOneShot(_countDownSe);
+            //});
 
             // フェードイン
             sequence.Append(
@@ -118,9 +123,15 @@ public class CountdownController : MonoBehaviourPunCallbacks
 
             rect.localScale = Vector3.one * _maxScale;
             _countdownTextLocalize.enabled = true;
-            _aud.PlayOneShot(_startSe);
             //_countdownText.text = "スタート";
+
+            //_aud.PlayOneShot(_startSe);
         });
+
+        //sequence.AppendCallback(() =>
+        //{
+            
+        //});
         //完了コールバック
         sequence.AppendCallback(() =>
         {
@@ -154,7 +165,7 @@ public class CountdownController : MonoBehaviourPunCallbacks
        
 
         sequence.Play();
-        //CRIAudioManager.SE.Play("SE", "count");
+        CRIAudioManager.SE.Play("SE", "count");
     }
 
 }
