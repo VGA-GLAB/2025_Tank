@@ -3,15 +3,42 @@ using TMPro;
 using Photon.Realtime;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization;
+using UnityEngine.Events;
+using UnityEngine.UI;
 public class ErrorMessageUI : MonoBehaviour
 {
     [SerializeField] private GameObject _messagePanel;
+    [SerializeField] private Button _confirmButton;
     [SerializeField] private LocalizeStringEvent _localization;
     [SerializeField] private LocalizationDatas _localizationDatas;
-    public void ShowMessage(LocalizedString message)
+    [SerializeField] private CursorManager _cursorManager;
+    public static ErrorMessageUI Instance { get; private set; }
+    private void Awake()
+    {
+        Instance = this;
+    }
+    private void Start()
+    {
+        if(_cursorManager == null)
+        {
+            _cursorManager = FindAnyObjectByType<CursorManager>();
+        }
+        _messagePanel.SetActive(false);
+    }
+    public void ShowMessage(LocalizedString message,UnityAction action = null)
     {
         _localization.StringReference = message;
         _messagePanel.SetActive(true);
+        _confirmButton.onClick.RemoveAllListeners();
+        if (action != null)
+        {
+            _confirmButton.onClick.AddListener(action);
+        }
+
+        if(_cursorManager != null)
+        {
+            _cursorManager.EnableDefaultCursor();
+        }
     }
     public void ShowMessage(DisconnectCause cause)
     {

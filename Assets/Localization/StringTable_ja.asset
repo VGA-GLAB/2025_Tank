@@ -272,6 +272,10 @@ MonoBehaviour:
       DEALINGS IN THE\r\nSOFTWARE.</size>"
     m_Metadata:
       m_Items: []
+  - m_Id: 3141977793581056
+    m_Localized: "\u901A\u4FE1\u74B0\u5883\u304C\u60AA\u3044\u305F\u3081\u3001\u30EB\u30FC\u30E0\u304B\u3089\u9000\u51FA\u3057\u307E\u3059\u3002"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

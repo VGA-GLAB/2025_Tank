@@ -22,6 +22,7 @@ public class BulletControl : MonoBehaviourPunCallbacks
     private Vector3 _forwardDirection;
     private int _frameCounter = 3;
     private PhotonView _attackerView;
+
     public enum Target
     {
         None,Player,Enemy,

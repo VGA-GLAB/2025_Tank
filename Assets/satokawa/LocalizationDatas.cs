@@ -64,4 +64,8 @@ public class LocalizationDatas : ScriptableObject
     public LocalizedString DefaultError;
     [Header("インターネットに接続されていません。")]
     public LocalizedString NoInternetConnection;
+
+    [Header("===ゲーム内エラー===")]
+    [Header("通信環境が悪いため、ルームから退出します")]
+    public LocalizedString LowNetworkSpeed;
 }

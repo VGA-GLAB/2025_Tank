@@ -281,6 +281,10 @@ MonoBehaviour:
       DEALINGS IN THE\r\nSOFTWARE.</size> "
     m_Metadata:
       m_Items: []
+  - m_Id: 3141977793581056
+    m_Localized: We will disconnect you due to low network speed.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
