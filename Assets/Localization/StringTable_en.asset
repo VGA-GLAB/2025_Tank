@@ -289,6 +289,19 @@ MonoBehaviour:
     m_Localized: We will exit the room due to loss of internet connection.
     m_Metadata:
       m_Items: []
+  - m_Id: 5661286109499392
+    m_Localized: 'This room name is already in use.
+
+      Please choose a different
+      name.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5661376513527808
+    m_Localized: 'The server is currently full.
+
+      Please try again later.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

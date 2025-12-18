@@ -263,6 +263,14 @@ MonoBehaviour:
     m_Key: InternetDisconnect
     m_Metadata:
       m_Items: []
+  - m_Id: 5661286109499392
+    m_Key: GameIdAlreadyExists
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5661376513527808
+    m_Key: ServerFull
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

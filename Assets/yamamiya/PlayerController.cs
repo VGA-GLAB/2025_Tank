@@ -102,6 +102,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
 
     private void FixedUpdate()
     {
+        if (!photonView.IsMine) return;
+
         if (_moveInput != Vector2.zero)
         {
             var z = _moveInput.y * _moveSpeed * Time.deltaTime;
@@ -112,6 +114,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
 
     private void Update()
     {
+
+        Vector3 vp = Camera.main.WorldToViewportPoint(_playerHeadPosition.position);
+        vp.y += _markerPosNormalized;
+        Vector3 screenPos = Camera.main.ViewportToScreenPoint(vp);
+        _playerMarker.position = screenPos;
+
+        if (!photonView.IsMine) return;
+
         if (_moveInput != Vector2.zero)
         {
             var x = _moveInput.x * _turnSpeed * Time.deltaTime;
@@ -132,10 +142,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
             }
         }
 
-        Vector3 vp = Camera.main.WorldToViewportPoint(_playerHeadPosition.position);
-        vp.y += _markerPosNormalized;
-        Vector3 screenPos = Camera.main.ViewportToScreenPoint(vp);
-        _playerMarker.position = screenPos;
+      
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -152,7 +159,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
 
         _isDie = true;
 
-        if (photonView.IsMine)
+        if (PhotonNetwork.IsMasterClient)
         {
             photonView.RPC(nameof(PlayAnimation), RpcTarget.All, 1);
         }
@@ -169,20 +176,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     [PunRPC]
     public void Hit(int attack, int viewID)
     {
-        _hp -= attack;
-        PhotonView view = PhotonView.Find(viewID);
-
-        if (photonView.IsMine && HPGauge != null)
+        if (photonView.IsMine)
         {
-            HPGauge.UpdateHPGauge(true);
+            _hp -= attack;
+            if (HPGauge != null)
+            {
+                HPGauge.UpdateHPGauge(true);
+            }
             photonView.RPC(nameof(PlayAnimation), RpcTarget.All, 0);
+            if (_hp <= 0)
+            {
+                photonView.RPC(nameof(Die), RpcTarget.All);
+                return;
+            }
         }
-        if (_hp <= 0 && (PhotonNetwork.IsMasterClient || PhotonNetwork.OfflineMode))
-        {
-            photonView.RPC(nameof(Die), RpcTarget.All);
-            return;
-        
-        }
+        //PhotonView view = PhotonView.Find(viewID);
     }
     [PunRPC]
     public void PlayAnimation(int animation)

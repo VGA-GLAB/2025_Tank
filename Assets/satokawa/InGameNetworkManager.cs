@@ -362,7 +362,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     }
     public override void OnDisconnected(DisconnectCause cause)
     {
-        if(cause == DisconnectCause.DisconnectByClientLogic)
+        if(cause == DisconnectCause.DisconnectByClientLogic
+            || cause == DisconnectCause.DisconnectByServerLogic)
         {
             return;
         }

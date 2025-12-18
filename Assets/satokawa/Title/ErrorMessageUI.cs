@@ -29,7 +29,7 @@ public class ErrorMessageUI : MonoBehaviour
     {
         _localization.StringReference = message;
         _messagePanel.SetActive(true);
-        _confirmButton.onClick.RemoveAllListeners();
+        _confirmButton?.onClick.RemoveAllListeners();
         if (action != null)
         {
             _confirmButton.onClick.AddListener(action);
