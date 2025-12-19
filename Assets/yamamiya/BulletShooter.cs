@@ -64,7 +64,7 @@ public class BulletShooter : MonoBehaviourPunCallbacks
     /// </summary>
     private void ShotBullet()
     {
-        if (IntervalGauge == null) return;
+        if (IntervalGauge == null || !photonView.IsMine) return;
 
         if (_intervalTimer <= 0f)
         {

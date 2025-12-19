@@ -25,11 +25,12 @@ public class AttackIntervalGauge : MonoBehaviour
     {
         if(_fillTween != null)
         {
-            _fillTween.Complete();
-            _fillTween.Kill();
+            _fillTween.Kill(true);
         }
         // ゲージを一旦リセットしてからアニメーションさせる
         _gauge.fillAmount = 0f;
         _fillTween = _gauge.DOFillAmount(value, duration);
     }
+
+    
 }

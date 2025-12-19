@@ -58,12 +58,16 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     private int _allPlayerHP;
     [SerializeField]
     private CountdownController _countdownController;
-    [SerializeField] 
+    [SerializeField]
     private LocalizationDatas _localizationDatas;
     public int _playerNumber { get; private set; }//何番目にルームに入ったか
     private bool _isAllLoaded;
 
     private List<GameObject> _clonedObjects = new();
+
+    private int _pingLimit = 500;     
+    private float _checkInterval = 1f; // 定期チェック
+    private float _netSpeedTimer = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -148,28 +152,10 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         _gameManager.ToggleTimer(true);
         CRIAudioManager.BGM.Play("BGM", "bgm_ingame");
     }
-    //public void Update()
-    //{
-    //    if (_isAllLoaded)
-    //    {
-    //        return;
-    //    }
-    //    _isAllLoaded = true;
-    //    foreach (Player player in PhotonNetwork.PlayerList)
-    //    {
-    //        int data = (int)NetworkCore.GetNetValue($"isLoaded{player.ActorNumber}", out bool found);
-
-    //        if (!found || data == 0)
-    //        {
-    //            if (player.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
-    //            {
-    //                NetworkCore.SetNetValue($"isLoaded{PhotonNetwork.LocalPlayer.ActorNumber}", 1);
-    //            }
-    //            _isAllLoaded = false;
-    //            break;
-    //        }
-    //    }
-    //}
+    public void Update()
+    {
+        CheckNetSpeed();
+    }
 
     public override void OnConnectedToMaster()
     {
@@ -358,5 +344,34 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
 
         _isAllLoaded = CheckAllLoaded();
     }
+    private void CheckNetSpeed()
+    {
+        _netSpeedTimer += Time.deltaTime;
+        if (_netSpeedTimer < _checkInterval) return;
+        _netSpeedTimer = 0;
+
+        int ping = PhotonNetwork.GetPing();
+
+        if (ping > _pingLimit)
+        {
+
+            Debug.Log("ネットワーク低速");
+            _gameManager.ToggleTimer(false);
+            ErrorMessageUI.Instance.ShowMessage(_localizationDatas.LowNetworkSpeed, () => ReturnToTitle());
+        }
+    }
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        if(cause == DisconnectCause.DisconnectByClientLogic
+            || cause == DisconnectCause.DisconnectByServerLogic)
+        {
+            return;
+        }
+
+        Debug.Log("ネットワーク切断");
+        _gameManager.ToggleTimer(false);
+        ErrorMessageUI.Instance.ShowMessage(_localizationDatas.InternetDisconnect, () => ReturnToTitle());
+    }
+
 
 }

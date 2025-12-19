@@ -255,6 +255,22 @@ MonoBehaviour:
     m_Key: CrediContent
     m_Metadata:
       m_Items: []
+  - m_Id: 3141977793581056
+    m_Key: LowNetworkSpeed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3144527460651008
+    m_Key: InternetDisconnect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5661286109499392
+    m_Key: GameIdAlreadyExists
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5661376513527808
+    m_Key: ServerFull
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

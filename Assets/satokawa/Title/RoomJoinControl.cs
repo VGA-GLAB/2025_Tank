@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
+using DG.Tweening;
 
 public class RoomJoinControl : MonoBehaviourPunCallbacks
 {
@@ -149,13 +150,14 @@ public class RoomJoinControl : MonoBehaviourPunCallbacks
         {
             return;
         }
-        _networkManager.JoinRoom(_selectedRoom._roomInfo.Name,JoinError);
+        _networkManager.JoinRoom(_selectedRoom._roomInfo.Name, JoinError);
         _selectedRoom.OutLineActive(false);
         _selectedRoom = null;
     }
     public void JoinError()
     {
         _joinButton.interactable = true;
+        _createButton.interactable = true;
         LoadingUI.Instance.HideLoading();
     }
 }

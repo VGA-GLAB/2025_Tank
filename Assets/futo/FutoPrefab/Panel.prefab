@@ -2138,6 +2138,54 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4959238632514607137, guid: d030dfea7ea2f2c4abf112d79e6a9c3f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 210
+      objectReference: {fileID: 0}
+    - target: {fileID: 5445505573963612687, guid: d030dfea7ea2f2c4abf112d79e6a9c3f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 210
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164013357031169981, guid: d030dfea7ea2f2c4abf112d79e6a9c3f, type: 3}
+      propertyPath: m_fontSize
+      value: 28.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164013357031169981, guid: d030dfea7ea2f2c4abf112d79e6a9c3f, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 28.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164013357031169981, guid: d030dfea7ea2f2c4abf112d79e6a9c3f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883961556250562004, guid: d030dfea7ea2f2c4abf112d79e6a9c3f, type: 3}
+      propertyPath: m_fontSize
+      value: 28.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883961556250562004, guid: d030dfea7ea2f2c4abf112d79e6a9c3f, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 28.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 6883961556250562004, guid: d030dfea7ea2f2c4abf112d79e6a9c3f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7118638101768256518, guid: d030dfea7ea2f2c4abf112d79e6a9c3f, type: 3}
+      propertyPath: m_fontSize
+      value: 28.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 7118638101768256518, guid: d030dfea7ea2f2c4abf112d79e6a9c3f, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 28.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 7118638101768256518, guid: d030dfea7ea2f2c4abf112d79e6a9c3f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7494688338971433686, guid: d030dfea7ea2f2c4abf112d79e6a9c3f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 210
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

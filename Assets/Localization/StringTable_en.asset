@@ -263,7 +263,43 @@ MonoBehaviour:
       intellectual property rights of CRI ADX LE,\nYou may not resell, rent, license
       or distribute them.\n\nIn no event will CRI Middleware be liable to you on
       any legal theory for any special, incidential, consequential, punitive, exemplary
-      damages arising out of the use of this application.</size> "
+      damages arising out of the use of this application.\n\n\n\nThe MIT License
+      (MIT)\r\n\r\nCopyright (c) 2019 Yoshifumi Kawai / Cysharp, Inc.\r\n\r\nPermission
+      is hereby granted, free of charge, to any person obtaining a copy\r\nof this
+      software and associated documentation files (the \"Software\"), to deal\r\nin
+      the Software without restriction, including without limitation the rights\r\nto
+      use, copy, modify, merge, publish, distribute, sublicense, and/or sell\r\ncopies
+      of the Software, and to permit persons to whom the Software is\r\nfurnished
+      to do so, subject to the following conditions:\r\n\r\nThe above copyright notice
+      and this permission notice shall be included in all\r\ncopies or substantial
+      portions of the Software.\r\n\r\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT
+      WARRANTY OF ANY KIND, EXPRESS OR\r\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE
+      WARRANTIES OF MERCHANTABILITY,\r\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+      IN NO EVENT SHALL THE\r\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+      DAMAGES OR OTHER\r\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+      ARISING FROM,\r\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+      DEALINGS IN THE\r\nSOFTWARE.</size> "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3141977793581056
+    m_Localized: We will disconnect you due to low network speed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3144527460651008
+    m_Localized: We will exit the room due to loss of internet connection.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5661286109499392
+    m_Localized: 'This room name is already in use.
+
+      Please choose a different
+      name.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5661376513527808
+    m_Localized: 'The server is currently full.
+
+      Please try again later.'
     m_Metadata:
       m_Items: []
   references:
