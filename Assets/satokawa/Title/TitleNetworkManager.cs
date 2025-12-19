@@ -221,7 +221,18 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     /// <param name="message"></param>
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        _messageUI.ShowMessage(_localizationDatas.OperationNotAllowedInCurrentState);
+        switch (returnCode)
+        {
+            case ErrorCode.GameIdAlreadyExists://ルーム重複
+                _messageUI.ShowMessage(_localizationDatas.UsedNaming);
+                break;
+            case ErrorCode.ServerFull: //サーバー満員
+                _messageUI.ShowMessage(_localizationDatas.ServerFull);
+                break;
+            default:
+                _messageUI.ShowMessage(_localizationDatas.OperationNotAllowedInCurrentState);
+                break;
+        }
         _roomJoinErrorEvent.Invoke();
     }
     /// <summary>
