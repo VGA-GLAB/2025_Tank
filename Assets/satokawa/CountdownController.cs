@@ -21,11 +21,6 @@ public class CountdownController : MonoBehaviourPunCallbacks
     [SerializeField] private Color _normalColor = new Color(1f, 0.95f, 0.8f); // 柔らかベージュ
     [SerializeField] private Color _lastColor = new Color(1f, 1f, 0.9f);      // やや明るめ
 
-    [Header("サウンド")]
-    [SerializeField] private AudioSource _aud;
-    [SerializeField] private AudioClip _countDownSe;
-    [SerializeField] private AudioClip _startSe;
-
     public void RequestStartCountdown(string callback,PhotonView view)
     {
         if (PhotonNetwork.IsMasterClient)
@@ -73,7 +68,6 @@ public class CountdownController : MonoBehaviourPunCallbacks
                 _countdownText.color = c;
                 _countdownText.text = text;
 
-                //_aud.PlayOneShot(_countDownSe);
             });
 
             //sequence.AppendCallback(() =>
@@ -116,6 +110,7 @@ public class CountdownController : MonoBehaviourPunCallbacks
         //===============================
         sequence.AppendCallback(() =>
         {
+            CRIAudioManager.SE.Play("SE", "start");
             _countdownText.color = _lastColor;
             var c = _countdownText.color;
             c.a = 0.5f;
@@ -162,10 +157,10 @@ public class CountdownController : MonoBehaviourPunCallbacks
             _countdownText.alpha = 1f;
             _countdownText.gameObject.SetActive(false);
         });
-       
 
-        sequence.Play();
         CRIAudioManager.SE.Play("SE", "count");
+        sequence.Play();
+
     }
 
 }
