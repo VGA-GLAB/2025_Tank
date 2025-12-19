@@ -32,37 +32,5 @@ public class AttackIntervalGauge : MonoBehaviour
         _fillTween = _gauge.DOFillAmount(value, duration);
     }
 
-    public void aaa()
-    {
-
-        int[] nums = { 4, 3, 2, 3, 1 };
-
-        string result = "";
-
-        for (int i = nums.Length - 1; i >= 0; i--)
-        {
-            if (nums[i] == 3)
-            {
-                continue;
-            }
-
-            result += nums[i].ToString();
-        }
-
-        Debug.Log(result);
-
-
-
-    }
-}
-public class AAAA : MonoBehaviour
-{
-    void Start()
-    {
-        Debug.Log(GetDoubleNumber(10));
-    }
-    int GetDoubleNumber(int num)
-    {
-        return num * 2;   
-    }
+    
 }
