@@ -35,6 +35,6 @@ public class TitleSoundPlayer : MonoBehaviour
             CRIAudioManager.SE.SetVolume(_seVolSlider.value);
         }
 
-        // Sound:タイトル画面
+        CRIAudioManager.BGM.Play("BGM", "bgm_title");
     }
 }
