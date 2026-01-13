@@ -88,7 +88,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void Update()
     {
-        Debug.Log($"timeScale: {Time.timeScale}");
 
         //リスポーンタイマーを動かし時間になったらNetworkmanagerにPlayerを作ってもらう
         if (_isRespawnTimer)
