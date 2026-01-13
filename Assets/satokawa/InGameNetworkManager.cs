@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.InputSystem;
 [RequireComponent(typeof(PhotonView))]
 /// <summary>
 /// インゲームのネットワーク関係を管理
@@ -136,6 +137,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     {
         foreach(GameObject obj in _clonedObjects)
         {
+            if (!obj.GetComponent<PhotonView>().IsMine) return;
+
             if(obj.TryGetComponent(out PlayerController playerController))
             {
                 playerController.enabled = true;
@@ -200,7 +203,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
             {
                 int playerHP = _allPlayerHP / PhotonNetwork.PlayerList.Length;
                 playerController.SetHP(playerHP);
-                playerController.Awake();
+                playerController.UpdateMarkerPosition();
             }
 
             if (newPlayer.TryGetComponent(out BulletShooter bulletShooter))
@@ -214,10 +217,16 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
                 }
             }
         }
-       
+        var playerInput = newPlayer.GetComponent<PlayerInput>();
+        if (playerInput == null) return;
+
+        playerInput.enabled = true;
+        playerInput.ActivateInput();
+        playerInput.SwitchCurrentActionMap("Player");
+
 
         //マテリアル変更
-        for(int i = 0; i < newPlayer.transform.childCount; i++)
+        for (int i = 0; i < newPlayer.transform.childCount; i++)
         {
             if(newPlayer.transform.GetChild(i).TryGetComponent(out SkinnedMeshRenderer renderer))
             {

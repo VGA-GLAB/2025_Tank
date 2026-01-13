@@ -340,13 +340,10 @@ MonoBehaviour:
   _minScale: 4
   _fadeInTime: 0.5
   _fadeOutTime: 0.3
-  _waitTime: 0.2
+  _waitTime: 0.1
   _countScale: 5
   _normalColor: {r: 1, g: 0.58620816, b: 0.216981, a: 1}
   _lastColor: {r: 0, g: 0.8923898, b: 1, a: 1}
-  _aud: {fileID: 3816805939799080818}
-  _countDownSe: {fileID: 8300000, guid: 52c3027432fd169489574e86be9c07a1, type: 3}
-  _startSe: {fileID: 8300000, guid: 8cd50b1937dcf464f8d674afe1944783, type: 3}
 --- !u!82 &3816805939799080818
 AudioSource:
   m_ObjectHideFlags: 0
@@ -460,6 +457,7 @@ MonoBehaviour:
   _confirmButton: {fileID: 5403528232047034009}
   _localization: {fileID: 165582271285144283}
   _localizationDatas: {fileID: 11400000, guid: 21e215418c30c7440ac45fbfd1eb4e44, type: 2}
+  _cursorManager: {fileID: 0}
 --- !u!1 &2374452442278552106
 GameObject:
   m_ObjectHideFlags: 0

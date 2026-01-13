@@ -256,15 +256,15 @@ MonoBehaviour:
   - m_Id: 1470434566950912
     m_Localized: "<size=150%>Programmer</size> \n\n\u5BCC\u571F\u3000\u84BC\n\n\u91CC\u5DDD\u3000\u77E5\u751F\n\n\u5C71\u5BAE\u3000\u7FD4\u592A\n\n\n<size=150%>Designer</size>
       \n\n\u5927\u4E45\u4FDD\u3000\u6A39\n\n\u4E0B\u6850\u3000\u5927\u6A39\n\n\u6BDB\u5229\u3000\u96C4\u4EAE\n\n\u6E05\u91CE\u3000\u83EF\u77E2\n\n\u5C71\u53E3\u3000\u76F4\u4EBA\n\n\n<size=150%>Sound</size>
-      \n\uFF5E\uFF5E\uFF5E\uFF5E\uFF5E\n\n\n\n<size=80%>\nThis application includes
-      CRI ADX LE runtime libraries.\nYou may not reverse engineer, decompile nor
-      disassemble these runtime libraries.\nYou may not reuse these runtime libraries
-      and/or any part there of for your software development.\n\nCRI Middleware has
-      intellectual property rights of CRI ADX LE,\nYou may not resell, rent, license
-      or distribute them.\n\nIn no event will CRI Middleware be liable to you on
-      any legal theory for any special, incidential, consequential, punitive, exemplary
-      damages arising out of the use of this application.\n\n\n\nThe MIT License
-      (MIT)\r\n\r\nCopyright (c) 2019 Yoshifumi Kawai / Cysharp, Inc.\r\n\r\nPermission
+      \n\n\u5409\u7530\u3000\u85AB\u4E5F\n\n\u77F3\u95A2\u3000\u4E03\u6D77\n\n<size=80%>\nThis
+      application includes CRI ADX LE runtime libraries.\nYou may not reverse engineer,
+      decompile nor disassemble these runtime libraries.\nYou may not reuse these
+      runtime libraries and/or any part there of for your software development.\n\nCRI
+      Middleware has intellectual property rights of CRI ADX LE,\nYou may not resell,
+      rent, license or distribute them.\n\nIn no event will CRI Middleware be liable
+      to you on any legal theory for any special, incidential, consequential, punitive,
+      exemplary damages arising out of the use of this application.\n\n\n\nThe MIT
+      License (MIT)\r\n\r\nCopyright (c) 2019 Yoshifumi Kawai / Cysharp, Inc.\r\n\r\nPermission
       is hereby granted, free of charge, to any person obtaining a copy\r\nof this
       software and associated documentation files (the \"Software\"), to deal\r\nin
       the Software without restriction, including without limitation the rights\r\nto
