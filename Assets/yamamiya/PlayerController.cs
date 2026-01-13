@@ -52,6 +52,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     private bool _isDie = false;
     public void Awake()
     {
+        
+    }
+    public void UpdateMarkerPosition()
+    {
         Vector3 vp = Camera.main.WorldToViewportPoint(_playerHeadPosition.position);
         vp.y += _markerPosNormalized;
         Vector3 screenPos = Camera.main.ViewportToScreenPoint(vp);
@@ -104,6 +108,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     {
         if (!photonView.IsMine) return;
 
+
         if (_moveInput != Vector2.zero)
         {
             var z = _moveInput.y * _moveSpeed * Time.deltaTime;
@@ -115,10 +120,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     private void Update()
     {
 
-        Vector3 vp = Camera.main.WorldToViewportPoint(_playerHeadPosition.position);
-        vp.y += _markerPosNormalized;
-        Vector3 screenPos = Camera.main.ViewportToScreenPoint(vp);
-        _playerMarker.position = screenPos;
+       UpdateMarkerPosition();
 
         if (!photonView.IsMine) return;
 

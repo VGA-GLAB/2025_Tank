@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public void Update()
     {
+
         //リスポーンタイマーを動かし時間になったらNetworkmanagerにPlayerを作ってもらう
         if (_isRespawnTimer)
         {
@@ -207,13 +208,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             Debug.LogError("diPlayerID not find");
             return;
         }
-        if (diePlayer.GetComponent<PhotonView>().IsMine)
-        {
-            PhotonNetwork.Destroy(diePlayer.gameObject);
-        }
+        PhotonView diePlayerView = diePlayer.GetComponent<PhotonView>();
+
         bool isPlayerActive = false;
         foreach (PlayerController tank in Players)
         {
+            if (tank == diePlayer) continue;
+
             if (tank != null && tank.Hp > 0)
             {
                 isPlayerActive = true;
@@ -245,10 +246,18 @@ public class GameManager : MonoBehaviourPunCallbacks
                 
             }
         }
-        else if (diePlayer.GetComponent<PhotonView>().IsMine)
+        else if (diePlayerView.IsMine)
         {
             _isRespawnTimer = true;
             _respawnTimer = 0;
+        }
+
+        Players.Remove(diePlayer);
+        if (diePlayerView.IsMine)
+        {
+            PhotonNetwork.Destroy(diePlayer.gameObject);
+            _minePlayer = null;
+            _mineBulletShooter = null;
         }
     }
     /// <summary>
