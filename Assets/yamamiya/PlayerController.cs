@@ -108,7 +108,6 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     {
         if (!photonView.IsMine) return;
 
-        Debug.Log(_moveInput);
 
         if (_moveInput != Vector2.zero)
         {
