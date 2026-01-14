@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -21,6 +22,7 @@ public class StageListView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _flankingEnemy;
     [SerializeField] private TextMeshProUGUI _fixedEnemy;
     [SerializeField] private TextMeshProUGUI _bossEnemy;
+    [SerializeField] private SelectAnimation _defaultSelectAnimation;
 
     private SelectAnimation _selectAnimation;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -30,7 +32,6 @@ public class StageListView : MonoBehaviour
         {
             _titleUIManager = FindAnyObjectByType<TitleUIManager>();
         }
-        ShowList();
     }
 
     // Update is called once per frame
@@ -53,33 +54,13 @@ public class StageListView : MonoBehaviour
         _fixedEnemy.text = "×" + _stageList[index].FixedEnemy;
         _bossEnemy.text = "×" + _stageList[index].BossEnemy;
     }
-    public void ShowList()
+    public async void ShowList()
     {
-        DeleteChild();
-        int index = 0;
-        foreach(var stage in _stageList)
-        {
-            GameObject newObject = Instantiate(_buttonPrefab.gameObject, _content);
-            int i = index;
-            Button button = newObject.GetComponent<Button>();
-            button.onClick.AddListener(() => ShowInfo(i));
-            button.onClick.AddListener(() => ChangeSelect(button.gameObject));
-            button.onClick.AddListener(_titleUIManager.OnButtonClick);
-            if(index == 0)
-            {
-               DOVirtual.DelayedCall(0.1f,() =>
-               {
-                   ShowInfo(i);
-                   ChangeSelect(button.gameObject);
-               });
-            }
-            if(newObject.transform.Find("Image").TryGetComponent(out Image image))
-            {
-                image.sprite = stage.Image;
-            }
-            index++;
-        }
+        await UniTask.Yield();
         ShowInfo(0);
+        _selectAnimation?.SetLoopAnimation(false);
+        _defaultSelectAnimation.SetLoopAnimation(true);
+        _selectAnimation = _defaultSelectAnimation;
     }
     public void ChangeSelect(GameObject obj)
     {

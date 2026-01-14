@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 236416992194560
-    m_Localized: Tutorial
+    m_Localized: User guide
     m_Metadata:
       m_Items: []
   - m_Id: 236466313015296
@@ -300,6 +300,10 @@ MonoBehaviour:
     m_Localized: 'The server is currently full.
 
       Please try again later.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15384223221764096
+    m_Localized: StageInfo
     m_Metadata:
       m_Items: []
   references:

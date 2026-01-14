@@ -13,7 +13,6 @@ public class SelectAnimation : ButtonScalerTween
     private Vector3 _defaultScale;
     private Sequence _loopSequence;
     private bool _isHovered = false;
-
     public override void Start()
     {
         base.Start();
@@ -22,7 +21,6 @@ public class SelectAnimation : ButtonScalerTween
 
         if (_enableLoopAnimation)
             StartLoopAnimation();
-
         SetLoopAnimation(false);
     }
 
@@ -32,6 +30,11 @@ public class SelectAnimation : ButtonScalerTween
         if (_isHovered) return;
 
         _loopSequence?.Kill();
+        if (_rectTransform == null)
+        {
+            _rectTransform = GetComponent<RectTransform>();
+            _defaultScale = _rectTransform.localScale;
+        }
         _rectTransform.localScale = _defaultScale;
 
         _loopSequence = DOTween.Sequence();
@@ -71,8 +74,9 @@ public class SelectAnimation : ButtonScalerTween
 
     public void SetLoopAnimation(bool active)
     {
+        Debug.Log(this.gameObject.name + " : " + active);
         _enableLoopAnimation = active;
-        _outLine.gameObject.SetActive(active);
+        _outLine?.gameObject.SetActive(active);
         if (!active)
         {
             StopLoopAnimation();
