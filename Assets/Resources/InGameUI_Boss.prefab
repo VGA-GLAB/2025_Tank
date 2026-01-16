@@ -167,8 +167,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 2
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3197ac58600336f4f8f9dd8076e56603, type: 2}
-  m_sharedMaterial: {fileID: -4256249795171377991, guid: 3197ac58600336f4f8f9dd8076e56603, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1451,9 +1451,6 @@ MonoBehaviour:
   _countScale: 5
   _normalColor: {r: 1, g: 0.58620816, b: 0.216981, a: 1}
   _lastColor: {r: 0, g: 0.8923898, b: 1, a: 1}
-  _aud: {fileID: 255184026937984840}
-  _countDownSe: {fileID: 8300000, guid: 52c3027432fd169489574e86be9c07a1, type: 3}
-  _startSe: {fileID: 8300000, guid: 8cd50b1937dcf464f8d674afe1944783, type: 3}
 --- !u!82 &255184026937984840
 AudioSource:
   m_ObjectHideFlags: 0
