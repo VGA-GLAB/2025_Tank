@@ -1,11 +1,18 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TitleSoundPlayer : MonoBehaviour
 {
     [SerializeField] private Slider _bgmVolSlider;
     [SerializeField] private Slider _seVolSlider;
+
+    /// <summary>
+    /// BGMを流す対象のシーン名
+    /// NOTE Steamに出す用のビルドをする際は消す
+    /// </summary>
+    [SerializeField] private string _targetSceneName = "Title";
 
     private void Awake()
     {
@@ -35,6 +42,9 @@ public class TitleSoundPlayer : MonoBehaviour
             CRIAudioManager.SE.SetVolume(_seVolSlider.value);
         }
 
-        // Sound:タイトル画面
+        // シーン名が一致しない場合はBGMを再生しない
+        if (_targetSceneName != SceneManager.GetActiveScene().name) return;
+
+        CRIAudioManager.BGM.Play("BGM", "bgm_title");
     }
 }

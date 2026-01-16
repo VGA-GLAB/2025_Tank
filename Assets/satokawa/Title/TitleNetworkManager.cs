@@ -48,6 +48,8 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     {
         LoadingUI.Instance.ShowLoading(_localizationDatas.StartGame);
 
+        CRIAudioManager.BGM.Stop(); // BGM停止
+
         yield return null;
 
         if (PhotonNetwork.IsConnected)
@@ -150,7 +152,9 @@ public class TitleNetworkManager : MonoBehaviourPunCallbacks
     {
         //参加不可にしてInGameSceneに移動
         LoadingUI.Instance.ShowLoading(_localizationDatas.StartGame);
-        
+
+        CRIAudioManager.BGM.Stop(); // BGM停止
+
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
