@@ -100,28 +100,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
 
-        //ポーズ
-        if (Input.GetKeyDown(KeyCode.Escape) && IsGameTimer)
-        {
-            if (_pauseControl.IsShow())
-            {
-                CriAtomExCategory.Pause("SE", false);
-                ClausePause();
-            }
-            else
-            {
-                CriAtomExCategory.Pause("SE", true);
-                _pauseControl.ShowPanel(true);
-                _cursorManager.EnableDefaultCursor();
-
-                if (!PhotonNetwork.IsConnected || PhotonNetwork.CurrentRoom.PlayerCount == 1)
-                {
-                    Time.timeScale = 0f;
-                    _minePlayer.enabled = false;
-                    _mineBulletShooter.enabled = false;
-                }
-            }
-        }
+        ChangePauseState();
 
         if (IsGameTimer)
         {
@@ -140,9 +119,37 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
+    private void ChangePauseState()
+    {
+        //ポーズ
+        if (Input.GetKeyDown(KeyCode.Escape) && IsGameTimer)
+        {
+            if (_pauseControl.IsShow())
+            {
+                CriAtomExCategory.Pause("SE", false);
+                ClausePause();
+            }
+            else
+            {
+                if (!_pauseControl.ShowPanel(true)) return;//閉じるのに失敗したらスキップ
+                CriAtomExCategory.Pause("SE", true);
+
+
+                _cursorManager.EnableDefaultCursor();
+
+                if (!PhotonNetwork.IsConnected || PhotonNetwork.CurrentRoom.PlayerCount == 1)
+                {
+                    Time.timeScale = 0f;
+                    _minePlayer.enabled = false;
+                    _mineBulletShooter.enabled = false;
+                }
+            }
+        }
+    }
+
     public void ClausePause()
     {
-        _pauseControl.ShowPanel(false);
+        if (!_pauseControl.ShowPanel(false)) return;
         _cursorManager.DisableDefaultCursor();
 
         if (!PhotonNetwork.IsConnected || PhotonNetwork.CurrentRoom.PlayerCount == 1)

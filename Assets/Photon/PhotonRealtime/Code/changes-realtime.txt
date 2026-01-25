@@ -41,7 +41,8 @@ Version 4.1.8.10 (14. October 2024 - rev7732)
     Added: LoadBalancingClient.AddressRewriter function. Useful to rewrite addresses, when some relay must be used (e.g. in case of Discord Activities). Used when setting server addresses.
     Internal: Added optional parameter to SetRegions to pass LoadBalancingClient. If AddressRewriter is set, this calls it. Also used to log.
     Added: ToProtocolAddress to format addresses correctly for the given protocol. This includes scheme where needed, port and path. Calls AddressRewriter if set.
-    Internal: GetNameServerAddress now uses ToProtocolAddress.
+    Internal: 
+    ServerAddress now uses ToProtocolAddress.
     Changed: The Authenticate response on the Name Server will first apply the expected protocol for the Master Server connection. Then read the address and maybe rewrite it.
     Removed: Unity special cases of using SocketUdpAsync / SocketTcpAsync for .Net 4.x for Mono specifically. Recent Unity versions (2019 tested) no longer run into issues with receiving data in blocking mode.
 

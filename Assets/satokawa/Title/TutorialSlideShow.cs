@@ -40,13 +40,13 @@ public class TutorialSlideShow : MonoBehaviour
         _mainImage.rectTransform.localPosition = new Vector3(_movePositionX * (next ? 1 : -1), _mainImage.rectTransform.localPosition.y, 0);
         _slideImage.rectTransform.localPosition = Vector3.zero;
 
-        _mainImage.rectTransform.DOLocalMoveX(0, _moveDuration);
-        _slideImage.rectTransform.DOLocalMoveX(_movePositionX * (next ? -1 : 1), _moveDuration)
+        _mainImage.rectTransform.DOAnchorPosX(0, _moveDuration).SetUpdate(true);
+        _slideImage.rectTransform.DOAnchorPosX(_movePositionX * (next ? -1 : 1), _moveDuration)
             .OnComplete(() =>
             {
                 _slideImage.gameObject.SetActive(false);
                 _isMove = false;
-            });
+            }).SetUpdate(true);
     }
     private Sprite GetImage(int index)
     {
@@ -62,5 +62,12 @@ public class TutorialSlideShow : MonoBehaviour
         }
 
         return null;
+    }
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
