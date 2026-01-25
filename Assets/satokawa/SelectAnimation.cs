@@ -74,7 +74,6 @@ public class SelectAnimation : ButtonScalerTween
 
     public void SetLoopAnimation(bool active)
     {
-        Debug.Log(this.gameObject.name + " : " + active);
         _enableLoopAnimation = active;
         _outLine?.gameObject.SetActive(active);
         if (!active)

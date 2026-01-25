@@ -11,6 +11,7 @@ public class PauseControl : MonoBehaviourPunCallbacks
     [SerializeField] private InGameNetworkManager _inGameNetworkManager;
     [SerializeField] private float _clausePositionY;
     [SerializeField] private float _moveDuration;
+    [SerializeField] private TutorialSlideShow _tutorial;
     [Header("ボタン")]
     [SerializeField] private Button _buttonResume;
     [SerializeField] private Button _buttonRestart;
@@ -29,6 +30,10 @@ public class PauseControl : MonoBehaviourPunCallbacks
         {
             _inGameNetworkManager = FindAnyObjectByType<InGameNetworkManager>();
         }
+        if(_tutorial == null)
+        {
+            _tutorial = FindAnyObjectByType<TutorialSlideShow>();
+        }
        _panel.gameObject.SetActive(false);
         _buttonResume.onClick.RemoveAllListeners();
         _buttonRestart.onClick.RemoveAllListeners();
@@ -40,8 +45,10 @@ public class PauseControl : MonoBehaviourPunCallbacks
         _buttonTitle.onClick.AddListener(() => _gameManager.GameOver()); 
         _buttonDisconnect.onClick.AddListener(() => _inGameNetworkManager.ReturnToTitle()); 
     }
-    public void ShowPanel(bool b)
+    public bool ShowPanel(bool b)
     {
+        if (_tutorial.gameObject.activeSelf) return false;
+
         _panel.gameObject.SetActive(b);
 
         if(_panelTween != null)
@@ -56,6 +63,8 @@ public class PauseControl : MonoBehaviourPunCallbacks
         {
             SetButtonData();
         }
+
+        return true;
     }
     public bool IsShow()
     {
