@@ -30,10 +30,12 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     public GameObject Player => _player;
 
     private GameManager gameManager;
+    private TankHitEffectManager _hitEffectManager;
     protected NavMeshAgent _agent;
     protected virtual void Start()
     {
         gameManager = FindAnyObjectByType<GameManager>();
+        _hitEffectManager = FindAnyObjectByType<TankHitEffectManager>();
         if (_agent == null)
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -60,6 +62,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     [PunRPC]
     public void Hit(int attack,int viewID)
     {
+        _hitEffectManager.PlayHitEffect(this.transform.position);
         _hp -= attack;
 
         PhotonView attackerView = PhotonView.Find(viewID);
