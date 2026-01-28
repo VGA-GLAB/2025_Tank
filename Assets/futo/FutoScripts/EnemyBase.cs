@@ -29,11 +29,13 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     public float MoveSpeed => _moveSpeed;
     public GameObject Player => _player;
 
-    private GameManager gameManager;
+    private GameManager _gameManager;
+    private TankHitEffectManager _hitEffectManager;
     protected NavMeshAgent _agent;
     protected virtual void Start()
     {
-        gameManager = FindAnyObjectByType<GameManager>();
+        _gameManager = FindAnyObjectByType<GameManager>();
+        _hitEffectManager = FindAnyObjectByType<TankHitEffectManager>();
         if (_agent == null)
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -53,13 +55,14 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
         }
         if (photonView.IsMine && PhotonNetwork.IsConnectedAndReady)
         {
-            gameManager.GetComponent<PhotonView>().RPC("CheckEnemeyActive", RpcTarget.All);
+            _gameManager.GetComponent<PhotonView>().RPC("CheckEnemeyActive", RpcTarget.All);
             PhotonNetwork.Destroy(this.gameObject);
         }
     }
     [PunRPC]
     public void Hit(int attack,int viewID)
     {
+        _hitEffectManager.PlayHitEffect(this.transform.position);
         _hp -= attack;
 
         PhotonView attackerView = PhotonView.Find(viewID);
@@ -89,14 +92,14 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     /// <returns>ture　みつかった false みつからなかった</returns>
     protected virtual bool PlayerFind(int n = 1)
     {
-        if (gameManager?.Players == null || gameManager.Players.Count == 0)
+        if (_gameManager?.Players == null || _gameManager.Players.Count == 0)
         {
             return false;
         }
 
         List<PlayerController> players = new List<PlayerController>();
 
-        foreach (var player in gameManager.Players)
+        foreach (var player in _gameManager.Players)
         {
             if (player != null)
             {
@@ -132,7 +135,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks, ITank
     /// <returns>true プレイヤーを見つけた　false プレイヤーを見つからなかった </returns>
     protected bool FindPlayer(int index)
     {
-        var players = gameManager.Players
+        var players = _gameManager.Players
             .Where(go => go != null) // nullチェック
             .OrderBy(go => Vector3.Distance(transform.position, go.transform.position)) // 距離順にソート
             .ToArray();

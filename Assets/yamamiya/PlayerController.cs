@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     private CriAtomExPlayback _tankSePlayback;
     public HPGaugeController HPGauge;
     public BuffUIManager BuffUI;
+    private TankHitEffectManager _hitEffectManager;
     private bool _isDie = false;
     public void Awake()
     {
@@ -89,6 +90,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
         _bulletShooter.InitializeAttackSettings(_attackPower, _bulletInterval);
         _gameManager = FindAnyObjectByType<GameManager>();
         _inGameNetworkManager = FindAnyObjectByType<InGameNetworkManager>();
+        _hitEffectManager = FindAnyObjectByType<TankHitEffectManager>();
 
         if (!photonView.IsMine)
         {
@@ -180,6 +182,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, ITank
     {
         if (photonView.IsMine)
         {
+            _hitEffectManager.PlayHitEffect(this.transform.position);
             _hp -= attack;
             if (HPGauge != null)
             {
