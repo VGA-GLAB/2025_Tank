@@ -2378,6 +2378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bgmVolSlider: {fileID: 0}
   _seVolSlider: {fileID: 0}
+  _targetSceneName: Title
 --- !u!1 &374073049
 GameObject:
   m_ObjectHideFlags: 0
@@ -10091,6 +10092,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1164805529}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1684567904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1684567906}
+  - component: {fileID: 1684567905}
+  m_Layer: 0
+  m_Name: EffectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1684567905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684567904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd649e09a43edd40873b31efeaef190, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hitEffectPrefab: {fileID: 7486926364829667367, guid: e6b364ad024ee6f429005ceabd2b009f, type: 3}
+  poolSize: 50
+  maxPoolSize: 100
+--- !u!4 &1684567906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684567904}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.983247, y: 2.064659, z: 4.2025237}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1741613426
 GameObject:
   m_ObjectHideFlags: 0
@@ -11805,3 +11853,4 @@ SceneRoots:
   - {fileID: 1579362107}
   - {fileID: 176818212}
   - {fileID: 1164805529}
+  - {fileID: 1684567906}
