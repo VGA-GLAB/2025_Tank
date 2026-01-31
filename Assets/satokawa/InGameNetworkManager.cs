@@ -92,6 +92,8 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
     }
     void Start()
     {
+        CRIAudioManager.BGM.Stop();
+
         //接続の状態によって処理を分岐
         if (PhotonNetwork.InRoom)
         {
@@ -364,7 +366,7 @@ public class InGameNetworkManager : MonoBehaviourPunCallbacks
         if (ping > _pingLimit)
         {
 
-            Debug.Log("ネットワーク低速");
+            Debug.Log("ネットワーク低速:" + ping);
             _gameManager.ToggleTimer(false);
             ErrorMessageUI.Instance.ShowMessage(_localizationDatas.LowNetworkSpeed, () => ReturnToTitle());
         }
