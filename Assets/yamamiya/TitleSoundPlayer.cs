@@ -14,6 +14,10 @@ public class TitleSoundPlayer : MonoBehaviour
     /// </summary>
     [SerializeField] private string _targetSceneName = "Title";
 
+    // PlayerPrefsのキー
+    private const string BGM_VOLUME_KEY = "BGMVolume";
+    private const string SE_VOLUME_KEY = "SEVolume";
+
     private void Awake()
     {
         if (_bgmVolSlider == null)
@@ -25,6 +29,18 @@ public class TitleSoundPlayer : MonoBehaviour
             Debug.LogWarning("SEボリュームスライダーが設定されていません。");
         }
 
+        // 保存されている音量を読み込み、スライダーに反映
+        if (_bgmVolSlider != null)
+        {
+            float savedBGMVolume = PlayerPrefs.GetFloat(BGM_VOLUME_KEY, 1.0f);
+            _bgmVolSlider.value = savedBGMVolume;
+        }
+        if (_seVolSlider != null)
+        {
+            float savedSEVolume = PlayerPrefs.GetFloat(SE_VOLUME_KEY, 0.3f);
+            _seVolSlider.value = savedSEVolume;
+        }
+
         CRIAudioManager.Initialize();
     }
 
@@ -32,6 +48,7 @@ public class TitleSoundPlayer : MonoBehaviour
     {
         // CRIAudioManagerの初期化完了を待機
         await UniTask.WaitUntil(() => CRIAudioManager.IsReady);
+        
         // スライダーの初期値に基づいて音量を設定
         if (_bgmVolSlider != null)
         {
