@@ -1,5 +1,7 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Components;
@@ -8,9 +10,9 @@ using UnityEngine.UI;
 public class StageListView : MonoBehaviour
 {
     [Header("List")]
-    [SerializeField] private RectTransform _content;
-    [SerializeField] private Button _buttonPrefab;
     [SerializeField] private StageData[] _stageList;
+    [SerializeField] private Button[] _stageSelectButtons;
+    [SerializeField] private string[] _stageSceneName;
     [SerializeField] private TitleUIManager _titleUIManager;
     [Header("Info")]
     [SerializeField] private TextMeshProUGUI _stageNumber;
@@ -23,12 +25,12 @@ public class StageListView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _fixedEnemy;
     [SerializeField] private TextMeshProUGUI _bossEnemy;
     [SerializeField] private SelectAnimation _defaultSelectAnimation;
-
     private SelectAnimation _selectAnimation;
+    public string SelectStage { get; private set; }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(_titleUIManager == null)
+        if (_titleUIManager == null)
         {
             _titleUIManager = FindAnyObjectByType<TitleUIManager>();
         }
@@ -37,16 +39,19 @@ public class StageListView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void ShowInfo(int index)
     {
+        Debug.Log(index);
         if (index >= _stageList.Length) return;
+
+        SelectStage = _stageSceneName[index];
 
         _stageNumber.text = _stageList[index].Number;
         _stageName.StringReference = _stageList[index].Name;
         _stageImage.sprite = _stageList[index].Image;
-        
+
         _normalEnemy.text = "×" + _stageList[index].NormalEnemy;
         _laserEnemy.text = "×" + _stageList[index].LaserEnemy;
         _buckshotEnemy.text = "×" + _stageList[index].BuckshotEnemy;
@@ -64,23 +69,68 @@ public class StageListView : MonoBehaviour
     }
     public void ChangeSelect(GameObject obj)
     {
-        if(!obj.TryGetComponent(out SelectAnimation selectAnimation ))
+        Debug.Log(obj);
+        if (!obj.TryGetComponent(out SelectAnimation selectAnimation))
         {
             return;
         }
-        if(_selectAnimation != null)
+        if (_selectAnimation != null)
         {
             _selectAnimation.SetLoopAnimation(false);
         }
         _selectAnimation = selectAnimation;
         selectAnimation.SetLoopAnimation(true);
-        
+
     }
-    public void DeleteChild()
+    public void SetStageClearData()
     {
-        for(int i = _content.childCount - 1; i >= 0; i--)
+        int i = 0;
+        foreach (var button in _stageSelectButtons)
         {
-            Destroy(_content.GetChild(i).gameObject);
+            int index = i;
+            GameObject buttonObj = button.gameObject;
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() =>
+            {
+                ShowInfo(index);
+                ChangeSelect(buttonObj);
+                _titleUIManager.OnButtonClick();
+            });
+            i++;
         }
+        ShowInfo(0);
+        ChangeSelect(_stageSelectButtons[0].gameObject);
+        SelectStage = _stageSceneName[0];
+
+        if (_stageSelectButtons.Length != _stageSceneName.Length) return;
+
+        for (i = 0; i < _stageSelectButtons.Length; i++)
+        {
+            if (i == 0)
+            {
+                _stageSelectButtons[i].interactable = true;
+                continue;
+            }
+            if (PhotonNetwork.IsMasterClient || !PhotonNetwork.IsConnected)
+            {
+                int stageClear = PlayerPrefs.GetInt(_stageSceneName[i - 1]);
+                _stageSelectButtons[i].interactable = stageClear == 1;
+
+                if (PhotonNetwork.IsConnected)
+                    NetworkCore.SetNetValue(_stageSceneName[i - 1], stageClear);
+            }
+            else
+            {
+                _stageSelectButtons[i].interactable = NetworkCore.GetNetValue(_stageSceneName[i - 1], out _) == 1;
+            }
+        }
+    }
+    public void ResetData()
+    {
+        foreach (var name in _stageSceneName)
+        {
+            PlayerPrefs.SetInt(name, 0);
+        }
+        SetStageClearData();
     }
 }

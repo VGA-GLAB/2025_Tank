@@ -304,6 +304,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 {
                     _resultManager.GetComponent<PhotonView>().RPC("ShowResult", RpcTarget.All, ((int)_gameTimer));
                 }
+                PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);
                 ClausePause();
                 IsGameTimer = false;
                 _cursorManager.EnableDefaultCursor();

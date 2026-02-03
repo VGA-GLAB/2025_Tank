@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SelectAnimation : ButtonScalerTween
 {
     [SerializeField] private bool _enableLoopAnimation = true;
+    [SerializeField] private bool _defaultStart = false;
     [SerializeField] private float _maxScale = 1.1f;
     [SerializeField] private float _duration = 0.5f;
     [SerializeField] private Image _outLine;
@@ -21,7 +22,7 @@ public class SelectAnimation : ButtonScalerTween
 
         if (_enableLoopAnimation)
             StartLoopAnimation();
-        SetLoopAnimation(false);
+        SetLoopAnimation(_defaultStart);
     }
 
     private void StartLoopAnimation()

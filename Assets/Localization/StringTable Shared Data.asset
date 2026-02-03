@@ -275,6 +275,10 @@ MonoBehaviour:
     m_Key: StageInfo
     m_Metadata:
       m_Items: []
+  - m_Id: 22682765116264448
+    m_Key: ResetSaveData
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
